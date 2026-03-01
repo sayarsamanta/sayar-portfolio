@@ -1,0 +1,39 @@
+import { motion, AnimatePresence } from "framer-motion";
+import { Outlet, useLocation } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import FloatingConnectButton from "../components/FloatingConnectButton";
+import { ThemeContext } from "../context/ThemeContext";
+import { useContext, useEffect } from "react";
+
+const MainLayout = () => {
+  const { darkMode } = useContext(ThemeContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.remove("light-theme");
+    } else {
+      document.body.classList.add("light-theme");
+    }
+  }, [darkMode]);
+
+  return (
+    <div className="min-h-screen">
+      <Navbar />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Outlet />
+        </motion.div>
+      </AnimatePresence>
+      <FloatingConnectButton />
+    </div>
+  );
+};
+
+export default MainLayout;
