@@ -1,8 +1,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-* {
-  transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+html,
+body,
+main,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* Match this hex code to your dark mode background color */
+}
+/* Global base styles for the portfolio */
+@layer base {
+  /* Body: default text and font */
+  body {
+    @apply font-body text-text-secondary bg-white dark:bg-black;
+  }
+
+  /* Headings: h1–h6 use heading font and primary color */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-text-primary;
+  }
+
+  /* Links and buttons use heading font */
+  a,
+  button {
+    @apply font-heading;
+  }
+
+  /* Optional: smooth font rendering */
+  body,
+  button,
+  input,
+  textarea {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Optional: set default line-height and spacing for paragraphs */
+  p {
+    @apply leading-relaxed mb-4;
+  }
+
+  /* Optional: smaller text for small elements like captions */
+  small {
+    @apply text-sm font-body text-text-secondary;
+  }
+
+  /* Responsive default text sizes for headings */
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-7xl;
+  }
+  h2 {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+  h3 {
+    @apply text-xl sm:text-2xl md:text-3xl;
+  }
+  h4 {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+  h5 {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+  h6 {
+    @apply text-sm sm:text-base md:text-lg;
+  }
+}
+.input-glass {
+  @apply px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 shadow-inner w-full font-body;
+  background-color: rgba(255, 255, 255, 0.07); /* slightly more visible */
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  caret-color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.input-glass:focus {
+  background-color: rgba(255, 255, 255, 0.12); /* stronger on focus */
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
 }
 :root {
   --background: #000000; /* page background */
@@ -19,7 +101,7 @@
 
 /* Light Theme */
 .light-theme {
-  --background: #f8f8f8;
+  --background: #ffffff;
   --background-alt: #ffffff;
   --card: #ffffff;
   --border: #dddddd;

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
-import sample1 from "../assets/sample1.jpg";
-import sample2 from "../assets/sample2.jpg";
+import sample1 from "../../assets/sample1.jpg";
+import sample2 from "../../assets/sample2.jpg";
 import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const projectData = [
   {
@@ -48,14 +48,15 @@ export default function Projects() {
 
   return (
     <div
-      className="min-h-screen px-6 md:px-20 py-20 flex flex-col gap-20"
+      className="min-h-screen px-6 md:px-20 py-20 flex flex-col gap-20 font-body"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--text-primary)",
       }}
     >
+      {/* Section Title */}
       <h1
-        className="text-5xl font-bold text-center mb-8"
+        className="text-5xl font-heading font-bold text-center mb-8"
         style={{ color: "var(--text-primary)" }}
       >
         Projects
@@ -67,7 +68,7 @@ export default function Projects() {
           <button
             key={cat}
             onClick={() => setFilter(cat)}
-            className={`px-5 py-2 rounded-full text-sm font-medium border transition-colors`}
+            className="px-5 py-2 rounded-full text-sm font-heading font-medium border transition-colors duration-300"
             style={{
               backgroundColor:
                 filter === cat ? "var(--primary)" : "var(--card)",
@@ -101,7 +102,7 @@ export default function Projects() {
             {/* Fullstack Badge */}
             {proj.type === "Fullstack" && (
               <span
-                className="absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full z-20"
+                className="absolute top-3 right-3 text-xs font-heading font-semibold px-3 py-1 rounded-full z-20"
                 style={{
                   backgroundColor: "var(--primary)",
                   color: "var(--text-light)",
@@ -112,10 +113,12 @@ export default function Projects() {
             )}
 
             {/* Project Name */}
-            <h3 className="text-xl font-semibold mb-3">{proj.name}</h3>
+            <h3 className="text-xl font-heading font-semibold mb-3">
+              {proj.name}
+            </h3>
 
             {/* Tech Stack */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 font-body">
               {proj.tech.map((tech, i) => (
                 <span
                   key={i}
@@ -159,7 +162,7 @@ export default function Projects() {
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
               transition={{ duration: 0.3 }}
-              className="relative rounded-3xl max-w-3xl w-full shadow-2xl flex flex-col gap-6 overflow-y-auto p-8"
+              className="relative rounded-3xl max-w-3xl w-full shadow-2xl flex flex-col gap-6 overflow-y-auto p-8 font-body"
               style={{
                 backgroundColor: "var(--card)",
                 color: "var(--text-primary)",
@@ -175,15 +178,17 @@ export default function Projects() {
               </button>
 
               {/* Project Title */}
-              <h2 className="text-3xl font-bold">{selectedProject.name}</h2>
+              <h2 className="text-3xl font-heading font-bold">
+                {selectedProject.name}
+              </h2>
 
               {/* Description */}
-              <p style={{ color: "var(--text-secondary)" }}>
+              <p className="text-[var(--text-secondary)]">
                 {selectedProject.description}
               </p>
 
               {/* Tech Stack */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 font-body">
                 {selectedProject.tech.map((tech, i) => (
                   <span
                     key={i}

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import profileImg from "../assets/profile.jpg";
-import FloatingConnectButton from "../components/FloatingConnectButton";
-import { ThemeContext } from "../context/ThemeContext";
+import profileImg from "../../assets/profile.jpg";
+import FloatingConnectButton from "../../components/FloatingConnectButton";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const skills = [
   { name: "React", category: "Frontend", level: 90 },
@@ -64,7 +64,7 @@ export default function About() {
   return (
     <div
       className="min-h-screen px-6 md:px-20 py-20 flex flex-col gap-28 relative
-                 transition-colors duration-500 bg-[var(--background)] text-[var(--text-primary)]"
+             transition-colors duration-500 bg-[var(--background)] text-[var(--text-primary)] font-body"
     >
       {/* Hero / Intro */}
       <motion.div
@@ -82,7 +82,9 @@ export default function About() {
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="flex-1">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">About Me</h1>
+          <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
+            About Me
+          </h1>
           <p className="text-[var(--text-secondary)] text-lg md:text-xl leading-relaxed">
             I'm a Full Stack Developer passionate about building interactive,
             scalable web applications. I combine clean UI/UX with robust backend
@@ -99,7 +101,7 @@ export default function About() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <h2 className="text-3xl font-semibold mb-6">Skills</h2>
+        <h2 className="text-3xl font-heading font-semibold mb-6">Skills</h2>
 
         {/* Skill Category Filter */}
         <div className="flex gap-4 mb-6">
@@ -107,12 +109,12 @@ export default function About() {
             <button
               key={cat}
               onClick={() => setSkillCategory(cat)}
-              className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors
-                ${
-                  skillCategory === cat
-                    ? "bg-[var(--primary)] text-[var(--text-button)] border-[var(--primary)]"
-                    : "bg-[var(--card)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)]"
-                }`}
+              className={`px-4 py-2 rounded-full text-sm font-heading font-medium border transition-colors
+            ${
+              skillCategory === cat
+                ? "bg-[var(--primary)] text-[var(--text-button)] border-[var(--primary)]"
+                : "bg-[var(--card)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--primary)]"
+            }`}
             >
               {cat}
             </button>
@@ -126,8 +128,8 @@ export default function About() {
               whileHover={{ scale: 1.05, y: -3 }}
               className="bg-[var(--card)] rounded-xl p-4 shadow-lg transition-colors duration-300"
             >
-              <div className="flex justify-between mb-2">
-                <span className="font-medium">{skill.name}</span>
+              <div className="flex justify-between mb-2 font-heading font-medium">
+                <span>{skill.name}</span>
                 <span className="text-[var(--text-secondary)] text-sm">
                   {skill.level}%
                 </span>
@@ -153,7 +155,9 @@ export default function About() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <h2 className="text-3xl font-semibold mb-6">Achievements</h2>
+        <h2 className="text-3xl font-heading font-semibold mb-6">
+          Achievements
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {achievements.map((ach, idx) => (
             <motion.div
@@ -161,7 +165,9 @@ export default function About() {
               whileHover={{ scale: 1.03 }}
               className="bg-[var(--card)] rounded-xl p-4 shadow-lg text-center transition-colors duration-300"
             >
-              <h3 className="font-semibold text-lg mb-2">{ach.title}</h3>
+              <h3 className="font-heading font-semibold text-lg mb-2">
+                {ach.title}
+              </h3>
               <span className="text-[var(--text-secondary)] text-sm">
                 {ach.year}
               </span>
@@ -177,7 +183,7 @@ export default function About() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >
-        <h2 className="text-3xl font-semibold mb-6">Education</h2>
+        <h2 className="text-3xl font-heading font-semibold mb-6">Education</h2>
         <div className="flex flex-col gap-4">
           {education.map((edu, idx) => (
             <motion.div
@@ -186,7 +192,7 @@ export default function About() {
               className="bg-[var(--card)] rounded-xl p-4 shadow-lg flex justify-between items-center transition-colors duration-300"
             >
               <div>
-                <h3 className="font-medium">{edu.degree}</h3>
+                <h3 className="font-heading font-medium">{edu.degree}</h3>
                 <span className="text-[var(--text-secondary)] text-sm">
                   {edu.university}
                 </span>
@@ -206,7 +212,9 @@ export default function About() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.5 }}
       >
-        <h2 className="text-3xl font-semibold mb-6">Featured Projects</h2>
+        <h2 className="text-3xl font-heading font-semibold mb-6">
+          Featured Projects
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((proj, idx) => (
             <motion.a
@@ -217,12 +225,14 @@ export default function About() {
               whileHover={{ scale: 1.03, y: -2 }}
               className="bg-[var(--card)] rounded-xl p-4 shadow-lg flex flex-col gap-2 transition-colors duration-300"
             >
-              <h3 className="font-semibold text-lg">{proj.name}</h3>
+              <h3 className="font-heading font-semibold text-lg">
+                {proj.name}
+              </h3>
               <div className="flex gap-2 flex-wrap">
                 {proj.tech.map((tech, i) => (
                   <span
                     key={i}
-                    className="text-xs px-2 py-1 rounded-full border border-[var(--border)] bg-[var(--background-alt)] transition-colors duration-300"
+                    className="text-xs px-2 py-1 rounded-full border border-[var(--border)] bg-[var(--background-alt)] transition-colors duration-300 font-body"
                   >
                     {tech}
                   </span>
@@ -240,13 +250,15 @@ export default function About() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.6 }}
       >
-        <h2 className="text-3xl font-semibold mb-6">Personal Interests</h2>
+        <h2 className="text-3xl font-heading font-semibold mb-6">
+          Personal Interests
+        </h2>
         <div className="flex flex-wrap gap-4">
           {interests.map((i, idx) => (
             <motion.span
               key={idx}
               whileHover={{ scale: 1.1, y: -2 }}
-              className="text-sm px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--background-alt)] transition-colors duration-300"
+              className="text-sm px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--background-alt)] transition-colors duration-300 font-body"
             >
               {i}
             </motion.span>

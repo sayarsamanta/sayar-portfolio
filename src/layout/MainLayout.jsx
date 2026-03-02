@@ -27,6 +27,11 @@ const MainLayout = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.4 }}
+          className="flex-grow h-screen"
+          style={{
+            backgroundColor: "var(--background)",
+            color: "var(--text-primary)",
+          }}
         >
           <Outlet />
         </motion.div>

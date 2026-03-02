@@ -42,8 +42,9 @@ export default function FloatingConnectButton() {
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5 }}
           className={`fixed bottom-8 right-8 z-50 px-5 py-3 rounded-full shadow-lg flex items-center gap-4 transition-colors
-            ${darkMode ? "bg-zinc-900" : "bg-white"}
-          `}
+        font-body
+        ${darkMode ? "bg-zinc-900" : "bg-white"}
+      `}
         >
           <span
             className={`font-semibold hidden md:block ${

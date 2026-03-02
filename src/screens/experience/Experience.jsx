@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Experience.css";
-import { ThemeContext } from "../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const experienceData = [
   {
@@ -39,14 +39,15 @@ export default function Experience() {
 
   return (
     <div
-      className="min-h-screen px-6 md:px-20 py-20"
+      className="min-h-screen px-6 md:px-20 py-20 font-body"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--text-primary)",
       }}
     >
+      {/* Section Title */}
       <h1
-        className="text-4xl md:text-5xl font-bold mb-16"
+        className="text-4xl md:text-5xl font-heading font-bold mb-16 text-center"
         style={{ color: "var(--text-primary)" }}
       >
         Experience
@@ -100,23 +101,26 @@ export default function Experience() {
                     color: "var(--text-primary)",
                   }}
                 >
-                  <h3 className="text-xl font-semibold">{exp.role}</h3>
-                  <span style={{ color: "var(--text-secondary)" }}>
+                  {/* Role & Company */}
+                  <h3 className="text-xl font-heading font-semibold">
+                    {exp.role}
+                  </h3>
+                  <span className="block text-[var(--text-secondary)] font-body">
                     {exp.company}
                   </span>
                   <span
-                    className="block mt-1"
+                    className="block mt-1 text-sm font-body"
                     style={{ color: "var(--text-tertiary)" }}
                   >
                     {exp.duration}
                   </span>
 
                   {/* Tech Stack Badges */}
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <div className="flex flex-wrap gap-2 mt-3 font-body">
                     {exp.tech.map((tech, i) => (
                       <span
                         key={i}
-                        className="text-xs px-3 py-1 rounded-full border"
+                        className="text-xs px-3 py-1 rounded-full border font-heading"
                         style={{
                           backgroundColor: "var(--card)",
                           borderColor: "var(--border)",
@@ -136,7 +140,7 @@ export default function Experience() {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="mt-4 leading-relaxed"
+                        className="mt-4 leading-relaxed font-body text-sm"
                         style={{ color: "var(--text-secondary)" }}
                       >
                         {exp.description}

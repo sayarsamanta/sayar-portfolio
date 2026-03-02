@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { motion } from "framer-motion";
-import { ThemeContext } from "../context/ThemeContext";
+import { ThemeContext } from "../../context/ThemeContext";
 
 export default function Contact() {
   const { darkMode } = useContext(ThemeContext);
@@ -26,7 +26,7 @@ export default function Contact() {
 
   return (
     <div
-      className="relative min-h-screen px-6 md:px-20 py-20 flex flex-col gap-20"
+      className="relative min-h-screen px-6 md:px-20 py-20 flex flex-col gap-20 font-body"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--text-primary)",
@@ -42,13 +42,13 @@ export default function Contact() {
       >
         <h1
           style={{ color: "var(--text-primary)" }}
-          className="text-5xl font-bold mb-4"
+          className="text-5xl font-heading font-bold mb-4"
         >
           Let’s Connect
         </h1>
         <p
           style={{ color: "var(--text-secondary)" }}
-          className="text-lg md:text-xl max-w-2xl mx-auto"
+          className="text-lg md:text-xl max-w-2xl mx-auto font-body"
         >
           I’m always open to collaboration or discussing new projects. Send me a
           message or connect via social platforms below.
@@ -69,6 +69,7 @@ export default function Contact() {
           borderColor: "var(--border)",
         }}
       >
+        {/* Name Input */}
         <input
           type="text"
           name="name"
@@ -76,14 +77,18 @@ export default function Contact() {
           onChange={handleChange}
           placeholder="Your Name"
           required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 transition shadow-inner w-full"
+          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
           style={{
-            backgroundColor: "var(--input-background)",
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
+            border: "1px solid var(--border)",
             color: "var(--text-primary)",
-            borderColor: "var(--border)",
             caretColor: "var(--primary)",
+            backdropFilter: "blur(12px)",
           }}
         />
+
+        {/* Email Input */}
         <input
           type="email"
           name="email"
@@ -91,14 +96,18 @@ export default function Contact() {
           onChange={handleChange}
           placeholder="Your Email"
           required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 transition shadow-inner w-full"
+          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
           style={{
-            backgroundColor: "var(--input-background)",
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
+            border: "1px solid var(--border)",
             color: "var(--text-primary)",
-            borderColor: "var(--border)",
             caretColor: "var(--primary)",
+            backdropFilter: "blur(12px)",
           }}
         />
+
+        {/* Message Textarea */}
         <textarea
           name="message"
           value={formData.message}
@@ -106,22 +115,30 @@ export default function Contact() {
           placeholder="Your Message"
           rows={6}
           required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 transition shadow-inner w-full resize-none"
+          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full resize-none font-body transition shadow-inner"
           style={{
-            backgroundColor: "var(--input-background)",
+            background:
+              "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
+            border: "1px solid var(--border)",
             color: "var(--text-primary)",
-            borderColor: "var(--border)",
             caretColor: "var(--primary)",
+            backdropFilter: "blur(12px)",
           }}
         />
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 8px 20px rgba(255,255,255,0.3)",
+          }}
           whileTap={{ scale: 0.95 }}
           type="submit"
-          className="px-8 py-3 rounded-2xl font-semibold shadow-lg transition"
+          className="px-8 py-3 rounded-2xl font-heading font-semibold transition shadow-lg border-2"
           style={{
-            background: "var(--primary-gradient)",
+            background:
+              "linear-gradient(135deg, var(--primary), var(--secondary), var(--accent))",
             color: "var(--button-text)",
+            borderColor: "var(--primary)",
+            boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
           }}
         >
           {submitted ? "Message Sent ✅" : "Send Message"}
