@@ -7,7 +7,7 @@ main,
 #root {
   margin: 0;
   padding: 0;
-  min-height: 100vh;
+  height: 100%;
   /* Match this hex code to your dark mode background color */
 }
 /* Global base styles for the portfolio */
@@ -111,4 +111,18 @@ main,
   --text-primary: #111111;
   --text-secondary: #555555;
   --text-button: #ffffff;
+}
+/* Hide scrollbar for Chrome, Safari and Edge */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE, Edge */
+.hide-scrollbar {
+  -ms-overflow-style: none;
 }

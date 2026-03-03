@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import profileImg from "../assets/profile.jpg";
-import { FiMenu, FiX, FiSun, FiMoon } from "react-icons/fi";
+import { FiMenu, FiX, FiSun, FiMoon, FiShield } from "react-icons/fi";
 import { ThemeContext } from "../context/ThemeContext";
 
 const navItems = [
@@ -91,16 +91,44 @@ const Navbar = () => {
               key={item.path}
               to={item.path}
               end={item.path === "/"}
-              className="relative text-sm uppercase tracking-wider font-heading transition-colors duration-300"
+              className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
               style={{ color: "var(--text-secondary)" }}
             >
               {({ isActive }) => (
-                <div className="relative">
-                  {item.name}
+                <div className="relative px-1 py-1">
+                  {/* Text */}
+                  <span
+                    className="
+          transition-colors duration-300
+          group-hover:text-[var(--primary)]
+        "
+                    style={{
+                      color: isActive
+                        ? "var(--primary)"
+                        : "var(--text-secondary)",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+
+                  {/* Hover Underline */}
+                  {!isActive && (
+                    <span
+                      className="
+            absolute left-0 -bottom-1
+            h-[2px] w-0
+            bg-[var(--primary)]
+            transition-all duration-300 ease-out
+            group-hover:w-full
+          "
+                    />
+                  )}
+
+                  {/* Active Indicator (Animated) */}
                   {isActive && (
                     <motion.div
                       layoutId="activeIndicator"
-                      className="absolute -bottom-2 left-0 right-0 h-[2px] rounded-full bg-[var(--primary)]"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-[var(--primary)]"
                       transition={{
                         type: "spring",
                         stiffness: 400,
@@ -112,6 +140,16 @@ const Navbar = () => {
               )}
             </NavLink>
           ))}
+          <NavLink
+            to="/admin"
+            className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
+          >
+            <div className="relative px-1 py-1 flex items-center gap-1">
+              <FiShield size={16} className="text-[var(--primary)]" />
+              <span>Admin Panel</span>
+              <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[var(--primary)] transition-all duration-300 ease-out group-hover:w-full" />
+            </div>
+          </NavLink>
 
           {/* Theme Toggle Icon */}
           <button
@@ -173,6 +211,13 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
+            <NavLink
+              to="/admin"
+              className="py-2 w-full transition-colors duration-300 font-heading flex items-center gap-2"
+              onClick={() => setIsOpen(false)}
+            >
+              <FiShield size={18} /> Admin Panel
+            </NavLink>
           </motion.div>
         )}
       </AnimatePresence>

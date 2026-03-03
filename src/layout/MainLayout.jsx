@@ -27,7 +27,7 @@ const MainLayout = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.4 }}
-          className="flex-grow h-screen"
+          className="flex-grow h-screen pt-14"
           style={{
             backgroundColor: "var(--background)",
             color: "var(--text-primary)",
