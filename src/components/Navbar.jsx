@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import profileImg from "../assets/profile.jpg";
 import { FiMenu, FiX, FiSun, FiMoon, FiShield } from "react-icons/fi";
 import { ThemeContext } from "../context/ThemeContext";
+import { useSelector } from "react-redux";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -14,6 +15,7 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const { user } = useSelector((state) => state.user);
   const [scrolled, setScrolled] = useState(
     typeof window !== "undefined" ? window.scrollY > 10 : false
   );
@@ -21,6 +23,7 @@ const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const { profileImg, role } = user || {};
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
@@ -74,7 +77,7 @@ const Navbar = () => {
             <img
               src={profileImg}
               alt="Profile"
-              className="w-12 h-12 rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden md:block"
+              className="w-12 h-12 rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block"
             />
             <motion.div
               animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.15, 1] }}
@@ -85,7 +88,7 @@ const Navbar = () => {
         </motion.div>
 
         {/* Desktop Links + Theme Icon */}
-        <div className="hidden sm:flex gap-6 items-center relative">
+        <div className="hidden md:flex gap-6 items-center relative">
           {navItems.map((item) => (
             <NavLink
               key={item.path}
@@ -140,16 +143,18 @@ const Navbar = () => {
               )}
             </NavLink>
           ))}
-          <NavLink
-            to="/admin"
-            className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
-          >
-            <div className="relative px-1 py-1 flex items-center gap-1">
-              <FiShield size={16} className="text-[var(--primary)]" />
-              <span>Admin Panel</span>
-              <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[var(--primary)] transition-all duration-300 ease-out group-hover:w-full" />
-            </div>
-          </NavLink>
+          {role === "admin" && (
+            <NavLink
+              to="/admin"
+              className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
+            >
+              <div className="relative px-1 py-1 flex items-center gap-1">
+                <FiShield size={16} className="text-[var(--primary)]" />
+                <span>Admin Panel</span>
+                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[var(--primary)] transition-all duration-300 ease-out group-hover:w-full" />
+              </div>
+            </NavLink>
+          )}
 
           {/* Theme Toggle Icon */}
           <button
@@ -165,7 +170,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="sm:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-3">
           {/* Mobile Theme Toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
@@ -193,7 +198,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="sm:hidden absolute top-full left-0 w-full flex flex-col items-start p-6 font-heading"
+            className="md:hidden absolute top-full left-0 w-full flex flex-col items-start p-6 font-heading"
             style={{ backgroundColor: "var(--card)" }}
             initial="hidden"
             animate="visible"
@@ -211,13 +216,15 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
-            <NavLink
-              to="/admin"
-              className="py-2 w-full transition-colors duration-300 font-heading flex items-center gap-2"
-              onClick={() => setIsOpen(false)}
-            >
-              <FiShield size={18} /> Admin Panel
-            </NavLink>
+            {role === "admin" && (
+              <NavLink
+                to="/admin"
+                className="py-2 w-full transition-colors duration-300 font-heading flex items-center gap-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <FiShield size={18} /> Admin Panel
+              </NavLink>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

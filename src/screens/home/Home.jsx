@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import profileImg from "../../assets/profile.jpg";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Stat } from "../../components/Stat";
 import { FaChevronDown } from "react-icons/fa";
+import { useSelector } from "react-redux";
 const containerVariants = {
   hidden: {},
   visible: {
@@ -19,6 +19,16 @@ const itemVariants = {
 
 const Home = () => {
   const { darkMode } = useContext(ThemeContext);
+  const { user } = useSelector((state) => state.user);
+  const {
+    name,
+    bio,
+    brief,
+    profileImg,
+    qoute,
+    skills,
+    stats: { projects, experienceYears, clients },
+  } = user || {};
 
   return (
     <div className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 lg:px-10">
@@ -35,7 +45,7 @@ const Home = () => {
       </div>
 
       {/* Mobile Profile Image */}
-      <div className="flex justify-center mb-6 md:hidden w-full">
+      <div className="flex justify-center mb-6 lg:hidden w-full">
         <div className="relative">
           <div
             className="absolute inset-0 rounded-full blur-2xl scale-110"
@@ -68,24 +78,23 @@ const Home = () => {
           className="text-5xl sm:text-6xl md:text-7xl font-bold font-heading leading-tight"
           style={{ color: "var(--text-primary)" }}
         >
-          Sayar Samanta
+          {name}
         </motion.h1>
 
         <motion.h2
           variants={itemVariants}
-          className="text-lg sm:text-xl md:text-2xl font-light"
+          className="text-lg sm:text-xl md:text-2xl font-light "
           style={{ color: "var(--text-secondary)" }}
         >
-          Full Stack Developer | React & Node.js Engineer
+          {bio}
         </motion.h2>
 
         <motion.p
           variants={itemVariants}
-          className="mt-4 max-w-lg leading-relaxed text-sm sm:text-base"
+          className="mt-4 max-w-lg leading-relaxed text-sm sm:text-base text-center"
           style={{ color: "var(--text-secondary)" }}
         >
-          I build scalable web applications with clean architecture, modern
-          UI/UX principles, and production-ready backend systems.
+          {brief}
         </motion.p>
 
         {/* Personal Tagline */}
@@ -93,7 +102,7 @@ const Home = () => {
           variants={itemVariants}
           className="mt-2 italic text-sm sm:text-base text-[var(--text-tertiary)]"
         >
-          "Transforming ideas into interactive digital experiences."
+          {qoute}
         </motion.p>
 
         {/* Buttons */}
@@ -114,8 +123,6 @@ const Home = () => {
 
           <Link
             to="/resume"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             className="px-6 py-3 text-sm tracking-wide border rounded-2xl transition duration-300 font-body"
             style={{
               borderColor: "var(--primary)",
@@ -128,23 +135,15 @@ const Home = () => {
 
         {/* Mini Stats */}
         <motion.div className="flex flex-wrap justify-center gap-8 mt-10">
-          <Stat count={12} label="Projects" />
-          <Stat count={5} label="Years Exp" />
-          <Stat count={20} label="Clients" />
+          <Stat count={projects} label="Projects" />
+          <Stat count={experienceYears} label="Years Exp" />
+          <Stat count={clients} label="Clients" />
         </motion.div>
       </motion.div>
 
       {/* Floating Tech Icons */}
       <div className="hidden md:flex flex-row gap-8 mt-10">
-        {[
-          "React",
-          "Node.js",
-          "Express",
-          "JS",
-          "Tailwind",
-          "mongoDB",
-          "React Native",
-        ].map((tech, i) => (
+        {skills.map((tech, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, x: -20 }}

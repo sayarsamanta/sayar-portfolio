@@ -2,32 +2,8 @@ import { motion } from "framer-motion";
 import { FaTimes, FaGithub } from "react-icons/fa";
 import { FaReact } from "react-icons/fa";
 import { FaNodeJs } from "react-icons/fa";
-import sample1 from "../../assets/sample1.jpg";
-import sample2 from "../../assets/sample2.jpg";
-const projectData = {
-  id: 1,
-  name: "DevTinder",
-  type: "Fullstack",
-  description: "A developer networking platform...",
-  role: "Full Stack Developer",
-  duration: "Jan 2025 – Mar 2025",
-  status: "Live",
-  team: "Solo",
-  year: "2025",
-  github: "https://github.com/yourusername/devtinder",
-  live: "https://devtinder.live",
-  problem: "Developers struggle to find collaboration partners...",
-  solution: "Built a swipe-based matching platform...",
-  features: [
-    "Authentication with JWT",
-    "Real-time notifications",
-    "Premium subscription via Razorpay",
-  ],
-  tech: ["React", "Node.js", "MongoDB"],
-  screenshots: [sample1, sample2],
-};
-const DetailedModal = ({ setSelectedProject }) => {
-  const selectedProject = projectData; // Replace with actual selected project data
+const DetailedModal = ({ selectedProject, setSelectedProject }) => {
+  // Replace with actual selected project data
   if (!selectedProject) return null;
 
   return (

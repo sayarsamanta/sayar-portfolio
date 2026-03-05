@@ -57,13 +57,6 @@ export default function AdminProjects() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.remove("light-theme");
-    } else {
-      document.body.classList.add("light-theme");
-    }
-  }, [darkMode]);
 
   const handleEdit = (project) => {
     setSelectedProject(project); // pass the project to modal

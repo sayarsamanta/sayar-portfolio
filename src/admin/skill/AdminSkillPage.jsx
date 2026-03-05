@@ -8,13 +8,6 @@ export default function AdminSkillPage() {
   const [newSkill, setNewSkill] = useState("");
 
   const { darkMode, setDarkMode } = useContext(ThemeContext);
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.remove("light-theme");
-    } else {
-      document.body.classList.add("light-theme");
-    }
-  }, [darkMode]);
 
   // Add new skill
   const handleAddSkill = () => {

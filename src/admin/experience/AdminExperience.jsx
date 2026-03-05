@@ -7,13 +7,7 @@ import DeleteModal from "../../components/admin/DeleteModal";
 
 export default function AdminExperience() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.remove("light-theme");
-    } else {
-      document.body.classList.add("light-theme");
-    }
-  }, [darkMode]);
+
   const [experiences, setExperiences] = useState([
     // sample data
     {

@@ -14,13 +14,7 @@ export default function AdminSettingsPage() {
   // --------- HANDLERS ----------
   const handleToggleDarkMode = () => setDarkMode(!darkMode);
   const handlePrimaryColorChange = (e) => setPrimaryColor(e.target.value);
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.remove("light-theme");
-    } else {
-      document.body.classList.add("light-theme");
-    }
-  }, [darkMode]);
+
   const handleSaveProfile = () => {
     alert("Profile Saved!");
     // integrate API later

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiSun, FiMoon } from "react-icons/fi";
@@ -9,6 +9,13 @@ export default function AdminLayout() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.remove("light-theme");
+    } else {
+      document.body.classList.add("light-theme");
+    }
+  }, [darkMode]);
 
   return (
     <div className="h-screen bg-[var(--background)] flex overflow-hidden">

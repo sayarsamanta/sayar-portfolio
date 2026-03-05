@@ -2,127 +2,85 @@ import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Experience.css";
 import { ThemeContext } from "../../context/ThemeContext";
-
-const experienceData = [
-  {
-    id: 1,
-    role: "Full Stack Developer",
-    company: "TechCorp Inc.",
-    duration: "Jan 2023 - Present",
-    description:
-      "Built end-to-end web applications using React, Node.js, and MongoDB. Led a team of 3 developers.",
-    tech: ["React", "Node.js", "MongoDB", "Tailwind", "Framer Motion"],
-  },
-  {
-    id: 2,
-    role: "Frontend Developer",
-    company: "Designify Labs",
-    duration: "Jun 2021 - Dec 2022",
-    description:
-      "Developed interactive UI components, animations, and responsive layouts using React and Tailwind.",
-    tech: ["React", "Tailwind", "Framer Motion", "GSAP"],
-  },
-  {
-    id: 3,
-    role: "Intern - Web Developer",
-    company: "Startup Hub",
-    duration: "Jan 2021 - May 2021",
-    description:
-      "Worked on landing pages and small full-stack features with React and Node.js.",
-    tech: ["React", "Node.js", "Express", "MongoDB"],
-  },
-];
+import { useSelector } from "react-redux";
 
 export default function Experience() {
+  const experienceData = useSelector((state) => state.experience.exp);
   const [expandedId, setExpandedId] = useState(null);
   const { darkMode } = useContext(ThemeContext);
 
   return (
     <div
-      className="min-h-screen px-6 md:px-20 py-20 font-body"
+      className="min-h-screen w-full py-24 px-6"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--text-primary)",
       }}
     >
       {/* Section Title */}
-      <h1
-        className="text-4xl md:text-5xl font-heading font-bold mb-16 text-center"
-        style={{ color: "var(--text-primary)" }}
-      >
+      <h1 className="text-4xl md:text-6xl font-heading font-bold text-center mb-20">
         Experience
       </h1>
 
-      <div className="relative">
-        {/* Main Vertical Timeline Line */}
+      <div className="relative max-w-4xl mx-auto">
+        {/* Center Line */}
         <div
-          className="absolute left-5 top-0 w-[4px] h-full rounded-full opacity-40 z-0"
+          className="absolute left-1/2 -translate-x-1/2 top-0 w-[2px] h-full opacity-30"
           style={{
             background:
               "linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent))",
           }}
-        ></div>
+        />
 
-        {/* Global Shimmer Line */}
-        <div className="absolute left-5 top-0 w-1 h-full z-0 overflow-hidden rounded-full">
-          <div
-            className="absolute top-0 w-full h-full opacity-40 blur-md shimmer-tracer"
-            style={{
-              background:
-                "linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent))",
-            }}
-          />
-        </div>
-
-        <div className="flex flex-col gap-10 relative">
+        <div className="flex flex-col gap-16 relative">
           {experienceData.map((exp, index) => {
             const isExpanded = expandedId === exp.id;
-            const side = index % 2 === 0 ? "left" : "right";
 
             return (
               <motion.div
                 key={exp.id}
-                initial={{ opacity: 0, x: side === "left" ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`relative flex items-start md:items-center justify-${
-                  side === "left" ? "start" : "end"
-                } gap-6`}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="relative flex justify-center"
               >
-                {/* Experience Card */}
+                {/* Dot */}
+                <div
+                  className="absolute top-4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full z-20"
+                  style={{ backgroundColor: "var(--primary)" }}
+                />
+
+                {/* Card */}
                 <motion.div
                   onClick={() => setExpandedId(isExpanded ? null : exp.id)}
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="relative rounded-2xl p-6 shadow-lg cursor-pointer md:w-3/4 w-full transition-all duration-500 hover:shadow-2xl z-10"
+                  whileHover={{ y: -6 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                  className="w-full md:w-[80%] backdrop-blur-xl border rounded-2xl p-8 shadow-xl cursor-pointer transition-all"
                   style={{
                     backgroundColor: "var(--card)",
-                    color: "var(--text-primary)",
+                    borderColor: "var(--border)",
                   }}
                 >
-                  {/* Role & Company */}
-                  <h3 className="text-xl font-heading font-semibold">
+                  <h3 className="text-xl md:text-2xl font-heading font-semibold">
                     {exp.role}
                   </h3>
-                  <span className="block text-[var(--text-secondary)] font-body">
-                    {exp.company}
-                  </span>
-                  <span
-                    className="block mt-1 text-sm font-body"
-                    style={{ color: "var(--text-tertiary)" }}
-                  >
-                    {exp.duration}
-                  </span>
 
-                  {/* Tech Stack Badges */}
-                  <div className="flex flex-wrap gap-2 mt-3 font-body">
+                  <p className="text-sm mt-1 text-[var(--text-secondary)]">
+                    {exp.company}
+                  </p>
+
+                  <p className="text-xs mt-1 text-[var(--text-tertiary)]">
+                    {exp.duration}
+                  </p>
+
+                  {/* Tech */}
+                  <div className="flex flex-wrap gap-2 mt-4">
                     {exp.tech.map((tech, i) => (
                       <span
                         key={i}
-                        className="text-xs px-3 py-1 rounded-full border font-heading"
+                        className="text-xs px-3 py-1 rounded-full border"
                         style={{
-                          backgroundColor: "var(--card)",
                           borderColor: "var(--border)",
                           color: "var(--text-secondary)",
                         }}
@@ -132,39 +90,20 @@ export default function Experience() {
                     ))}
                   </div>
 
-                  {/* Expandable Description */}
+                  {/* Expandable */}
                   <AnimatePresence>
                     {isExpanded && (
                       <motion.p
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="mt-4 leading-relaxed font-body text-sm"
-                        style={{ color: "var(--text-secondary)" }}
+                        transition={{ duration: 0.4 }}
+                        className="mt-5 text-sm leading-relaxed text-[var(--text-secondary)]"
                       >
                         {exp.description}
                       </motion.p>
                     )}
                   </AnimatePresence>
-
-                  {/* Duration Bar */}
-                  <div
-                    className="h-1 w-full rounded-full mt-4"
-                    style={{ backgroundColor: "var(--border)" }}
-                  >
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "100%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1 }}
-                      className="h-1 rounded-full"
-                      style={{
-                        background:
-                          "linear-gradient(to right, var(--primary), var(--secondary), var(--accent))",
-                      }}
-                    />
-                  </div>
                 </motion.div>
               </motion.div>
             );

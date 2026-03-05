@@ -5,17 +5,19 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Projects from "./screens/projects/Projects";
 import Experience from "./screens/experience/Experience";
 import Contact from "./screens/contact/Contact";
-import { ThemeContext, ThemeProvider } from "./context/ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import ResumePage from "./screens/resume/Resume";
 import AdminLayout from "./admin/AdminLayout";
-import { useContext } from "react";
 import AdminDashboard from "./admin/dashboard/AdminDashboard";
 import AdminProjects from "./admin/projects/AdminProjects";
 import AdminExperience from "./admin/experience/AdminExperience";
 import AdminSkillPage from "./admin/skill/AdminSkillPage";
 import AdminResumePage from "./admin/resume/AdminResumePage";
 import AdminSettingsPage from "./admin/settings/AdminSettingsPage";
-
+import AdminAboutPageSingleAPI from "./admin/about/AdminAbout";
+import AdminLogin from "./admin/login/AdminLogin";
+import AdminProtectedRoute from "./admin/protectedroute/AdminProtectedRoute";
+import { Toaster } from "react-hot-toast";
 function App() {
   return (
     <ThemeProvider>
@@ -35,20 +37,37 @@ function App() {
               <Route path="contact" element={<Contact />} />
               <Route path="resume" element={<ResumePage />} />
             </Route>
-            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route
+              path="/admin/*"
+              element={
+                <AdminProtectedRoute>
+                  <AdminLayout />
+                </AdminProtectedRoute>
+              }
+            >
               <Route index element={<AdminDashboard />} />
-              <Route
-                path="/admin/admindashboard"
-                element={<AdminDashboard />}
-              />
-              <Route path="/admin/projects" element={<AdminProjects />} />
-              <Route path="/admin/experience" element={<AdminExperience />} />
-              <Route path="/admin/skills" element={<AdminSkillPage />} />
-              <Route path="/admin/resume" element={<AdminResumePage />} />
-              <Route path="/admin/settings" element={<AdminSettingsPage />} />
+              <Route path="admindashboard" element={<AdminDashboard />} />
+              <Route path="projects" element={<AdminProjects />} />
+              <Route path="experience" element={<AdminExperience />} />
+              <Route path="skills" element={<AdminSkillPage />} />
+              <Route path="resume" element={<AdminResumePage />} />
+              <Route path="settings" element={<AdminSettingsPage />} />
+              <Route path="about" element={<AdminAboutPageSingleAPI />}></Route>
               <Route path="*" element={<AdminDashboard />} />
             </Route>
           </Routes>
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+            toastOptions={{
+              style: {
+                background: "var(--card)",
+                color: "var(--text-primary)",
+                border: "1px solid var(--border)",
+              },
+            }}
+          />
         </main>
       </BrowserRouter>
     </ThemeProvider>

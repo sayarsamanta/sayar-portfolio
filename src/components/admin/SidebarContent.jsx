@@ -8,7 +8,9 @@ import {
   FiMail,
   FiSettings,
   FiLogOut,
+  FiUser,
 } from "react-icons/fi";
+
 import { Link, NavLink } from "react-router-dom";
 const navItems = [
   { name: "Dashboard", path: "/admin", icon: FiHome },
@@ -17,6 +19,7 @@ const navItems = [
   { name: "Skills", path: "/admin/skills", icon: FiCpu },
   { name: "Resume", path: "/admin/resume", icon: FiFileText },
   { name: "Settings", path: "/admin/settings", icon: FiSettings },
+  { name: "About", path: "/admin/about", icon: FiUser },
 ];
 export function SidebarContent({ close }) {
   return (

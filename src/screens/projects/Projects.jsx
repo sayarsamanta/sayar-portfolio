@@ -1,45 +1,12 @@
 import { useEffect, useState } from "react";
-import sample1 from "../../assets/sample1.jpg";
-import sample2 from "../../assets/sample2.jpg";
-import { useContext } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
 import ProjectCard from "../../components/project/ProjectCard";
 import DetailedModel from "../../components/project/DetailedModel";
-const projectData = [
-  {
-    id: 1,
-    name: "Fullstack Portfolio",
-    type: "Fullstack",
-    tech: ["React", "Node.js", "Tailwind"],
-    description:
-      "A fully animated portfolio using React and Node.js with dynamic content from DB.",
-    screenshots: [sample1, sample2],
-  },
-  {
-    id: 2,
-    name: "E-commerce Platform",
-    type: "Fullstack",
-    tech: ["React", "Express", "MongoDB"],
-    description:
-      "End-to-end e-commerce platform with cart, payment, and admin panel.",
-    screenshots: [sample1],
-  },
-  {
-    id: 3,
-    name: "Landing Page UI",
-    type: "Frontend",
-    tech: ["React", "Tailwind"],
-    description:
-      "Responsive landing page with animations and interactive components.",
-    screenshots: [sample2],
-  },
-];
+import { useSelector } from "react-redux";
 
 export default function Projects() {
+  const projects = useSelector((state) => state.projects.projects);
   const [filter, setFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState(null);
-  const { darkMode } = useContext(ThemeContext);
-
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
@@ -53,19 +20,19 @@ export default function Projects() {
   }, [selectedProject]);
   const filteredProjects =
     filter === "All"
-      ? projectData
-      : projectData.filter((proj) => proj.type === filter);
+      ? projects
+      : projects.filter((proj) => proj.type === filter);
 
   return (
     <>
       <div
         className="
-    min-h-screen 
+    min-h-screen w-full
     px-4 sm:px-6 md:px-12 lg:px-20 
     py-16 sm:py-20 md:py-24 
     flex flex-col gap-16 md:gap-20 
     font-body
-    max-w-7xl mx-auto
+    
   "
         style={{
           backgroundColor: "var(--background)",
@@ -118,18 +85,20 @@ export default function Projects() {
             </button>
           ))}
         </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {filteredProjects.map((proj, idx) => (
-            <ProjectCard
-              proj={proj}
-              key={idx}
-              onClick={() => setSelectedProject(proj)}
-            />
-          ))}
+        <div className="w-full mx-auto px-8">
+          <div className="flex flex-wrap gap-8 justify-center">
+            {/* Project Cards */}
+            {filteredProjects.map((proj, idx) => (
+              <ProjectCard
+                proj={proj}
+                key={idx}
+                onClick={() => setSelectedProject(proj)}
+              />
+            ))}
+          </div>
         </div>
       </div>
+      {/* Projects Grid */}
       {selectedProject && (
         <DetailedModel
           selectedProject={selectedProject}

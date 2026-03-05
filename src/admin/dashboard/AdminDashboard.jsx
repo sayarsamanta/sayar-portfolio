@@ -26,14 +26,6 @@ export default function AdminDashboard() {
   ];
   console.log("AdminDashboard rendered with darkMode:", darkMode);
 
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.remove("light-theme");
-    } else {
-      document.body.classList.add("light-theme");
-    }
-  }, [darkMode]);
-
   return (
     <div className="space-y-8 text-[var(--text-primary)] font-sans">
       {/* Header */}
