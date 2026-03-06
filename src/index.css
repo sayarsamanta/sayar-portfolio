@@ -97,6 +97,7 @@ main,
   --text-primary: #ffffff; /* main text */
   --text-secondary: #aaaaaa; /* secondary text */
   --text-button: #000000;
+  --calendar-icon-filter: invert(1);
 }
 
 /* Light Theme */
@@ -111,6 +112,7 @@ main,
   --text-primary: #111111;
   --text-secondary: #555555;
   --text-button: #ffffff;
+  --calendar-icon-filter: invert(0);
 }
 /* Hide scrollbar for Chrome, Safari and Edge */
 .hide-scrollbar::-webkit-scrollbar {
@@ -137,4 +139,7 @@ main,
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
+}
+input[type="month"]::-webkit-calendar-picker-indicator {
+  filter: var(--calendar-icon-filter);
 }

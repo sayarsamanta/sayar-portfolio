@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import profileImg from "../assets/profile.jpg";
 import { FiMenu, FiX, FiSun, FiMoon, FiShield } from "react-icons/fi";
 import { ThemeContext } from "../context/ThemeContext";
 import { useSelector } from "react-redux";
+import ProfileAvatar from "./profilepic/ProfileAvatar";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -15,7 +15,7 @@ const navItems = [
 ];
 
 const Navbar = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.about || null);
   const [scrolled, setScrolled] = useState(
     typeof window !== "undefined" ? window.scrollY > 10 : false
   );
@@ -73,12 +73,8 @@ const Navbar = () => {
           transition={{ type: "spring", stiffness: 300 }}
           className="flex items-center gap-3 cursor-pointer"
         >
-          <div className="relative">
-            <img
-              src={profileImg}
-              alt="Profile"
-              className="w-12 h-12 rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block"
-            />
+          <div className="relative rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block">
+            <ProfileAvatar src={profileImg} size="small" />
             <motion.div
               animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.15, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

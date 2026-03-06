@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { Pencil, Trash2, Plus } from "lucide-react";
-import { ThemeContext } from "../../context/ThemeContext";
 import AdminAddProjectModal from "./AdminAddProjectModal";
 import sample1 from "../../assets/sample1.jpg";
 import sample2 from "../../assets/sample2.jpg";
@@ -54,7 +53,6 @@ const dummyProjects = [
 
 export default function AdminProjects() {
   const [projects, setProjects] = useState(dummyProjects);
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 

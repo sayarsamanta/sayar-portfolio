@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import SectionLayout from "../SectionLayout";
 import FloatingConnectButton from "../FloatingConnectButton";
 import AboutSectionRenderer from "./AboutSectionRenderer";
+import ProfileAvatar from "../profilepic/ProfileAvatar";
 const MAX_LENGTH = 200;
 const AboutContent = ({
   profileImg,
@@ -10,7 +11,6 @@ const AboutContent = ({
   skills,
   achievements,
   education,
-  featuredProjects,
   personalInterests,
 }) => {
   const [skillCategory, setSkillCategory] = useState("All");
@@ -37,19 +37,15 @@ const AboutContent = ({
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
           {/* Profile Image */}
           {profileImg && (
-            <div className="relative mb-6">
-              <img
-                src={profileImg}
-                alt="Profile"
-                className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-[var(--primary)] shadow-xl"
-              />
-              <div className="absolute inset-0 rounded-full blur-2xl bg-[var(--primary)] opacity-20 -z-10"></div>
-            </div>
+            <div className="lg:hidden">
+              <ProfileAvatar src={profileImg} />
+              </div>
+            
           )}
 
           {/* Headline */}
           {headline && (
-            <h1 className="text-3xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent sm:mt-4">
               {headline}
             </h1>
           )}

@@ -5,6 +5,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { Stat } from "../../components/Stat";
 import { FaChevronDown } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
 const containerVariants = {
   hidden: {},
   visible: {
@@ -19,21 +20,21 @@ const itemVariants = {
 
 const Home = () => {
   const { darkMode } = useContext(ThemeContext);
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.about);
   const {
     name,
     bio,
     brief,
     profileImg,
     qoute,
-    skills,
     stats: { projects, experienceYears, clients },
+    about: {skills}
   } = user || {};
 
   return (
-    <div className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 lg:px-10">
+    <div className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 p-6">
       {/* Background Glows */}
-      <div className="absolute inset-0 -z-10">
+      {/* <div className="absolute inset-0 -z-10">
         <div
           className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] rounded-full blur-3xl"
           style={{ backgroundColor: "var(--primary)", opacity: 0.05 }}
@@ -42,27 +43,15 @@ const Home = () => {
           className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] rounded-full blur-3xl"
           style={{ backgroundColor: "var(--secondary)", opacity: 0.05 }}
         />
-      </div>
+      </div> */}
 
       {/* Mobile Profile Image */}
-      <div className="flex justify-center mb-6 lg:hidden w-full">
+      <div className="flex justify-center mb-6 w-full">
         <div className="relative">
-          <div
-            className="absolute inset-0 rounded-full blur-2xl scale-110"
-            style={{ backgroundColor: "var(--accent)", opacity: 0.1 }}
-          ></div>
-          <motion.img
-            src={profileImg}
-            alt="Profile"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
-            transition={{
-              opacity: { duration: 0.6 },
-              scale: { duration: 0.6 },
-              y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-            }}
-            className="w-56 h-56 sm:w-64 sm:h-64 mt-9 rounded-full object-cover object-top ring-1 ring-white/20"
-          />
+          <div className="mt-12">
+          <ProfileAvatar src={profileImg} size="large" />
+          </div>
+          
         </div>
       </div>
 
@@ -71,7 +60,7 @@ const Home = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col items-center justify-center max-w-2xl mx-auto gap-4 font-body mt-32"
+        className="flex flex-col items-center justify-center max-w-2xl mx-auto gap-4 font-body mt-25"
       >
         <motion.h1
           variants={itemVariants}
@@ -155,7 +144,7 @@ const Home = () => {
             }}
             className="bg-[var(--card)] p-2 rounded-full shadow-lg text-[var(--text-primary)] font-body text-xs"
           >
-            {tech}
+            {tech?.name}
           </motion.div>
         ))}
       </div>

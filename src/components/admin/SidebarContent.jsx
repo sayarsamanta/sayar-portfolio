@@ -16,7 +16,6 @@ const navItems = [
   { name: "Dashboard", path: "/admin", icon: FiHome },
   { name: "Projects", path: "/admin/projects", icon: FiFolder },
   { name: "Experience", path: "/admin/experience", icon: FiBriefcase },
-  { name: "Skills", path: "/admin/skills", icon: FiCpu },
   { name: "Resume", path: "/admin/resume", icon: FiFileText },
   { name: "Settings", path: "/admin/settings", icon: FiSettings },
   { name: "About", path: "/admin/about", icon: FiUser },

@@ -8,8 +8,8 @@ import AboutSkillEditor from "./sections/AboutSkillEditor";
 import AboutAchievementEditor from "./sections/AboutAchievementEditor";
 import AboutEducationEditor from "./sections/AboutEducationEditor";
 import AboutInterestEditor from "./sections/AboutInterestEditor";
+import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
 export default function AdminAboutPage({}) {
-  const user = useSelector((state) => state.user.user);
   const aboutFromStore = useSelector((state) => state.about);
   const [about, setAbout] = useState({
     intro: { profileImg: "", headline: "", subText: "", story: "", quote: "" },
@@ -44,7 +44,6 @@ export default function AdminAboutPage({}) {
   });
 
   const [interestInput, setInterestInput] = useState("");
-  const { profileImg } = user || {};
   useEffect(() => {
     async function fetchAbout() {
       try {
@@ -52,7 +51,6 @@ export default function AdminAboutPage({}) {
         // const data = res.data || {};
         setAbout({
           intro: aboutFromStore.intro,
-
           skills: aboutFromStore.skills || [],
           achievements: aboutFromStore.achievements || [],
           education: aboutFromStore.education || [],
@@ -111,11 +109,11 @@ export default function AdminAboutPage({}) {
     <div
       className={`h-[calc(100vh-80px)] 
       grid grid-cols-1 
-      2xl:grid-cols-[minmax(520px,0.8fr)_minmax(420px,1.2fr)] 
+      2xl:grid-cols-[minmax(520px,1fr)_minmax(420px,1fr)] 
       gap-8 p-6 overflow-hidden text-[var(--text-primary)] font-sans`}
     >
       {/* LEFT PANEL */}
-      <div className="space-y-8 overflow-y-auto pr-2 max-h-[calc(100vh-120px)]">
+      <div className="space-y-8 overflow-y-auto pr-2 max-h-[calc(100vh-120px)] hide-scrollbar">
         {/* Header */}
         <div>
           <h2 className="text-2xl font-semibold">About Section</h2>
@@ -123,6 +121,19 @@ export default function AdminAboutPage({}) {
             Edit your portfolio’s About section content below.
           </p>
         </div>
+        <div className="flex justify-center">
+        <ProfileAvatar src={about.intro.profileImg} editable onChange={({ file, preview }) => {
+    setAbout({
+      ...about,
+      intro: {
+        ...about.intro,
+        profileImg: preview,
+        profileFile: file,
+      },
+    });
+  }} />
+        </div>
+        
         <AboutIntroEditor about={about} setAbout={setAbout} />
         {/* Skills */}
         <AboutSkillEditor
@@ -166,9 +177,9 @@ export default function AdminAboutPage({}) {
         </div>
       </div>
       {/* RIGHT PREVIEW PANEL */}
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 overflow-y-auto h-full ">
-        <h3 className="text-lg font-semibold mb-4">Live About Preview</h3>
-        <AboutContent profileImg={profileImg} {...about} />
+      <div className="rounded-2xl overflow-y-auto h-full hide-scrollbar">
+        <h2 className="text-2xl font-semibold">Live About Preview</h2>
+        <AboutContent profileImg={about.intro.profileImg} {...about} />
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Sun, Moon, LogOut, Key, Trash2, Download } from "lucide-react";
 import { ThemeContext } from "../../context/ThemeContext";
 
 export default function AdminSettingsPage() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
+
   // --------- STATES ----------
   const [primaryColor, setPrimaryColor] = useState("#3b82f6"); // Tailwind blue-500
   const [name, setName] = useState("Admin Name");
@@ -13,7 +14,6 @@ export default function AdminSettingsPage() {
 
   // --------- HANDLERS ----------
   const handleToggleDarkMode = () => setDarkMode(!darkMode);
-  const handlePrimaryColorChange = (e) => setPrimaryColor(e.target.value);
 
   const handleSaveProfile = () => {
     alert("Profile Saved!");
@@ -81,15 +81,15 @@ export default function AdminSettingsPage() {
             {darkMode ? "Dark Mode" : "Light Mode"}
           </button>
 
-          <label className="flex items-center gap-2">
+          {/* <label className="flex items-center gap-2">
             Primary Color:
             <input
               type="color"
               value={primaryColor}
-              onChange={handlePrimaryColorChange}
+              onChange={handleColorChange}
               className="w-10 h-8 border rounded"
             />
-          </label>
+          </label> */}
         </div>
       </div>
 

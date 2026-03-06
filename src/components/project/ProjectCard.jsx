@@ -1,5 +1,4 @@
 import React from "react";
-import { FaNodeJs, FaReact } from "react-icons/fa";
 import { motion } from "framer-motion";
 const ProjectCard = ({ proj, onClick }) => {
   return (

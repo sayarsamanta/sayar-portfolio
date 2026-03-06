@@ -11,14 +11,15 @@ import AdminLayout from "./admin/AdminLayout";
 import AdminDashboard from "./admin/dashboard/AdminDashboard";
 import AdminProjects from "./admin/projects/AdminProjects";
 import AdminExperience from "./admin/experience/AdminExperience";
-import AdminSkillPage from "./admin/skill/AdminSkillPage";
 import AdminResumePage from "./admin/resume/AdminResumePage";
 import AdminSettingsPage from "./admin/settings/AdminSettingsPage";
 import AdminAboutPageSingleAPI from "./admin/about/AdminAbout";
 import AdminLogin from "./admin/login/AdminLogin";
 import AdminProtectedRoute from "./admin/protectedroute/AdminProtectedRoute";
 import { Toaster } from "react-hot-toast";
+
 function App() {
+
   return (
     <ThemeProvider>
       <BrowserRouter>
@@ -50,7 +51,6 @@ function App() {
               <Route path="admindashboard" element={<AdminDashboard />} />
               <Route path="projects" element={<AdminProjects />} />
               <Route path="experience" element={<AdminExperience />} />
-              <Route path="skills" element={<AdminSkillPage />} />
               <Route path="resume" element={<AdminResumePage />} />
               <Route path="settings" element={<AdminSettingsPage />} />
               <Route path="about" element={<AdminAboutPageSingleAPI />}></Route>

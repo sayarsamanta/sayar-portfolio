@@ -6,7 +6,6 @@ import experienceReducer from "./slices/experience/expSlice";
 export const store = configureStore({
   reducer: {
     // Add your reducers here
-    user: userReducer,
     about: aboutReducer,
     projects: projectReducer,
     experience: experienceReducer,

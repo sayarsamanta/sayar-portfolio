@@ -9,11 +9,10 @@ import MaintenancePage from "../screens/maintenance/MaintenancePage";
 import useAdminShortcut from "../hooks/useAdminShortcut";
 
 const MainLayout = () => {
-  const { user } = useSelector((state) => state.user || null);
+  const { user } = useSelector((state) => state.about || null);
   const { darkMode } = useContext(ThemeContext);
   const location = useLocation();
   useAdminShortcut();
-
   useEffect(() => {
     if (darkMode) {
       document.body.classList.remove("light-theme");
