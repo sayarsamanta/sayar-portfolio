@@ -196,7 +196,7 @@ Planned enhancements include:
 # 🚀 Getting Started
 
 ### Clone Repository
-git clone https://github.com/yourusername/portfolio.git
+git clone [https://github.com/sayarsamanta/portfolio.git](https://github.com/sayarsamanta/sayar-portfolio.git)
 
 ### Install Dependencies
 npm install
