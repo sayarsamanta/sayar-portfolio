@@ -18,9 +18,7 @@ export const Stat = ({ count, label }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <span className="text-2xl md:text-3xl font-bold font-heading">
-        {number}+
-      </span>
+      <span className="text-2xl md:text-3xl font-bold font-heading">{number}+</span>
       <span className="text-sm text-[var(--text-secondary)]">{label}</span>
     </div>
   );

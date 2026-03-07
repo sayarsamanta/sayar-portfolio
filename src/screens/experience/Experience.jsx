@@ -18,9 +18,7 @@ export default function Experience() {
       }}
     >
       {/* Section Title */}
-      <h1 className="text-4xl md:text-6xl font-heading font-bold text-center mb-20">
-        Experience
-      </h1>
+      <h1 className="text-4xl md:text-6xl font-heading font-bold text-center mb-20">Experience</h1>
 
       <div className="relative max-w-4xl mx-auto">
         {/* Center Line */}
@@ -34,12 +32,14 @@ export default function Experience() {
 
         <div className="flex flex-col gap-16 relative">
           {experienceData.map((exp, index) => {
-            return(
-<ExpCard expandedId={expandedId} setExpandedId={setExpandedId} index={index} {...exp} />
-            )
-            
-
-            
+            return (
+              <ExpCard
+                expandedId={expandedId}
+                setExpandedId={setExpandedId}
+                index={index}
+                {...exp}
+              />
+            );
           })}
         </div>
       </div>

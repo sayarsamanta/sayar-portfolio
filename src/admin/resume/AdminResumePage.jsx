@@ -58,11 +58,7 @@ export default function AdminResumePage() {
       {/* Preview */}
       {resumeFile && (
         <div className="mt-6 w-full h-[500px] border border-[var(--border)] rounded overflow-hidden">
-          <iframe
-            src={resumeFile.url}
-            title="Resume Preview"
-            className="w-full h-full"
-          ></iframe>
+          <iframe src={resumeFile.url} title="Resume Preview" className="w-full h-full"></iframe>
         </div>
       )}
     </div>

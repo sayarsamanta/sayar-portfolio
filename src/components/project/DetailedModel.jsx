@@ -94,9 +94,7 @@ const DetailedModal = ({ selectedProject, setSelectedProject }) => {
             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
               {selectedProject.name}
             </h2>
-            <p className="text-sm text-gray-300 mt-2 max-w-xl">
-              {selectedProject.description}
-            </p>
+            <p className="text-sm text-gray-300 mt-2 max-w-xl">{selectedProject.description}</p>
           </div>
         </div>
 

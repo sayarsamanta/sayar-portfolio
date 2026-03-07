@@ -27,9 +27,7 @@ export default function MaintenancePage() {
       </motion.div>
 
       {/* Headline */}
-      <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
-        Site Under Maintenance
-      </h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">Site Under Maintenance</h1>
 
       {/* Subtext */}
       <p className="text-[var(--text-secondary)] text-center max-w-lg">

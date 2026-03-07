@@ -102,9 +102,7 @@ const Navbar = () => {
           group-hover:text-[var(--primary)]
         "
                     style={{
-                      color: isActive
-                        ? "var(--primary)"
-                        : "var(--text-secondary)",
+                      color: isActive ? "var(--primary)" : "var(--text-secondary)",
                     }}
                   >
                     {item.name}
@@ -157,11 +155,7 @@ const Navbar = () => {
             onClick={() => setDarkMode(!darkMode)}
             className="ml-4 p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
           >
-            {darkMode ? (
-              <FiSun color="#FBBF24" size={20} />
-            ) : (
-              <FiMoon size={20} />
-            )}
+            {darkMode ? <FiSun color="#FBBF24" size={20} /> : <FiMoon size={20} />}
           </button>
         </div>
 
@@ -176,14 +170,8 @@ const Navbar = () => {
           </button>
 
           {/* Hamburger */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="focus:outline-none"
-          >
-            <motion.div
-              animate={{ rotate: isOpen ? 90 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
+          <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
+            <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </motion.div>
           </button>

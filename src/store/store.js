@@ -1,8 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/user/UserSlice";
 import aboutReducer from "./slices/about/aboutSlice";
-import projectReducer from "./slices/projects/projectSlice";
 import experienceReducer from "./slices/experience/expSlice";
+import projectReducer from "./slices/projects/projectSlice";
 export const store = configureStore({
   reducer: {
     // Add your reducers here

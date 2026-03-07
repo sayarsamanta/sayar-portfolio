@@ -40,7 +40,7 @@ const initialState = {
         story:
           "I started my journey focusing on frontend development and gradually expanded into backend systems and scalable architecture. I enjoy solving complex problems with clean and maintainable solutions.",
       },
-  
+
       skills: [
         {
           id: "skill_001",
@@ -67,7 +67,7 @@ const initialState = {
           type: "backend",
         },
       ],
-  
+
       featuredProjects: [
         {
           id: "fp_001",
@@ -90,15 +90,14 @@ const initialState = {
           githubLink: "https://github.com/example",
         },
       ],
-  
+
       achievements: [
         {
           id: "ach_001",
           title: "Top Performer Award",
           issuer: "TechCorp",
           year: "2024",
-          description:
-            "Recognized for delivering high-performance scalable frontend architecture.",
+          description: "Recognized for delivering high-performance scalable frontend architecture.",
           icon: "Trophy",
         },
         {
@@ -106,12 +105,11 @@ const initialState = {
           title: "1000+ Users Served",
           issuer: "Personal SaaS Project",
           year: "2025",
-          description:
-            "Built and launched a SaaS product serving over 1000 active users.",
+          description: "Built and launched a SaaS product serving over 1000 active users.",
           icon: "Rocket",
         },
       ],
-  
+
       education: [
         {
           id: "edu_001",
@@ -131,12 +129,11 @@ const initialState = {
           location: "West Bengal, India",
           duration: "2016 – 2018",
           grade: "85%",
-          description:
-            "Focused on Mathematics, Physics, and Computer Science fundamentals.",
+          description: "Focused on Mathematics, Physics, and Computer Science fundamentals.",
           logo: "https://picsum.photos/100/100?random=21",
         },
       ],
-  
+
       personalInterests: [
         "Photography",
         "Automobile Road Trips",
@@ -145,8 +142,6 @@ const initialState = {
       ],
     },
   },
-
-
 };
 
 const aboutSlice = createSlice({
@@ -168,9 +163,7 @@ const aboutSlice = createSlice({
       if (!Array.isArray(state[arrayName])) return;
 
       items.forEach((newItem) => {
-        const index = state[arrayName].findIndex(
-          (item) => item.id === newItem.id
-        );
+        const index = state[arrayName].findIndex((item) => item.id === newItem.id);
         if (index !== -1) {
           // Update existing item
           state[arrayName][index] = { ...state[arrayName][index], ...newItem };
@@ -183,21 +176,15 @@ const aboutSlice = createSlice({
     removeArrayItemsById(state, action) {
       const { arrayName, ids } = action.payload; // e.g., { arrayName: "skills", ids: ["skill_001"] }
       if (!Array.isArray(state[arrayName])) return;
-      state[arrayName] = state[arrayName].filter(
-        (item) => !ids.includes(item.id)
-      );
+      state[arrayName] = state[arrayName].filter((item) => !ids.includes(item.id));
     },
     updatePersonalInterests(state, action) {
       const { add, remove } = action.payload; // { add: [], remove: [] }
       if (add) {
-        state.personalInterests = Array.from(
-          new Set([...state.personalInterests, ...add])
-        );
+        state.personalInterests = Array.from(new Set([...state.personalInterests, ...add]));
       }
       if (remove) {
-        state.personalInterests = state.personalInterests.filter(
-          (i) => !remove.includes(i)
-        );
+        state.personalInterests = state.personalInterests.filter((i) => !remove.includes(i));
       }
     },
   },

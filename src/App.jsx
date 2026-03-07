@@ -19,7 +19,6 @@ import AdminProtectedRoute from "./admin/protectedroute/AdminProtectedRoute";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-
   return (
     <ThemeProvider>
       <BrowserRouter>

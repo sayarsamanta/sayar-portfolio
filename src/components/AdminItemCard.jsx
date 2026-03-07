@@ -35,9 +35,7 @@ export default function AdminItemCard({ type, data, onDelete }) {
         return (
           <>
             <p className="font-medium text-[15px]">{data.degree}</p>
-            <p className="text-sm text-[var(--text-secondary)]">
-              {data.institution}
-            </p>
+            <p className="text-sm text-[var(--text-secondary)]">{data.institution}</p>
             <p className="text-xs text-[var(--text-secondary)]">{data.year}</p>
           </>
         );

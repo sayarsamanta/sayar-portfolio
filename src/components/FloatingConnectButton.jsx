@@ -47,9 +47,7 @@ export default function FloatingConnectButton() {
       `}
         >
           <span
-            className={`font-semibold hidden md:block ${
-              darkMode ? "text-white" : "text-black"
-            }`}
+            className={`font-semibold hidden md:block ${darkMode ? "text-white" : "text-black"}`}
           >
             Connect with Me
           </span>
@@ -59,9 +57,7 @@ export default function FloatingConnectButton() {
               href="https://github.com/yourusername"
               target="_blank"
               rel="noreferrer"
-              className={`hover:opacity-80 ${
-                darkMode ? "text-white" : "text-black"
-              }`}
+              className={`hover:opacity-80 ${darkMode ? "text-white" : "text-black"}`}
             >
               <FaGithub />
             </a>

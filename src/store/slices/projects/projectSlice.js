@@ -174,13 +174,10 @@ const projectSlice = createSlice({
       }
     },
     deleteProjects(state, action) {
-      state.projects = state.projects.filter(
-        (project) => project.id !== action.payload
-      );
+      state.projects = state.projects.filter((project) => project.id !== action.payload);
     },
   },
 });
 
-export const { setProjects, editProjects, deleteProjects } =
-  projectSlice.actions;
+export const { setProjects, editProjects, deleteProjects } = projectSlice.actions;
 export default projectSlice.reducer;

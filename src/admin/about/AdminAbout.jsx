@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import AboutContent from "../../components/about/AboutContent";
@@ -9,6 +8,8 @@ import AboutAchievementEditor from "./sections/AboutAchievementEditor";
 import AboutEducationEditor from "./sections/AboutEducationEditor";
 import AboutInterestEditor from "./sections/AboutInterestEditor";
 import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
+const placeHolder =
+  "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg";
 export default function AdminAboutPage({}) {
   const aboutFromStore = useSelector((state) => state.about);
   const [about, setAbout] = useState({
@@ -42,7 +43,7 @@ export default function AdminAboutPage({}) {
     description: "",
     logo: "",
   });
-
+  const { profileImg } = about.intro || {};
   const [interestInput, setInterestInput] = useState("");
   useEffect(() => {
     async function fetchAbout() {
@@ -66,11 +67,8 @@ export default function AdminAboutPage({}) {
 
   const updateItem = (field, item) => {
     const id = item.id || uuidv4();
-    const updatedArray = about[field].map((i) =>
-      i.id === id ? { ...i, ...item } : i
-    );
-    if (!updatedArray.find((i) => i.id === id))
-      updatedArray.push({ ...item, id });
+    const updatedArray = about[field].map((i) => (i.id === id ? { ...i, ...item } : i));
+    if (!updatedArray.find((i) => i.id === id)) updatedArray.push({ ...item, id });
     setAbout({ ...about, [field]: updatedArray });
   };
 
@@ -122,20 +120,40 @@ export default function AdminAboutPage({}) {
           </p>
         </div>
         <div className="flex justify-center">
-        <ProfileAvatar src={about.intro.profileImg} editable onChange={({ file, preview }) => {
-    setAbout({
-      ...about,
-      intro: {
-        ...about.intro,
-        profileImg: preview,
-        profileFile: file,
-      },
-    });
-  }} />
+          <ProfileAvatar
+            src={profileImg || placeHolder}
+            editable
+            isPlaceHolder={!profileImg}
+            onDelete={() => {
+              if (confirm("Remove profile image?")) {
+                setAbout((prev) => ({
+                  ...prev,
+                  intro: {
+                    ...prev.intro,
+                    profileImg: null,
+                    profileFile: null,
+                  },
+                }));
+              }
+            }}
+            onChange={({ file }) => {
+              const preview = URL.createObjectURL(file);
+              setAbout({
+                ...about,
+                intro: {
+                  ...about.intro,
+                  profileImg: preview,
+                  profileFile: file,
+                },
+              });
+            }}
+          />
         </div>
-        
+
         <AboutIntroEditor about={about} setAbout={setAbout} />
+
         {/* Skills */}
+
         <AboutSkillEditor
           about={about}
           skillForm={skillForm}
@@ -177,9 +195,13 @@ export default function AdminAboutPage({}) {
         </div>
       </div>
       {/* RIGHT PREVIEW PANEL */}
-      <div className="rounded-2xl overflow-y-auto h-full hide-scrollbar">
+      <div className="rounded-2xl overflow-y-auto h-full hide-scrollbar border border-[var(--border)] p-5 shadow-md">
         <h2 className="text-2xl font-semibold">Live About Preview</h2>
-        <AboutContent profileImg={about.intro.profileImg} {...about} />
+        <AboutContent
+          fromPreview={true}
+          profileImg={about?.intro?.profileImg || placeHolder}
+          {...about}
+        />
       </div>
     </div>
   );

@@ -31,12 +31,7 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         </button>
       </div>
       {about.personalInterests.map((item, id) => (
-        <AdminItemCard
-          key={item}
-          type="interest"
-          data={item}
-          onDelete={() => removeInterest(id)}
-        />
+        <AdminItemCard key={item} type="interest" data={item} onDelete={() => removeInterest(id)} />
       ))}
     </div>
   );

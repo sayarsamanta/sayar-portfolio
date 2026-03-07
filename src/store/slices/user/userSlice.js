@@ -48,8 +48,7 @@ const userSlice = createSlice({
       // Top-level fields
       if (updatedData.name) state.user.name = updatedData.name;
       if (updatedData.email) state.user.email = updatedData.email;
-      if (updatedData.profileImg)
-        state.user.profileImg = updatedData.profileImg;
+      if (updatedData.profileImg) state.user.profileImg = updatedData.profileImg;
       if (updatedData.bio) state.user.bio = updatedData.bio;
       if (updatedData.brief) state.user.brief = updatedData.brief;
       if (updatedData.qoute) state.user.qoute = updatedData.qoute;
@@ -70,21 +69,16 @@ const userSlice = createSlice({
 
       // Arrays (merge instead of replace)
       if (updatedData.skills) {
-        const newSkills = updatedData.skills.filter(
-          (skill) => !state.user.skills.includes(skill)
-        );
+        const newSkills = updatedData.skills.filter((skill) => !state.user.skills.includes(skill));
         state.user.skills = [...state.user.skills, ...newSkills];
       }
     },
     removeSkills(state, action) {
       const skillsToRemove = action.payload; // e.g., ["Node.js"]
-      state.user.skills = state.user.skills.filter(
-        (skill) => !skillsToRemove.includes(skill)
-      );
+      state.user.skills = state.user.skills.filter((skill) => !skillsToRemove.includes(skill));
     },
   },
 });
 
-export const { setUser, clearUser, updateUser, removeSkills } =
-  userSlice.actions;
+export const { setUser, clearUser, updateUser, removeSkills } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,12 +1,5 @@
 import { useContext, useEffect } from "react";
-import {
-  FiFolder,
-  FiBriefcase,
-  FiCpu,
-  FiHome,
-  FiFileText,
-  FiSettings,
-} from "react-icons/fi";
+import { FiFolder, FiBriefcase, FiCpu, FiHome, FiFileText, FiSettings } from "react-icons/fi";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Link } from "react-router-dom";
 const navItems = [
@@ -56,9 +49,7 @@ export default function AdminDashboard() {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-[var(--text-secondary)]">
-                    {stat.label}
-                  </p>
+                  <p className="text-sm text-[var(--text-secondary)]">{stat.label}</p>
                   <h3 className="text-2xl font-semibold mt-1">{stat.value}</h3>
                 </div>
 

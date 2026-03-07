@@ -1,6 +1,7 @@
 import React from "react";
 
 const AboutIntroEditor = ({ about, setAbout }) => {
+  const { bio, brief, quote, headline, subText, story } = about.intro || {};
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
       <h3 className="text-lg font-semibold mb-2">Intro / About Info</h3>
@@ -9,7 +10,7 @@ const AboutIntroEditor = ({ about, setAbout }) => {
       <div className="space-y-3">
         <input
           placeholder="Bio (Home Page)"
-          value={about.intro.bio || ""}
+          value={bio || ""}
           onChange={(e) =>
             setAbout({
               ...about,
@@ -25,7 +26,7 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
         <input
           placeholder="Brief (Home Page)"
-          value={about.intro.brief || ""}
+          value={brief || ""}
           onChange={(e) =>
             setAbout({
               ...about,
@@ -41,7 +42,7 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
         <input
           placeholder="Quote (Home Page)"
-          value={about.intro.quote || ""}
+          value={quote || ""}
           onChange={(e) =>
             setAbout({
               ...about,
@@ -61,7 +62,7 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
       <div className="space-y-3 mt-4">
         <input
           placeholder="Headline (About Page)"
-          value={about.intro.headline || ""}
+          value={headline || ""}
           onChange={(e) =>
             setAbout({
               ...about,
@@ -77,7 +78,7 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
         <input
           placeholder="SubText (About Page)"
-          value={about.intro.subText || ""}
+          value={subText || ""}
           onChange={(e) =>
             setAbout({
               ...about,
@@ -93,7 +94,7 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
         <textarea
           placeholder="Story (About Page)"
-          value={about.intro.story || ""}
+          value={story || ""}
           onChange={(e) =>
             setAbout({
               ...about,

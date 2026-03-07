@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const notify = () => toast("Admin access detected");
 export default function useAdminShortcut() {
   const navigate = useNavigate();

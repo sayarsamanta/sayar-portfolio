@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { Plus, Trash2, Edit2 } from "lucide-react";
+import { Edit2, Plus, Trash2 } from "lucide-react";
+import { useContext, useState } from "react";
+import DeleteModal from "../../components/admin/DeleteModal";
 import { ThemeContext } from "../../context/ThemeContext";
 import AdminAddExperienceModal from "./AdminAddExperienceModal";
-import DeleteModal from "../../components/admin/DeleteModal";
 // import DeleteModal from "../../components/DeleteModal"; // if you already have a delete modal
 
 export default function AdminExperience() {
@@ -33,8 +33,7 @@ export default function AdminExperience() {
       role: "Intern - Web Developer",
       company: "Startup Hub",
       duration: "Jan 2021 - May 2021",
-      description:
-        "Worked on landing pages and small full-stack features with React and Node.js.",
+      description: "Worked on landing pages and small full-stack features with React and Node.js.",
       tech: ["React", "Node.js", "Express", "MongoDB"],
     },
   ]);
@@ -106,9 +105,7 @@ export default function AdminExperience() {
               </p>
 
               {/* Description */}
-              <p className="text-sm mt-2 text-[var(--text-muted)]">
-                {exp.description}
-              </p>
+              <p className="text-sm mt-2 text-[var(--text-muted)]">{exp.description}</p>
 
               {/* Technologies */}
               <p className="text-sm mt-1 text-[var(--text-muted)]">

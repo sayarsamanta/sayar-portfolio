@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Stat } from "../../components/Stat";
 import { FaChevronDown } from "react-icons/fa";
@@ -19,6 +19,7 @@ const itemVariants = {
 };
 
 const Home = () => {
+  const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
   const { user } = useSelector((state) => state.about);
   const {
@@ -28,7 +29,7 @@ const Home = () => {
     profileImg,
     qoute,
     stats: { projects, experienceYears, clients },
-    about: {skills}
+    about: { skills },
   } = user || {};
 
   return (
@@ -49,9 +50,8 @@ const Home = () => {
       <div className="flex justify-center mb-6 w-full">
         <div className="relative">
           <div className="mt-12">
-          <ProfileAvatar src={profileImg} size="large" />
+            <ProfileAvatar src={profileImg} size="large" />
           </div>
-          
         </div>
       </div>
 
@@ -95,10 +95,7 @@ const Home = () => {
         </motion.p>
 
         {/* Buttons */}
-        <motion.div
-          variants={itemVariants}
-          className="mt-6 flex flex-wrap justify-center gap-4"
-        >
+        <motion.div variants={itemVariants} className="mt-6 flex flex-wrap justify-center gap-4">
           <Link
             to="/projects"
             className="px-6 py-3 text-sm font-medium tracking-wide transition duration-300 rounded-2xl font-body"
@@ -153,6 +150,7 @@ const Home = () => {
       <motion.div
         className="absolute bottom-6 animate-bounce"
         style={{ color: "var(--text-secondary)" }}
+        onClick={() => navigate("/about")}
       >
         <FaChevronDown size={24} />
       </motion.div>

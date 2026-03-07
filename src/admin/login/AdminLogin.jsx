@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -34,8 +33,7 @@ export default function AdminLogin() {
 
     if (!form.email) newErrors.email = "Email is required";
     if (!form.password) newErrors.password = "Password is required";
-    if (form.password && form.password.length < 6)
-      newErrors.password = "Minimum 6 characters";
+    if (form.password && form.password.length < 6) newErrors.password = "Minimum 6 characters";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -92,17 +90,13 @@ export default function AdminLogin() {
                    bg-[var(--card)] border border-[var(--border)] 
                    shadow-2xl backdrop-blur-xl"
       >
-        <h2 className="text-2xl font-semibold text-center mb-2">
-          Admin Access
-        </h2>
+        <h2 className="text-2xl font-semibold text-center mb-2">Admin Access</h2>
 
         <p className="text-sm text-center text-[var(--text-secondary)] mb-6">
           Secure login to manage portfolio content
         </p>
 
-        {apiError && (
-          <p className="text-red-500 text-sm mb-4 text-center">{apiError}</p>
-        )}
+        {apiError && <p className="text-red-500 text-sm mb-4 text-center">{apiError}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email */}
@@ -121,9 +115,7 @@ export default function AdminLogin() {
                          text-sm focus:outline-none 
                          focus:ring-2 focus:ring-purple-500 transition"
             />
-            {errors.email && (
-              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-            )}
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
           {/* Password */}
@@ -142,9 +134,7 @@ export default function AdminLogin() {
                          text-sm focus:outline-none 
                          focus:ring-2 focus:ring-purple-500 transition"
             />
-            {errors.password && (
-              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
-            )}
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
 
           {/* Button */}

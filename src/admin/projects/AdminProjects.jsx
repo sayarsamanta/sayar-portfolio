@@ -83,10 +83,7 @@ export default function AdminProjects() {
             transition-all duration-200
             hover:opacity-90
           "
-          onClick={
-            () =>
-              handleEdit(null) /* pass null to indicate adding new project */
-          }
+          onClick={() => handleEdit(null) /* pass null to indicate adding new project */}
         >
           <Plus size={16} />
           Add Project
@@ -110,18 +107,10 @@ export default function AdminProjects() {
           <table className="w-full text-sm">
             <thead className="bg-[var(--background)]">
               <tr>
-                <th className="text-left p-4 border-b border-[var(--border)]">
-                  Title
-                </th>
-                <th className="text-left p-4 border-b border-[var(--border)]">
-                  Tech Stack
-                </th>
-                <th className="text-left p-4 border-b border-[var(--border)]">
-                  Status
-                </th>
-                <th className="text-right p-4 border-b border-[var(--border)]">
-                  Actions
-                </th>
+                <th className="text-left p-4 border-b border-[var(--border)]">Title</th>
+                <th className="text-left p-4 border-b border-[var(--border)]">Tech Stack</th>
+                <th className="text-left p-4 border-b border-[var(--border)]">Status</th>
+                <th className="text-right p-4 border-b border-[var(--border)]">Actions</th>
               </tr>
             </thead>
 
@@ -137,9 +126,7 @@ export default function AdminProjects() {
                 >
                   <td className="p-4 font-medium">{project.name}</td>
 
-                  <td className="p-4 text-[var(--text-secondary)]">
-                    {project.tech.join(", ")}
-                  </td>
+                  <td className="p-4 text-[var(--text-secondary)]">{project.tech.join(", ")}</td>
 
                   <td className="p-4">
                     <span
@@ -192,9 +179,7 @@ export default function AdminProjects() {
       <AdminAddProjectModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSave={(newProject) =>
-          setProjects([...projects, { ...newProject, id: Date.now() }])
-        }
+        onSave={(newProject) => setProjects([...projects, { ...newProject, id: Date.now() }])}
         item={selectedProject} // pass selected project for editing
       />
     </div>

@@ -15,9 +15,7 @@ export default function AboutSectionRenderer({ type, items }) {
             >
               <div className="flex justify-between mb-3 font-heading font-medium">
                 <span>{skill.name}</span>
-                <span className="text-[var(--text-secondary)] text-sm">
-                  {skill.percentage}%
-                </span>
+                <span className="text-[var(--text-secondary)] text-sm">{skill.percentage}%</span>
               </div>
 
               <div className="h-2 bg-[var(--background-alt)] rounded-full overflow-hidden">
@@ -43,13 +41,9 @@ export default function AboutSectionRenderer({ type, items }) {
               whileHover={{ scale: 1.02 }}
               className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 transition-all duration-300 hover:border-[var(--primary)] hover:shadow-xl"
             >
-              <h3 className="font-heading font-semibold text-lg mb-2">
-                {ach.title}
-              </h3>
+              <h3 className="font-heading font-semibold text-lg mb-2">{ach.title}</h3>
 
-              <span className="text-[var(--text-secondary)] text-sm">
-                {ach.year}
-              </span>
+              <span className="text-[var(--text-secondary)] text-sm">{ach.year}</span>
             </motion.div>
           ))}
         </div>
@@ -65,13 +59,9 @@ export default function AboutSectionRenderer({ type, items }) {
               className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 flex flex-col md:flex-row md:justify-between md:items-center transition-all duration-300 hover:border-[var(--primary)] hover:shadow-lg"
             >
               <div>
-                <h3 className="font-heading font-medium text-lg">
-                  {edu.degree}
-                </h3>
+                <h3 className="font-heading font-medium text-lg">{edu.degree}</h3>
 
-                <span className="text-[var(--text-secondary)] text-sm">
-                  {edu.institution}
-                </span>
+                <span className="text-[var(--text-secondary)] text-sm">{edu.institution}</span>
               </div>
 
               <span className="text-[var(--text-secondary)] text-sm mt-2 md:mt-0">
@@ -94,9 +84,7 @@ export default function AboutSectionRenderer({ type, items }) {
               whileHover={{ scale: 1.02, y: -4 }}
               className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300 hover:border-[var(--primary)] hover:shadow-xl"
             >
-              <h3 className="font-heading font-semibold text-lg">
-                {proj.title}
-              </h3>
+              <h3 className="font-heading font-semibold text-lg">{proj.title}</h3>
 
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed line-clamp-4">
                 {proj.description}

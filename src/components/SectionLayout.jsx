@@ -23,15 +23,11 @@ const SectionLayout = ({
           className="w-full"
         >
           {title && (
-            <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-4">
-              {title}
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-4">{title}</h2>
           )}
 
           {description && (
-            <p className="text-[var(--text-secondary)] max-w-2xl mx-auto mb-8">
-              {description}
-            </p>
+            <p className="text-[var(--text-secondary)] max-w-2xl mx-auto mb-8">{description}</p>
           )}
 
           {children}

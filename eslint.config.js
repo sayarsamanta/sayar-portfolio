@@ -1,29 +1,61 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
-
-export default defineConfig([
-  globalIgnores(['dist']),
+import js from "@eslint/js";
+import importPlugin from "eslint-plugin-import";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import unusedImports from "eslint-plugin-unused-imports";
+import globals from "globals";
+export default [
+  js.configs.recommended,
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
+    extends: ["prettier"],
     languageOptions: {
-      ecmaVersion: 2020,
       globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
     },
+
+    plugins: {
+      react,
+      "react-hooks": reactHooks,
+      "unused-imports": unusedImports,
+      import: importPlugin,
+    },
+
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      /* ---------- Unused Code ---------- */
+
+      "no-unused-vars": "off",
+
+      "unused-imports/no-unused-imports": "error",
+
+      "unused-imports/no-unused-vars": [
+        "warn",
+        {
+          vars: "all",
+          varsIgnorePattern: "^_",
+          args: "after-used",
+          argsIgnorePattern: "^_",
+        },
+      ],
+
+      /* ---------- React ---------- */
+
+      "react/react-in-jsx-scope": "off",
+
+      "react/prop-types": "off",
+
+      /* ---------- Hooks ---------- */
+
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+
+      /* ---------- Import Order ---------- */
+
+      "import/order": [
+        "warn",
+        {
+          groups: ["builtin", "external", "internal"],
+          alphabetize: { order: "asc", caseInsensitive: true },
+        },
+      ],
     },
   },
-])
+];

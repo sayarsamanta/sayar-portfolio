@@ -49,9 +49,7 @@ const ProjectCard = ({ proj, onClick }) => {
       <div className="p-6 md:p-8 space-y-5">
         {/* Top Row */}
         <div className="flex items-center justify-between">
-          <h3 className="text-xl md:text-2xl font-semibold tracking-tight">
-            {proj.name}
-          </h3>
+          <h3 className="text-xl md:text-2xl font-semibold tracking-tight">{proj.name}</h3>
 
           <span
             className="text-xs px-3 py-1 rounded-full border"
@@ -102,8 +100,7 @@ const ProjectCard = ({ proj, onClick }) => {
       pointer-events-none
     "
         style={{
-          background:
-            "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08), transparent 60%)",
+          background: "radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08), transparent 60%)",
         }}
       />
     </motion.div>

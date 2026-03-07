@@ -73,11 +73,7 @@ export default function AdminLayout() {
               onClick={() => setDarkMode(!darkMode)}
               className="p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition"
             >
-              {darkMode ? (
-                <FiSun color="#FBBF24" size={18} />
-              ) : (
-                <FiMoon size={18} />
-              )}
+              {darkMode ? <FiSun color="#FBBF24" size={18} /> : <FiMoon size={18} />}
             </button>
 
             {/* Avatar */}

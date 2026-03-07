@@ -19,9 +19,7 @@ export default function Projects() {
     };
   }, [selectedProject]);
   const filteredProjects =
-    filter === "All"
-      ? projects
-      : projects.filter((proj) => proj.type === filter);
+    filter === "All" ? projects : projects.filter((proj) => proj.type === filter);
 
   return (
     <>
@@ -71,14 +69,9 @@ export default function Projects() {
   transition duration-200
 "
               style={{
-                backgroundColor:
-                  filter === cat ? "var(--primary)" : "var(--card)",
-                color:
-                  filter === cat
-                    ? "var(--text-light)"
-                    : "var(--text-secondary)",
-                borderColor:
-                  filter === cat ? "var(--primary)" : "var(--border)",
+                backgroundColor: filter === cat ? "var(--primary)" : "var(--card)",
+                color: filter === cat ? "var(--text-light)" : "var(--text-secondary)",
+                borderColor: filter === cat ? "var(--primary)" : "var(--border)",
               }}
             >
               {cat}
@@ -89,21 +82,14 @@ export default function Projects() {
           <div className="flex flex-wrap gap-8 justify-center">
             {/* Project Cards */}
             {filteredProjects.map((proj, idx) => (
-              <ProjectCard
-                proj={proj}
-                key={idx}
-                onClick={() => setSelectedProject(proj)}
-              />
+              <ProjectCard proj={proj} key={idx} onClick={() => setSelectedProject(proj)} />
             ))}
           </div>
         </div>
       </div>
       {/* Projects Grid */}
       {selectedProject && (
-        <DetailedModel
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-        />
+        <DetailedModel selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
       )}
     </>
   );

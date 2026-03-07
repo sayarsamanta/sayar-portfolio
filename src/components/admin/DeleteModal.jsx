@@ -21,9 +21,7 @@ export default function DeleteModal({ isOpen, onClose, onConfirm, itemName }) {
         </div>
 
         {/* Title */}
-        <h2 className="text-xl font-semibold text-center mb-2">
-          Confirm Delete
-        </h2>
+        <h2 className="text-xl font-semibold text-center mb-2">Confirm Delete</h2>
 
         {/* Message */}
         <p className="text-sm text-center text-[var(--text-muted)] mb-6">

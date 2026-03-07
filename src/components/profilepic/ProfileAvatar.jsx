@@ -1,12 +1,15 @@
 import { useRef } from "react";
 import { Camera } from "lucide-react";
 import { motion } from "framer-motion";
+import { FaTrash } from "react-icons/fa";
 
 export default function ProfileAvatar({
   src,
   editable = false,
   onChange,
   size = "large",
+  onDelete,
+  isPlaceHolder = true,
 }) {
   const fileRef = useRef();
 
@@ -39,7 +42,7 @@ export default function ProfileAvatar({
           ${sizes[size]}
           rounded-full
           object-cover
-          border-${size==="small"?2:4}
+          border-${size === "small" ? 2 : 4}
           border-[var(--border)]
           shadow-lg
         `}
@@ -67,6 +70,16 @@ export default function ProfileAvatar({
           >
             <Camera size={24} className="text-white" />
           </button>
+          {!isPlaceHolder && (
+            <button
+              onClick={onDelete}
+              className="absolute bottom-2 right-2 bg-red-500 text-white 
+            p-2 rounded-full opacity-0 group-hover:opacity-100
+            transition-opacity duration-200 shadow-md hover:bg-red-600"
+            >
+              <FaTrash size={12} />
+            </button>
+          )}
 
           <input
             ref={fileRef}

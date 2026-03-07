@@ -50,8 +50,8 @@ export default function Contact() {
           style={{ color: "var(--text-secondary)" }}
           className="text-lg md:text-xl max-w-2xl mx-auto font-body"
         >
-          I’m always open to collaboration or discussing new projects. Send me a
-          message or connect via social platforms below.
+          I’m always open to collaboration or discussing new projects. Send me a message or connect
+          via social platforms below.
         </p>
       </motion.div>
 
@@ -79,8 +79,7 @@ export default function Contact() {
           required
           className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
             border: "1px solid var(--border)",
             color: "var(--text-primary)",
             caretColor: "var(--primary)",
@@ -98,8 +97,7 @@ export default function Contact() {
           required
           className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
             border: "1px solid var(--border)",
             color: "var(--text-primary)",
             caretColor: "var(--primary)",
@@ -117,8 +115,7 @@ export default function Contact() {
           required
           className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full resize-none font-body transition shadow-inner"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
             border: "1px solid var(--border)",
             color: "var(--text-primary)",
             caretColor: "var(--primary)",
@@ -134,8 +131,7 @@ export default function Contact() {
           type="submit"
           className="px-8 py-3 rounded-2xl font-heading font-semibold transition shadow-lg border-2"
           style={{
-            background:
-              "linear-gradient(135deg, var(--primary), var(--secondary), var(--accent))",
+            background: "linear-gradient(135deg, var(--primary), var(--secondary), var(--accent))",
             color: "var(--button-text)",
             borderColor: "var(--primary)",
             boxShadow: "0 4px 15px rgba(0,0,0,0.2)",

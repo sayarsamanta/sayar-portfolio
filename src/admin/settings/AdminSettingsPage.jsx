@@ -28,11 +28,7 @@ export default function AdminSettingsPage() {
     // integrate file download
   };
   const handleDeleteAccount = () => {
-    if (
-      confirm(
-        "Are you sure you want to delete your account? This cannot be undone."
-      )
-    ) {
+    if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
       alert("Account Deleted!");
       // integrate API
     }

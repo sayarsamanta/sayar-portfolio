@@ -1,13 +1,7 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
 const percentageOptions = Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
-const AboutSkillEditor = ({
-  about,
-  skillForm,
-  setSkillForm,
-  updateItem,
-  removeItem,
-}) => {
+const AboutSkillEditor = ({ about, skillForm, setSkillForm, updateItem, removeItem }) => {
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
       <h3 className="text-lg font-semibold mb-2">Skills</h3>

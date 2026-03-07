@@ -9,12 +9,7 @@ import { Textarea } from "../../components/admin/projects/Textarea";
 
 import ProjectCard from "../../components/project/ProjectCard";
 
-export default function AdminAddProjectModal({
-  isOpen,
-  onClose,
-  onSave,
-  item,
-}) {
+export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) {
   const [form, setForm] = useState({
     name: "",
     type: "",
@@ -89,8 +84,7 @@ export default function AdminAddProjectModal({
   const validate = () => {
     const newErrors = {};
     if (!form.name.trim()) newErrors.name = "Project name required";
-    if (!form.description.trim())
-      newErrors.description = "Description required";
+    if (!form.description.trim()) newErrors.description = "Description required";
     if (!form.year.trim()) newErrors.year = "Year required";
 
     setErrors(newErrors);
@@ -110,7 +104,6 @@ export default function AdminAddProjectModal({
 
       {/* Modal Wrapper */}
       <div className="absolute inset-0 flex justify-center items-start overflow-y-auto py-10 px-6">
-
         <div
           className="
           w-full
@@ -124,9 +117,7 @@ export default function AdminAddProjectModal({
         >
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
-            <h3 className="text-xl font-semibold">
-              {item ? "Edit Project" : "Add Project"}
-            </h3>
+            <h3 className="text-xl font-semibold">{item ? "Edit Project" : "Add Project"}</h3>
 
             <button onClick={onClose}>
               <X size={20} />
@@ -135,13 +126,10 @@ export default function AdminAddProjectModal({
 
           {/* Main Layout */}
           <div className="grid grid-cols-1 xl:grid-cols-[1.2fr_0.8fr] gap-12">
-
             {/* ================= LEFT : FORM ================= */}
             <div className="space-y-8 max-h-[80vh] overflow-y-auto pr-4">
-
               {/* BASIC INFO */}
               <Section title="Basic Information">
-
                 <Input
                   name="name"
                   placeholder="Project Name"
@@ -193,12 +181,10 @@ export default function AdminAddProjectModal({
                   onChange={handleChange}
                   error={errors.year}
                 />
-
               </Section>
 
               {/* LINKS */}
               <Section title="Links">
-
                 <Input
                   name="github"
                   placeholder="GitHub URL"
@@ -222,12 +208,10 @@ export default function AdminAddProjectModal({
                   <option value="Draft">Draft</option>
                   <option value="Live">Live</option>
                 </select>
-
               </Section>
 
               {/* PROBLEM & SOLUTION */}
               <Section title="Problem & Solution">
-
                 <Textarea
                   name="problem"
                   placeholder="Problem Statement"
@@ -241,7 +225,6 @@ export default function AdminAddProjectModal({
                   value={form.solution}
                   onChange={handleChange}
                 />
-
               </Section>
 
               {/* FEATURES */}
@@ -266,24 +249,17 @@ export default function AdminAddProjectModal({
 
               {/* SCREENSHOTS */}
               <Section title="Screenshots">
-
                 <input type="file" multiple onChange={handleScreenshotUpload} />
 
                 <div className="grid grid-cols-3 gap-4 mt-4">
                   {form.screenshots.map((src, i) => (
-                    <img
-                      key={i}
-                      src={src}
-                      className="rounded-lg border border-[var(--border)]"
-                    />
+                    <img key={i} src={src} className="rounded-lg border border-[var(--border)]" />
                   ))}
                 </div>
-
               </Section>
 
               {/* ACTION BUTTONS */}
               <div className="flex justify-end gap-4 pt-4">
-
                 <button
                   onClick={onClose}
                   className="px-4 py-2 border border-[var(--border)] rounded-xl"
@@ -297,39 +273,27 @@ export default function AdminAddProjectModal({
                 >
                   {item ? "Save Changes" : "Save Project"}
                 </button>
-
               </div>
             </div>
-
 
             {/* ================= RIGHT : LIVE PREVIEW ================= */}
             <div className="flex flex-col items-center">
-
-              <h4 className="text-lg font-semibold mb-6">
-                Live Preview
-              </h4>
+              <h4 className="text-lg font-semibold mb-6">Live Preview</h4>
 
               <div className="sticky top-20 w-full flex justify-center">
-
                 <ProjectCard
                   proj={{
                     ...form,
-                    screenshots:
-                      form.screenshots.length
-                        ? form.screenshots
-                        : ["https://placehold.co/800x500"],
+                    screenshots: form.screenshots.length
+                      ? form.screenshots
+                      : ["https://placehold.co/800x500"],
                   }}
                   preview
                 />
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
     </div>,
     document.body

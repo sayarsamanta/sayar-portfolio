@@ -1,13 +1,7 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
 
-const AboutAchievementEditor = ({
-  achForm,
-  setAchForm,
-  updateItem,
-  about,
-  removeItem,
-}) => {
+const AboutAchievementEditor = ({ achForm, setAchForm, updateItem, about, removeItem }) => {
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
       <h3 className="text-lg font-semibold mb-2">Achievements</h3>

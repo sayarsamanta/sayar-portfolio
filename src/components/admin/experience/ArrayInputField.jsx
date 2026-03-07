@@ -26,15 +26,10 @@ export default function ArrayInputField({
 
   return (
     <div className="space-y-3">
-      {label && (
-        <p className="text-sm font-medium text-[var(--text-secondary)]">
-          {label}
-        </p>
-      )}
+      {label && <p className="text-sm font-medium text-[var(--text-secondary)]">{label}</p>}
 
       {values.map((value, index) => (
         <div key={index} className="flex items-center gap-3">
-
           <input
             type="text"
             value={value}
