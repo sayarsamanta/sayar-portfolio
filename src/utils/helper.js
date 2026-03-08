@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 export const formatDuration = (startDate, endDate) => {
   if (!startDate) return "";
 
@@ -11,4 +13,28 @@ export const formatDuration = (startDate, endDate) => {
   const end = endDate ? format(endDate) : "Present";
 
   return `${start} – ${end}`;
+};
+
+export const validateSection = (sectionName, data) => {
+  if (!data) return false;
+
+  // for object sections
+  if (typeof data === "object" && !Array.isArray(data)) {
+    const hasValue = Object.values(data).some(
+      (val) => val !== "" && val !== null && val !== undefined
+    );
+
+    if (!hasValue) {
+      toast.error(`${sectionName} cannot be empty`);
+      return false;
+    }
+  }
+
+  // for array sections
+  if (Array.isArray(data) && data.length === 0) {
+    toast.error(`${sectionName} cannot be empty`);
+    return false;
+  }
+
+  return true;
 };

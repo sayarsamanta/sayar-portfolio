@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProjectCard from "../../components/project/ProjectCard";
 import DetailedModel from "../../components/project/DetailedModel";
 import { useSelector } from "react-redux";
+import EmptySection from "../../components/admin/experience/EmptySection";
 
 export default function Projects() {
   const projects = useSelector((state) => state.projects.projects);
@@ -37,9 +38,12 @@ export default function Projects() {
           color: "var(--text-primary)",
         }}
       >
+        {projects && projects.length === 0 && <EmptySection type={"Project"} />}
         {/* Section Title */}
-        <h1
-          className="
+        {projects && projects.length > 0 && (
+          <>
+            <h1
+              className="
         text-3xl 
         sm:text-4xl 
         md:text-5xl 
@@ -48,18 +52,18 @@ export default function Projects() {
         text-center 
         mb-6 md:mb-10
       "
-          style={{ color: "var(--text-primary)" }}
-        >
-          Projects
-        </h1>
+              style={{ color: "var(--text-primary)" }}
+            >
+              Projects
+            </h1>
 
-        {/* Filter Toggle */}
-        <div className="flex justify-center gap-4 mb-10">
-          {["All", "Fullstack", "Frontend"].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className="
+            {/* Filter Toggle */}
+            <div className="flex justify-center gap-4 mb-10">
+              {["All", "Fullstack", "Frontend"].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setFilter(cat)}
+                  className="
   px-4 sm:px-5 
   py-1.5 sm:py-2 
   text-xs sm:text-sm 
@@ -68,24 +72,26 @@ export default function Projects() {
   border 
   transition duration-200
 "
-              style={{
-                backgroundColor: filter === cat ? "var(--primary)" : "var(--card)",
-                color: filter === cat ? "var(--text-light)" : "var(--text-secondary)",
-                borderColor: filter === cat ? "var(--primary)" : "var(--border)",
-              }}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-        <div className="w-full mx-auto px-8">
-          <div className="flex flex-wrap gap-8 justify-center">
-            {/* Project Cards */}
-            {filteredProjects.map((proj, idx) => (
-              <ProjectCard proj={proj} key={idx} onClick={() => setSelectedProject(proj)} />
-            ))}
-          </div>
-        </div>
+                  style={{
+                    backgroundColor: filter === cat ? "var(--primary)" : "var(--card)",
+                    color: filter === cat ? "var(--text-light)" : "var(--text-secondary)",
+                    borderColor: filter === cat ? "var(--primary)" : "var(--border)",
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <div className="w-full mx-auto px-8">
+              <div className="flex flex-wrap gap-8 justify-center">
+                {/* Project Cards */}
+                {filteredProjects.map((proj, idx) => (
+                  <ProjectCard proj={proj} key={idx} onClick={() => setSelectedProject(proj)} />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
       {/* Projects Grid */}
       {selectedProject && (

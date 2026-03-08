@@ -8,7 +8,8 @@ import { Input } from "../../components/admin/projects/Input";
 import { Textarea } from "../../components/admin/projects/Textarea";
 
 import ProjectCard from "../../components/project/ProjectCard";
-
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) {
   const [form, setForm] = useState({
     name: "",
@@ -212,19 +213,47 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
 
               {/* PROBLEM & SOLUTION */}
               <Section title="Problem & Solution">
-                <Textarea
-                  name="problem"
-                  placeholder="Problem Statement"
-                  value={form.problem}
-                  onChange={handleChange}
-                />
+                <div
+                  className="
+                  input-glass rounded-md overflow-hidden
+  [&_.ql-toolbar]:bg-transparent
+  [&_.ql-container]:bg-transparent
+  [&_.ql-toolbar]:border-none
+  [&_.ql-container]:border-none
+                  "
+                >
+                  <ReactQuill
+                    theme="snow"
+                    value={form.problem}
+                    onChange={(value) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        problem: value,
+                      }))
+                    }
+                  />
+                </div>
 
-                <Textarea
-                  name="solution"
-                  placeholder="Solution Description"
-                  value={form.solution}
-                  onChange={handleChange}
-                />
+                <div
+                  className="
+                  input-glass rounded-md overflow-hidden
+  [&_.ql-toolbar]:bg-transparent
+  [&_.ql-container]:bg-transparent
+  [&_.ql-toolbar]:border-none
+  [&_.ql-container]:border-none
+                  "
+                >
+                  <ReactQuill
+                    theme="snow"
+                    value={form.solution}
+                    onChange={(value) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        solution: value,
+                      }))
+                    }
+                  />
+                </div>
               </Section>
 
               {/* FEATURES */}

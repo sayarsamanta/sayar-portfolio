@@ -1,5 +1,6 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
+import { validateSection } from "../../../utils/helper";
 
 const AboutEducationEditor = ({ eduForm, setEduForm, updateItem, about, removeItem }) => {
   return (
@@ -41,6 +42,11 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
         <button
           onClick={() => {
+            if (!validateSection("Education", eduForm)){
+              console.log("came here",eduForm)
+              
+              return;
+            } 
             updateItem("education", eduForm);
             setEduForm({
               id: "",

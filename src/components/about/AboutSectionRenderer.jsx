@@ -6,7 +6,11 @@ export default function AboutSectionRenderer({ type, items }) {
   switch (type) {
     case "skills":
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+        <div
+          className={`grid gap-6 text-left ${
+            items.length === 1 ? "grid-cols-1 max-w-md mx-auto" : "grid-cols-1 md:grid-cols-2"
+          }`}
+        >
           {items.map((skill, idx) => (
             <motion.div
               key={idx}

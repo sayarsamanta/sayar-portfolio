@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import "react-quill-new/dist/quill.snow.css";
 const ExpCard = ({
   setExpandedId,
   expandedId,
@@ -63,22 +64,30 @@ const ExpCard = ({
           ))}
         </div>
         {fromPreview && (
-          <motion.p
+          <div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-sm
-                  leading-relaxed
-                  text-[var(--text-secondary)]
-                  break-words
-                  whitespace-pre-line
-                  max-h-40
-                  overflow-y-auto
-                  pr-2"
-          >
-            {description}
-          </motion.p>
+            className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+          // <motion.p
+          //   initial={{ opacity: 0, height: 0 }}
+          //   animate={{ opacity: 1, height: "auto" }}
+          //   exit={{ opacity: 0, height: 0 }}
+          //   transition={{ duration: 0.4 }}
+          //   className="text-sm
+          //         leading-relaxed
+          //         text-[var(--text-secondary)]
+          //         break-words
+          //         whitespace-pre-line
+          //         max-h-40
+          //         overflow-y-auto
+          //         pr-2"
+          // >
+          //   {description}
+          // </motion.p>
         )}
         {/* Expandable */}
         {!fromPreview && (

@@ -126,17 +126,27 @@ const DetailedModal = ({ selectedProject, setSelectedProject }) => {
           {/* Problem */}
           <div>
             <h3 className="text-xl font-semibold mb-2">Problem</h3>
-            <p className="text-[var(--text-secondary)] leading-relaxed">
-              {selectedProject.problem}
-            </p>
+            <div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4 }}
+              className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+              dangerouslySetInnerHTML={{ __html: selectedProject.problem }}
+            />
           </div>
 
           {/* Solution */}
           <div>
             <h3 className="text-xl font-semibold mb-2">Solution</h3>
-            <p className="text-[var(--text-secondary)] leading-relaxed">
-              {selectedProject.solution}
-            </p>
+            <div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4 }}
+              className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+              dangerouslySetInnerHTML={{ __html: selectedProject.solution }}
+            />
           </div>
 
           {/* Features */}

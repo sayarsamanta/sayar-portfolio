@@ -54,41 +54,18 @@ const initialState = {
           percentage: 85,
           type: "frontend",
         },
-        {
-          id: "skill_003",
-          name: "Node.js",
-          percentage: 88,
-          type: "backend",
-        },
-        {
-          id: "skill_004",
-          name: "MongoDB",
-          percentage: 80,
-          type: "backend",
-        },
-      ],
-
-      featuredProjects: [
-        {
-          id: "fp_001",
-          title: "DevTinder",
-          description:
-            "A developer matchmaking platform with premium subscriptions and real-time chat.",
-          image: "https://picsum.photos/600/400?random=10",
-          tech: ["React", "Node.js", "MongoDB", "Redux Toolkit"],
-          liveLink: "https://example.com",
-          githubLink: "https://github.com/example",
-        },
-        {
-          id: "fp_002",
-          title: "Premium Portfolio",
-          description:
-            "Animated personal portfolio with admin dashboard and dynamic content management.",
-          image: "https://picsum.photos/600/400?random=11",
-          tech: ["React", "Framer Motion", "Node.js"],
-          liveLink: "https://example.com",
-          githubLink: "https://github.com/example",
-        },
+        // {
+        //   id: "skill_003",
+        //   name: "Node.js",
+        //   percentage: 88,
+        //   type: "backend",
+        // },
+        // {
+        //   id: "skill_004",
+        //   name: "MongoDB",
+        //   percentage: 80,
+        //   type: "backend",
+        // },
       ],
 
       achievements: [
@@ -122,23 +99,23 @@ const initialState = {
             "Specialized in Software Engineering, Data Structures, and Web Technologies.",
           logo: "https://picsum.photos/100/100?random=20",
         },
-        {
-          id: "edu_002",
-          degree: "Higher Secondary (Science)",
-          institution: "ABC School",
-          location: "West Bengal, India",
-          duration: "2016 – 2018",
-          grade: "85%",
-          description: "Focused on Mathematics, Physics, and Computer Science fundamentals.",
-          logo: "https://picsum.photos/100/100?random=21",
-        },
+        // {
+        //   id: "edu_002",
+        //   degree: "Higher Secondary (Science)",
+        //   institution: "ABC School",
+        //   location: "West Bengal, India",
+        //   duration: "2016 – 2018",
+        //   grade: "85%",
+        //   description: "Focused on Mathematics, Physics, and Computer Science fundamentals.",
+        //   logo: "https://picsum.photos/100/100?random=21",
+        // },
       ],
 
       personalInterests: [
         "Photography",
-        "Automobile Road Trips",
-        "Exploring New Technologies",
-        "UI/UX Design Trends",
+        // "Automobile Road Trips",
+        // "Exploring New Technologies",
+        // "UI/UX Design Trends",
       ],
     },
   },

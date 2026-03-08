@@ -3,10 +3,17 @@ import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { Section } from "../../components/admin/projects/Section";
 import { Input } from "../../components/admin/projects/Input";
-import { Textarea } from "../../components/admin/projects/Textarea";
 import ExpCard from "../../components/experience/expCard";
 import { formatDuration } from "../../utils/helper";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
+const modules = {
+  toolbar: [
+    ["bold", "italic"],
+    [{ list: "bullet" }, { list: "ordered" }],
+  ],
+};
 export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item }) {
   const [form, setForm] = useState({
     company: "",
@@ -17,6 +24,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
     description: "",
     technologies: [""],
     id: null,
+    isPresent: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -73,10 +81,22 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
     return Object.keys(newErrors).length === 0;
   };
 
+  const handlePresentChange = (e) => {
+    const checked = e.target.checked;
+
+    setForm((prev) => ({
+      ...prev,
+      isPresent: checked,
+      endDate: checked ? "" : prev.endDate,
+    }));
+  };
+
   const handleSubmit = () => {
     if (!validate()) return;
-    onSave(form, !!item);
-    onClose();
+    const cleanDescription = form.description?.replace(/<(.|\n)*?>/g, "").trim();
+    console.log(cleanDescription);
+    // onSave(form, !!item);
+    // onClose();
   };
 
   if (!isOpen) return null;
@@ -96,14 +116,14 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
       <div className="absolute inset-0 flex justify-center items-start overflow-y-auto py-10 px-4">
-        <div className="w-full max-w-5xl bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-xl p-8">
+        <div className="w-full max-w-5xl bg-[var(--card)] border border-[var(--border)] rounded-md shadow-xl p-8">
           {/* header */}
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-xl font-semibold">{item ? "Edit Experience" : "Add Experience"}</h3>
 
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-[var(--bg-soft)] transition"
+              className="p-2 rounded-md hover:bg-[var(--bg-soft)] transition"
             >
               <X size={20} />
             </button>
@@ -120,6 +140,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                   value={form.company}
                   onChange={handleChange}
                   error={errors.company}
+                  className={"rounded-sm"}
                 />
 
                 <Input
@@ -141,7 +162,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                       value={form.startDate || ""}
                       onChange={(e) => setForm({ ...form, startDate: e.target.value })}
                       className="px-4 py-2
-      rounded-lg
+      rounded-md
       border border-[var(--border)]
       bg-[var(--bg-soft)]
       text-[var(--text-primary)]"
@@ -155,24 +176,58 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                     <input
                       type="month"
                       name="endDate"
+                      disabled={form.isPresent}
                       value={form.endDate || ""}
                       onChange={(e) => setForm({ ...form, endDate: e.target.value })}
-                      className="px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-soft)]"
+                      className={`px-4 py-2
+    rounded-md
+    border border-[var(--border)]
+    ${form.isPresent ? "bg-[var(--bg-disabled)]" : "bg-[var(--bg-soft)]"}
+    text-[var(--text-primary)]`}
                     />
+                    <label className="flex items-center gap-2 mt-2">
+                      <input
+                        type="checkbox"
+                        checked={setForm.isPresent}
+                        onChange={handlePresentChange}
+                      />
+                      Currently working here
+                    </label>
                   </div>
+                </div>
+
+                {/* <Textarea
+                  name="description"
+                  placeholder="Short Description"
+                  value={form.description}
+                  onChange={handleChange}
+                /> */}
+                <div
+                  className="
+                  input-glass rounded-md overflow-hidden
+                  [&_.ql-toolbar]:bg-transparent
+                  [&_.ql-container]:bg-transparent
+                  [&_.ql-toolbar]:border-none
+                  [&_.ql-container]:border-none
+"
+                >
+                  <ReactQuill
+                    theme="snow"
+                    value={form.description}
+                    onChange={(value) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        description: value,
+                      }))
+                    }
+                  />
                 </div>
 
                 <Input
                   name="location"
+                  modules={modules}
                   placeholder="Location"
                   value={form.location}
-                  onChange={handleChange}
-                />
-
-                <Textarea
-                  name="description"
-                  placeholder="Short Description"
-                  value={form.description}
                   onChange={handleChange}
                 />
               </Section>
@@ -185,7 +240,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                       value={tech}
                       onChange={(e) => handleArrayChange(index, e.target.value)}
                       placeholder="Technology"
-                      className="flex-1 px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-soft)]"
+                      className="flex-1 px-4 py-2 rounded-md border border-[var(--border)] bg-[var(--bg-soft)]"
                     />
 
                     {form.technologies.length > 1 && (
@@ -203,7 +258,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                 <button
                   type="button"
                   onClick={addTechnology}
-                  className="text-sm px-4 py-2 rounded-lg border border-dashed border-[var(--border)] hover:bg-[var(--bg-soft)]"
+                  className="text-sm px-4 py-2 rounded-md border border-dashed border-[var(--border)] hover:bg-[var(--bg-soft)]"
                 >
                   + Add Technology
                 </button>
@@ -214,7 +269,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
             <div className="space-y-4 sticky top-6 h-fit">
               <h4 className="text-sm font-medium text-[var(--text-secondary)]">Live Preview</h4>
 
-              <div className="border h-96 border-[var(--border)] rounded-xl p-4 bg-[var(--bg-soft)]">
+              <div className="border h-96 border-[var(--border)] rounded-md p-4 bg-[var(--bg-soft)]">
                 <ExpCard
                   {...previewData}
                   tech={previewData.technologies}
@@ -231,14 +286,14 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
           <div className="flex justify-end gap-4 mt-10">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-[var(--border)] hover:bg-[var(--bg-soft)]"
+              className="px-4 py-2 rounded-md border border-[var(--border)] hover:bg-[var(--bg-soft)]"
             >
               Cancel
             </button>
 
             <button
               onClick={handleSubmit}
-              className="px-6 py-2 rounded-xl bg-[var(--primary)] text-[var(--text-button)]"
+              className="px-6 py-2 rounded-md bg-[var(--primary)] text-[var(--text-button)]"
             >
               {item ? "Save Changes" : "Add Experience"}
             </button>

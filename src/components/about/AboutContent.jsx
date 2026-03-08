@@ -42,7 +42,7 @@ const AboutContent = ({
           )}
 
           {headline || subText || story ? (
-            <section>
+            <section className="flex flex-col justify-center items-center">
               {/* existing content */}
               {/* Headline */}
               {headline && (
@@ -88,6 +88,7 @@ const AboutContent = ({
         <SectionLayout
           title="Skills & Expertise"
           description="Technologies and tools I use to build scalable and modern web applications."
+          maxWidth="max-w-4xl"
         >
           {/* filter pills */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
