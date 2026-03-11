@@ -1,10 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ThemeContext } from "../../context/ThemeContext";
 
 export default function Contact() {
-  const { darkMode } = useContext(ThemeContext);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -62,7 +59,7 @@ export default function Contact() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
         onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto rounded-3xl p-10 flex flex-col gap-6 shadow-2xl border transition"
+        className="max-w-2xl w-full sm:w-4/5 md:w-2/3 lg:w-1/2 mx-auto rounded-lg p-6 sm:p-8 md:p-10 flex flex-col gap-6 shadow-2xl border transition"
         style={{
           background: "var(--card-gradient)", // gradient depends on theme
           backdropFilter: "blur(20px)",
@@ -77,7 +74,7 @@ export default function Contact() {
           onChange={handleChange}
           placeholder="Your Name"
           required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
+          className="px-5 py-3 rounded-lg focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
             border: "1px solid var(--border)",
@@ -95,7 +92,7 @@ export default function Contact() {
           onChange={handleChange}
           placeholder="Your Email"
           required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
+          className="px-5 py-3 rounded-lg focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
             border: "1px solid var(--border)",
@@ -113,7 +110,7 @@ export default function Contact() {
           placeholder="Your Message"
           rows={6}
           required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full resize-none font-body transition shadow-inner"
+          className="px-5 py-3 rounded-lg focus:outline-none focus:ring-2 w-full resize-none font-body transition shadow-inner"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
             border: "1px solid var(--border)",

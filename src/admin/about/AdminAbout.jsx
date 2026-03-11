@@ -9,6 +9,7 @@ import AboutEducationEditor from "./sections/AboutEducationEditor";
 import AboutInterestEditor from "./sections/AboutInterestEditor";
 import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
 import toast from "react-hot-toast";
+import { flattenObject } from "../../utils/helper";
 const placeHolder =
   "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg";
 export default function AdminAboutPage({}) {
@@ -96,20 +97,22 @@ export default function AdminAboutPage({}) {
 
   const validateIntro = () => {
     const { headline, subText, story } = about?.intro || {};
-  
+
     if (!headline && !subText && !story) {
       toast.error(`intro section cannot be empty`);
       return false;
     }
-  
+
     return true;
   };
 
   const saveAll = async () => {
     try {
-      if(!validateIntro()) return
-
-      console.log(about);
+      if (!validateIntro()) return;
+      const payload = flattenObject({
+        about: about,
+      });
+      console.log(payload);
       //   await axios.put("/api/about", about);
       //   alert("About section updated successfully!");
     } catch (err) {

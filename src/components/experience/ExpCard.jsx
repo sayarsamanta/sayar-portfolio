@@ -21,7 +21,7 @@ const ExpCard = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`relative ${fromPreview ? "h-80" : "h-70"} flex justify-center`}
+      className={`relative min-h-[280px] min-w-[200px] flex justify-center`}
     >
       {/* Dot */}
       {!fromPreview && (
@@ -36,7 +36,7 @@ const ExpCard = ({
         onClick={() => setExpandedId(isExpanded ? null : id)}
         whileHover={{ y: -6 }}
         transition={{ type: "spring", stiffness: 200 }}
-        className="w-full md:w-[80%] backdrop-blur-xl border rounded-2xl p-8 shadow-xl cursor-pointer transition-all"
+        className="w-[300px] backdrop-blur-xl border rounded-2xl p-8 shadow-xl cursor-pointer transition-all"
         style={{
           backgroundColor: "var(--card)",
           borderColor: "var(--border)",
@@ -69,7 +69,19 @@ const ExpCard = ({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4 }}
-            className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+            className="
+  mt-4
+  text-sm
+  leading-relaxed
+  text-[var(--text-secondary)]
+  break-words
+  whitespace-normal
+  overflow-hidden
+  [&_ul]:list-disc [&_ul]:pl-5
+  [&_ol]:list-decimal [&_ol]:pl-5
+  [&_p]:mb-2
+  [&_a]:break-all
+  "
             dangerouslySetInnerHTML={{ __html: description }}
           />
           // <motion.p

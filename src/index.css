@@ -197,4 +197,7 @@ input[type="month"]::-webkit-calendar-picker-indicator {
 }
 .ql-editor {
   min-height: 120px;
+  max-height: 220px;
+  overflow-y: auto;
+  word-break: break-word;
 }

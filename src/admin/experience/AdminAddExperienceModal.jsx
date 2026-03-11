@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { Section } from "../../components/admin/projects/Section";
 import { Input } from "../../components/admin/projects/Input";
-import ExpCard from "../../components/experience/expCard";
+import ExpCard from "../../components/experience/ExpCard";
 import { formatDuration } from "../../utils/helper";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -220,6 +220,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                         description: value,
                       }))
                     }
+                    className="w-full min-h-[150px]"
                   />
                 </div>
 
@@ -269,7 +270,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
             <div className="space-y-4 sticky top-6 h-fit">
               <h4 className="text-sm font-medium text-[var(--text-secondary)]">Live Preview</h4>
 
-              <div className="border h-96 border-[var(--border)] rounded-md p-4 bg-[var(--bg-soft)]">
+              <div className="border border-[var(--border)] rounded-md p-4 bg-[var(--bg-soft)]">
                 <ExpCard
                   {...previewData}
                   tech={previewData.technologies}
