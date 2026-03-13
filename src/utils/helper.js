@@ -51,3 +51,65 @@ export const flattenObject = (obj, parent = "", res = {}) => {
 
   return res;
 };
+export const parseDuration = (duration) => {
+  if (!duration) return { startDate: "", endDate: "", current: false };
+
+  const [start, end] = duration.split(" – ");
+
+  const formatMonth = (value) => {
+    if (!value || value === "Present") return "";
+
+    const [month, year] = value.split(" ");
+    const months = {
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12",
+    };
+
+    return `${year}-${months[month]}`;
+  };
+
+  return {
+    startDate: formatMonth(start),
+    endDate: end === "Present" ? "" : formatMonth(end),
+    current: end === "Present",
+  };
+};
+export const validateExp = (form, setErrors) => {
+  const newErrors = {};
+
+  if (!form.company?.trim()) {
+    newErrors.company = "Company required";
+  }
+
+  if (!form.role?.trim()) {
+    newErrors.role = "Role required";
+  }
+
+  if (!form.startDate) {
+    newErrors.startDate = "Start date required";
+  }
+
+  if (!form.isPresent && !form.endDate) {
+    newErrors.endDate = "End date required";
+  }
+  if (!form.isPresent && form.startDate && form.endDate && form.startDate > form.endDate) {
+    newErrors.endDate = "End date cannot be before start date";
+  }
+
+  if (!form.description?.trim()) {
+    newErrors.description = "Description required";
+  }
+  setErrors(newErrors);
+
+  return Object.keys(newErrors).length === 0;
+};

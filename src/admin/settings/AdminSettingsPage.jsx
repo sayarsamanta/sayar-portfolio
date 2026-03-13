@@ -1,16 +1,14 @@
+import { LogOut, Moon, Sun, Trash2, Upload } from "lucide-react";
 import { useContext, useState } from "react";
-import { Sun, Moon, LogOut, Key, Trash2, Download } from "lucide-react";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useSelector } from "react-redux";
 
 export default function AdminSettingsPage() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
-
-  // --------- STATES ----------
-  const [primaryColor, setPrimaryColor] = useState("#3b82f6"); // Tailwind blue-500
+  const about = useSelector((state) => state.about);
+  const { resume } = about.user || "";
   const [name, setName] = useState("Admin Name");
   const [email, setEmail] = useState("admin@example.com");
-  const [password, setPassword] = useState("");
-  const [resumeFileName, setResumeFileName] = useState("Resume.pdf");
 
   // --------- HANDLERS ----------
   const handleToggleDarkMode = () => setDarkMode(!darkMode);
@@ -18,10 +16,6 @@ export default function AdminSettingsPage() {
   const handleSaveProfile = () => {
     alert("Profile Saved!");
     // integrate API later
-  };
-  const handleChangePassword = () => {
-    alert("Password Changed!");
-    setPassword("");
   };
   const handleDownloadResume = () => {
     alert("Downloading Resume...");
@@ -90,7 +84,7 @@ export default function AdminSettingsPage() {
       </div>
 
       {/* -------- PASSWORD SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
+      {/* <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
         <h2 className="text-xl font-semibold">Security</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
@@ -107,18 +101,29 @@ export default function AdminSettingsPage() {
         >
           <Key size={16} /> Change Password
         </button>
-      </div>
+      </div> */}
 
       {/* -------- RESUME SECTION -------- */}
       <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
         <h2 className="text-xl font-semibold">Resume / Portfolio</h2>
+
         <div className="flex items-center gap-4">
-          <span>{resumeFileName}</span>
+          <span className="truncate">{resume?.split("/").pop()}</span>
+
+          {/* Download Button */}
           <button
             onClick={handleDownloadResume}
-            className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all duration-200"
           >
-            <Download size={16} /> Download
+            <Upload size={16} /> Upload
+          </button>
+
+          {/* Delete Button */}
+          <button
+            onClick={() => {}}
+            className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-all duration-200"
+          >
+            <Trash2 size={16} /> Delete
           </button>
         </div>
       </div>
@@ -132,12 +137,12 @@ export default function AdminSettingsPage() {
         >
           <Trash2 size={16} /> Delete Account
         </button>
-        <button
+        {/* <button
           onClick={() => alert("Logging out...")}
           className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
         >
           <LogOut size={16} /> Logout
-        </button>
+        </button> */}
       </div>
     </div>
   );

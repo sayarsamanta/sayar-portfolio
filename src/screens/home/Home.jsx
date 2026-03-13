@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
 import { Stat } from "../../components/Stat";
-import { FaChevronDown } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
+import placeholder from "../../assets/placeholder.jpg";
 const containerVariants = {
   hidden: {},
   visible: {
@@ -19,38 +19,28 @@ const itemVariants = {
 };
 
 const Home = () => {
-  const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
   const { user } = useSelector((state) => state.about);
   const {
     name,
-    bio,
-    brief,
     profileImg,
-    qoute,
     stats: { projects, experienceYears, clients },
-    about: { skills },
+    about: {
+      skills,
+      intro: { bio, brief, qoute },
+    },
   } = user || {};
 
   return (
-    <div className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 p-6">
-      {/* Background Glows */}
-      {/* <div className="absolute inset-0 -z-10">
-        <div
-          className="absolute top-[-150px] left-[-150px] w-[400px] h-[400px] rounded-full blur-3xl"
-          style={{ backgroundColor: "var(--primary)", opacity: 0.05 }}
-        />
-        <div
-          className="absolute bottom-[-150px] right-[-150px] w-[400px] h-[400px] rounded-full blur-3xl"
-          style={{ backgroundColor: "var(--secondary)", opacity: 0.05 }}
-        />
-      </div> */}
-
+    <div
+      className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 p-10"
+      style={{ background: "var(--background)" }}
+    >
       {/* Mobile Profile Image */}
-      <div className="flex justify-center mb-6 w-full">
+      <div className="flex justify-center">
         <div className="relative">
-          <div className="mt-12">
-            <ProfileAvatar src={profileImg} size="large" />
+          <div className="mt-14">
+            <ProfileAvatar src={profileImg || placeholder} size="large" />
           </div>
         </div>
       </div>
@@ -60,45 +50,68 @@ const Home = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col items-center justify-center max-w-2xl mx-auto gap-4 font-body mt-25"
+        className="relative flex flex-col items-center justify-center text-center 
+  max-w-3xl mx-auto gap-5 px-4 sm:px-6 lg:px-8 mt-14 sm:mt-14"
       >
+        {/* Role Badge */}
+        <motion.div
+          variants={itemVariants}
+          className="px-4 py-1.5 text-xs sm:text-sm rounded-full 
+    border border-[var(--border)] bg-[var(--background-alt)] 
+    text-[var(--text-secondary)]"
+        >
+          Full Stack Developer
+        </motion.div>
+
+        {/* Name */}
         <motion.h1
           variants={itemVariants}
-          className="text-5xl sm:text-6xl md:text-7xl font-bold font-heading leading-tight"
+          className="font-heading font-bold leading-tight
+    text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ color: "var(--text-primary)" }}
         >
-          {name}
+          {name || "Sayar Samanta"}
         </motion.h1>
 
+        {/* Bio / Role */}
         <motion.h2
           variants={itemVariants}
-          className="text-lg sm:text-xl md:text-2xl font-light "
+          className="text-base sm:text-lg md:text-xl 
+    font-medium max-w-xl"
           style={{ color: "var(--text-secondary)" }}
         >
           {bio}
         </motion.h2>
 
+        {/* Brief */}
         <motion.p
           variants={itemVariants}
-          className="mt-4 max-w-lg leading-relaxed text-sm sm:text-base text-center"
+          className="max-w-xl leading-relaxed 
+    text-sm sm:text-base md:text-lg"
           style={{ color: "var(--text-secondary)" }}
         >
           {brief}
         </motion.p>
 
-        {/* Personal Tagline */}
-        <motion.p
-          variants={itemVariants}
-          className="mt-2 italic text-sm sm:text-base text-[var(--text-tertiary)]"
-        >
-          {qoute}
-        </motion.p>
+        {/* Quote */}
+        {qoute && (
+          <motion.p
+            variants={itemVariants}
+            className="italic text-xs sm:text-sm 
+      text-[var(--text-tertiary)] 
+      border-l-2 border-[var(--primary)] pl-3 mt-2"
+          >
+            "{qoute}"
+          </motion.p>
+        )}
 
-        {/* Buttons */}
-        <motion.div variants={itemVariants} className="mt-6 flex flex-wrap justify-center gap-4">
+        {/* CTA Buttons */}
+        <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 mt-6">
           <Link
             to="/projects"
-            className="px-6 py-3 text-sm font-medium tracking-wide transition duration-300 rounded-2xl font-body"
+            className="px-6 sm:px-7 py-3 rounded-xl text-sm sm:text-base 
+      font-medium transition-all duration-300 
+      hover:scale-105 shadow-md"
             style={{
               backgroundColor: "var(--primary)",
               color: darkMode ? "#000" : "#fff",
@@ -109,7 +122,9 @@ const Home = () => {
 
           <Link
             to="/resume"
-            className="px-6 py-3 text-sm tracking-wide border rounded-2xl transition duration-300 font-body"
+            className="px-6 sm:px-7 py-3 rounded-xl text-sm sm:text-base 
+      border transition-all duration-300 
+      hover:bg-[var(--background-alt)]"
             style={{
               borderColor: "var(--primary)",
               color: "var(--text-primary)",
@@ -119,8 +134,11 @@ const Home = () => {
           </Link>
         </motion.div>
 
-        {/* Mini Stats */}
-        <motion.div className="flex flex-wrap justify-center gap-8 mt-10">
+        {/* Stats */}
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-10"
+        >
           <Stat count={projects} label="Projects" />
           <Stat count={experienceYears} label="Years Exp" />
           <Stat count={clients} label="Clients" />
@@ -145,15 +163,6 @@ const Home = () => {
           </motion.div>
         ))}
       </div>
-
-      {/* Scroll Down Indicator */}
-      <motion.div
-        className="absolute bottom-6 animate-bounce"
-        style={{ color: "var(--text-secondary)" }}
-        onClick={() => navigate("/about")}
-      >
-        <FaChevronDown size={24} />
-      </motion.div>
     </div>
   );
 };

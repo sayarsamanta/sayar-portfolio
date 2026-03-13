@@ -1,4 +1,4 @@
-const EmptySection = ({ type }) => {
+const EmptySection = ({ type, isAdmin = false }) => {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       {/* Icon */}
@@ -27,8 +27,9 @@ const EmptySection = ({ type }) => {
 
       {/* Description */}
       <p className="text-sm text-[var(--text-secondary)] mt-2 max-w-md">
-        {`Working ${type?.toLowerCase()} details have not been added yet. Please check back later to view
-        professional experience and career highlights.`}
+        {isAdmin
+          ? `No ${type?.toLowerCase()} details have been added yet. Use the admin panel to add or update professional experience.`
+          : `Working ${type?.toLowerCase()} details have not been added yet. Please check back later to view professional experience and career highlights.`}
       </p>
     </div>
   );

@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
-
 import { Section } from "../../components/admin/projects/Section";
 import { DynamicList } from "../../components/admin/projects/DynamicList";
 import { Input } from "../../components/admin/projects/Input";
 import { Textarea } from "../../components/admin/projects/Textarea";
-
 import ProjectCard from "../../components/project/ProjectCard";
-import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
 export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) {
   const [form, setForm] = useState({
     name: "",
@@ -213,47 +209,20 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
 
               {/* PROBLEM & SOLUTION */}
               <Section title="Problem & Solution">
-                <div
-                  className="
-                  input-glass rounded-md overflow-hidden
-  [&_.ql-toolbar]:bg-transparent
-  [&_.ql-container]:bg-transparent
-  [&_.ql-toolbar]:border-none
-  [&_.ql-container]:border-none
-                  "
-                >
-                  <ReactQuill
-                    theme="snow"
-                    value={form.problem}
-                    onChange={(value) =>
-                      setForm((prev) => ({
-                        ...prev,
-                        problem: value,
-                      }))
-                    }
-                  />
-                </div>
-
-                <div
-                  className="
-                  input-glass rounded-md overflow-hidden
-  [&_.ql-toolbar]:bg-transparent
-  [&_.ql-container]:bg-transparent
-  [&_.ql-toolbar]:border-none
-  [&_.ql-container]:border-none
-                  "
-                >
-                  <ReactQuill
-                    theme="snow"
-                    value={form.solution}
-                    onChange={(value) =>
-                      setForm((prev) => ({
-                        ...prev,
-                        solution: value,
-                      }))
-                    }
-                  />
-                </div>
+                <Textarea
+                  name="problem"
+                  placeholder="Problem Description"
+                  value={form.problem}
+                  onChange={handleChange}
+                  error={errors.problem}
+                />
+                <Textarea
+                  name="solution"
+                  placeholder="Solution Description"
+                  value={form.solution}
+                  onChange={handleChange}
+                  error={errors.solution}
+                />
               </Section>
 
               {/* FEATURES */}
@@ -280,11 +249,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
               <Section title="Screenshots">
                 <input type="file" multiple onChange={handleScreenshotUpload} />
 
-                <div className="grid grid-cols-3 gap-4 mt-4">
-                  {form.screenshots.map((src, i) => (
-                    <img key={i} src={src} className="rounded-lg border border-[var(--border)]" />
-                  ))}
-                </div>
+                <div className="grid grid-cols-3 gap-4 mt-4"></div>
               </Section>
 
               {/* ACTION BUTTONS */}

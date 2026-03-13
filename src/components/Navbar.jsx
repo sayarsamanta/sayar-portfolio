@@ -5,7 +5,7 @@ import { FiMenu, FiX, FiSun, FiMoon, FiShield } from "react-icons/fi";
 import { ThemeContext } from "../context/ThemeContext";
 import { useSelector } from "react-redux";
 import ProfileAvatar from "./profilepic/ProfileAvatar";
-
+import placeholder from "../assets/placeholder.jpg";
 const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
@@ -74,7 +74,7 @@ const Navbar = () => {
           className="flex items-center gap-3 cursor-pointer"
         >
           <div className="relative rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block">
-            <ProfileAvatar src={profileImg} size="small" />
+            <ProfileAvatar src={profileImg || placeholder} size="small" />
             <motion.div
               animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.15, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

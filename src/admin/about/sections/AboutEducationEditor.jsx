@@ -42,11 +42,9 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
         <button
           onClick={() => {
-            if (!validateSection("Education", eduForm)){
-              console.log("came here",eduForm)
-              
+            if (!validateSection("Education", eduForm)) {
               return;
-            } 
+            }
             updateItem("education", eduForm);
             setEduForm({
               id: "",

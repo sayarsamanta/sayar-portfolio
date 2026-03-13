@@ -3,11 +3,13 @@ import ProjectCard from "../../components/project/ProjectCard";
 import DetailedModel from "../../components/project/DetailedModel";
 import { useSelector } from "react-redux";
 import EmptySection from "../../components/admin/experience/EmptySection";
+import useProjectAPI from "../../hooks/useProjectAPI";
 
 export default function Projects() {
   const projects = useSelector((state) => state.projects.projects);
   const [filter, setFilter] = useState("All");
   const [selectedProject, setSelectedProject] = useState(null);
+  const { fetchProjects } = useProjectAPI();
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = "hidden";
@@ -19,6 +21,9 @@ export default function Projects() {
       document.body.style.overflow = "auto";
     };
   }, [selectedProject]);
+  useEffect(() => {
+    fetchProjects();
+  }, []);
   const filteredProjects =
     filter === "All" ? projects : projects.filter((proj) => proj.type === filter);
 

@@ -9,13 +9,13 @@ import AboutEducationEditor from "./sections/AboutEducationEditor";
 import AboutInterestEditor from "./sections/AboutInterestEditor";
 import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
 import toast from "react-hot-toast";
-import { flattenObject } from "../../utils/helper";
-const placeHolder =
-  "https://static.vecteezy.com/system/resources/thumbnails/036/594/092/small/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg";
+import useAboutAPI from "../../hooks/useAboutAPI";
+import placeholder from "../../assets/placeholder.jpg";
 export default function AdminAboutPage({}) {
   const aboutFromStore = useSelector((state) => state.about);
+  const { saveAbout, loading } = useAboutAPI();
   const [about, setAbout] = useState({
-    intro: { profileImg: "", headline: "", subText: "", story: "", quote: "" },
+    intro: { profileImg: "", headline: "", subText: "", story: "", qoute: "", bio: "", brief: "" },
     skills: [],
     achievements: [],
     education: [],
@@ -33,7 +33,7 @@ export default function AdminAboutPage({}) {
     title: "",
     year: "",
     description: "",
-    icon: "",
+    type: "",
   });
   const [eduForm, setEduForm] = useState({
     id: "",
@@ -107,18 +107,7 @@ export default function AdminAboutPage({}) {
   };
 
   const saveAll = async () => {
-    try {
-      if (!validateIntro()) return;
-      const payload = flattenObject({
-        about: about,
-      });
-      console.log(payload);
-      //   await axios.put("/api/about", about);
-      //   alert("About section updated successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Error updating about section");
-    }
+    await saveAbout(about, validateIntro);
   };
   return (
     <div
@@ -138,7 +127,7 @@ export default function AdminAboutPage({}) {
         </div>
         <div className="flex justify-center">
           <ProfileAvatar
-            src={profileImg || placeHolder}
+            src={profileImg || placeholder}
             editable
             isPlaceHolder={!profileImg}
             onDelete={() => {
@@ -208,7 +197,32 @@ export default function AdminAboutPage({}) {
             onClick={saveAll}
             className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md"
           >
-            Save All
+            {loading ? (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+              </>
+            ) : (
+              "Save All"
+            )}
           </button>
         </div>
       </div>
@@ -217,7 +231,7 @@ export default function AdminAboutPage({}) {
         <h2 className="text-2xl font-semibold">Live About Preview</h2>
         <AboutContent
           fromPreview={true}
-          profileImg={about?.intro?.profileImg || placeHolder}
+          profileImg={about?.intro?.profileImg || placeholder}
           {...about}
         />
       </div>

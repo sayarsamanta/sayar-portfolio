@@ -6,11 +6,11 @@ export default function AdminDashboard() {
   const { projects } = useSelector((state) => state.projects);
   const { exp } = useSelector((state) => state.experience);
   const { user } = useSelector((state) => state.about);
-  const { skills } = user.about || [];
+  const { skills } = user?.about || [];
   const stats = [
-    { label: "Projects", value: projects.length || 0, icon: FiFolder },
+    { label: "Projects", value: projects?.length || 0, icon: FiFolder },
     { label: "Experience", value: exp?.length || 0, icon: FiBriefcase },
-    { label: "Skills", value: skills.length || 0, icon: FiCpu },
+    { label: "Skills", value: skills?.length || 0, icon: FiCpu },
   ];
 
   return (

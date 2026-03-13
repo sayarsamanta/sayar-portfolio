@@ -66,11 +66,9 @@ px-4 py-2.5 text-sm text-[var(--text-primary)]"
 
         <button
           onClick={() => {
-            if (!validateSection("Skills", skillForm)){
-              console.log("came here",skillForm)
-              
+            if (!validateSection("Skills", skillForm)) {
               return;
-            } 
+            }
 
             updateItem("skills", skillForm);
 

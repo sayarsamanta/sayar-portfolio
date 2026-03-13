@@ -4,16 +4,9 @@ import { createPortal } from "react-dom";
 import { Section } from "../../components/admin/projects/Section";
 import { Input } from "../../components/admin/projects/Input";
 import ExpCard from "../../components/experience/ExpCard";
-import { formatDuration } from "../../utils/helper";
-import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
+import { formatDuration, parseDuration, validateExp } from "../../utils/helper";
+import { Textarea } from "../../components/admin/projects/Textarea";
 
-const modules = {
-  toolbar: [
-    ["bold", "italic"],
-    [{ list: "bullet" }, { list: "ordered" }],
-  ],
-};
 export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item }) {
   const [form, setForm] = useState({
     company: "",
@@ -22,7 +15,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
     endDate: "",
     location: "",
     description: "",
-    technologies: [""],
+    tech: [""],
     id: null,
     isPresent: false,
   });
@@ -32,14 +25,17 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
 
   useEffect(() => {
     if (item) {
+      const parsed = parseDuration(item?.duration);
       setForm({
         company: item.company || "",
         role: item.role || "",
-        duration: item.duration || "",
+        startDate: parsed.startDate || "",
+        endDate: parsed.endDate || "",
         location: item.location || "",
         description: item.description || "",
-        technologies: item.technologies?.length ? item.technologies : [""],
+        tech: item.tech?.length ? item.tech : [""],
         id: item.id,
+        isPresent: parsed.current,
       });
     } else {
       setForm({
@@ -48,7 +44,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
         duration: "",
         location: "",
         description: "",
-        technologies: [""],
+        tech: [""],
         id: null,
       });
     }
@@ -60,25 +56,17 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
   };
 
   const handleArrayChange = (index, value) => {
-    const updated = [...form.technologies];
+    const updated = [...form?.tech];
     updated[index] = value;
-    setForm({ ...form, technologies: updated });
+    setForm({ ...form, tech: updated });
   };
 
-  const addTechnology = () => setForm({ ...form, technologies: [...form.technologies, ""] });
+  const addTechnology = () => setForm({ ...form, tech: [...form?.tech, ""] });
 
   const removeTechnology = (index) => {
-    const updated = [...form.technologies];
+    const updated = [...form.tech];
     updated.splice(index, 1);
-    setForm({ ...form, technologies: updated });
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    if (!form.company.trim()) newErrors.company = "Company required";
-    if (!form.role.trim()) newErrors.role = "Role required";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setForm({ ...form, tech: updated });
   };
 
   const handlePresentChange = (e) => {
@@ -91,10 +79,12 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
     }));
   };
 
-  const handleSubmit = () => {
-    if (!validate()) return;
-    const cleanDescription = form.description?.replace(/<(.|\n)*?>/g, "").trim();
-    console.log(cleanDescription);
+  const handleSubmitAction = () => {
+    if (!validateExp(form, setErrors)) {
+      console.log(errors);
+      return;
+    }
+    onSave(form, !!item, item?.slug, item?._id);
     // onSave(form, !!item);
     // onClose();
   };
@@ -106,7 +96,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
     role: form.role || "Role Title",
     duration: formatDuration(form.startDate, form.endDate),
     description: form.description || "Experience description preview will appear here.",
-    technologies: form.technologies.filter((t) => t.trim() !== ""),
+    tech: form.tech && form.tech.length > 0 && form.tech.filter((t) => t.trim() !== ""),
     id: form.id || "preview",
   };
 
@@ -156,7 +146,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                   <div className="flex flex-col gap-1">
                     <label className="text-xs text-[var(--text-secondary)]">Start Date</label>
 
-                    <input
+                    <Input
                       type="month"
                       name="startDate"
                       value={form.startDate || ""}
@@ -166,6 +156,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
       border border-[var(--border)]
       bg-[var(--bg-soft)]
       text-[var(--text-primary)]"
+                      error={errors.startDate}
                     />
                   </div>
 
@@ -173,7 +164,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                   <div className="flex flex-col gap-1">
                     <label className="text-xs text-[var(--text-secondary)]">End Date</label>
 
-                    <input
+                    <Input
                       type="month"
                       name="endDate"
                       disabled={form.isPresent}
@@ -184,11 +175,12 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
     border border-[var(--border)]
     ${form.isPresent ? "bg-[var(--bg-disabled)]" : "bg-[var(--bg-soft)]"}
     text-[var(--text-primary)]`}
+                      error={errors.endDate}
                     />
                     <label className="flex items-center gap-2 mt-2">
                       <input
                         type="checkbox"
-                        checked={setForm.isPresent}
+                        checked={form.isPresent}
                         onChange={handlePresentChange}
                       />
                       Currently working here
@@ -196,37 +188,15 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                   </div>
                 </div>
 
-                {/* <Textarea
+                <Textarea
                   name="description"
                   placeholder="Short Description"
                   value={form.description}
                   onChange={handleChange}
-                /> */}
-                <div
-                  className="
-                  input-glass rounded-md overflow-hidden
-                  [&_.ql-toolbar]:bg-transparent
-                  [&_.ql-container]:bg-transparent
-                  [&_.ql-toolbar]:border-none
-                  [&_.ql-container]:border-none
-"
-                >
-                  <ReactQuill
-                    theme="snow"
-                    value={form.description}
-                    onChange={(value) =>
-                      setForm((prev) => ({
-                        ...prev,
-                        description: value,
-                      }))
-                    }
-                    className="w-full min-h-[150px]"
-                  />
-                </div>
-
+                  error={errors.description}
+                />
                 <Input
                   name="location"
-                  modules={modules}
                   placeholder="Location"
                   value={form.location}
                   onChange={handleChange}
@@ -234,27 +204,29 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
               </Section>
 
               <Section title="Technologies Used">
-                {form.technologies.map((tech, index) => (
-                  <div key={index} className="flex gap-3 items-center">
-                    <input
-                      type="text"
-                      value={tech}
-                      onChange={(e) => handleArrayChange(index, e.target.value)}
-                      placeholder="Technology"
-                      className="flex-1 px-4 py-2 rounded-md border border-[var(--border)] bg-[var(--bg-soft)]"
-                    />
+                {form.tech &&
+                  form.tech.length > 0 &&
+                  form.tech.map((tech, index) => (
+                    <div key={index} className="flex gap-3 items-center">
+                      <Input
+                        type="text"
+                        value={tech}
+                        onChange={(e) => handleArrayChange(index, e.target.value)}
+                        placeholder="Technology"
+                        error={errors.tech}
+                      />
 
-                    {form.technologies.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeTechnology(index)}
-                        className="text-xs px-3 py-1 rounded-md bg-red-500 text-white"
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </div>
-                ))}
+                      {form.tech.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeTechnology(index)}
+                          className="text-xs px-3 py-1 rounded-md bg-red-500 text-white"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  ))}
 
                 <button
                   type="button"
@@ -273,7 +245,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
               <div className="border border-[var(--border)] rounded-md p-4 bg-[var(--bg-soft)]">
                 <ExpCard
                   {...previewData}
-                  tech={previewData.technologies}
+                  tech={previewData.tech}
                   index={0}
                   expandedId={expandedId}
                   setExpandedId={setExpandedId}
@@ -293,7 +265,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
             </button>
 
             <button
-              onClick={handleSubmit}
+              onClick={handleSubmitAction}
               className="px-6 py-2 rounded-md bg-[var(--primary)] text-[var(--text-button)]"
             >
               {item ? "Save Changes" : "Add Experience"}

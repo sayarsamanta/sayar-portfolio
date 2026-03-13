@@ -159,21 +159,24 @@ const projectSlice = createSlice({
   initialState,
   reducers: {
     setProjects(state, action) {
-      state.data = action.payload;
+      state.projects = action.payload;
+    },
+    addProject(state, action) {
+      state.projects.push(action.payload);
     },
     editProjects(state, action) {
       const { id, updatedData } = action.payload;
-      const projects = state.projects.find((p) => p.id === id);
+      const projects = state.projects.find((p) => p._id === id);
 
       if (projects) {
         Object.assign(projects, updatedData);
       }
     },
     deleteProjects(state, action) {
-      state.projects = state.projects.filter((project) => project.id !== action.payload);
+      state.projects = state.projects.filter((project) => project.slug !== action.payload);
     },
   },
 });
 
-export const { setProjects, editProjects, deleteProjects } = projectSlice.actions;
+export const { setProjects, editProjects, deleteProjects, addProject } = projectSlice.actions;
 export default projectSlice.reducer;
