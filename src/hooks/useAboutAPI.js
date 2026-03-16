@@ -40,14 +40,21 @@ const useAboutAPI = () => {
 
   // Save or update About
   const saveAbout = useCallback(
-    async (about, validateIntro) => {
+    async (about, validateIntro, fromSave = false) => {
       try {
+        console.log(about);
         if (validateIntro && !validateIntro()) return null;
         setLoading(true);
 
         const payload = {
-          role: "admin",
-          stats: { projects: 2, experienceYears: 7, clients: 10 },
+          name: about?.name,
+          email: about?.email,
+          role: about?.role || "admin",
+          stats: about?.stats || {
+            projects: 2,
+            experienceYears: 7,
+            clients: 10,
+          },
           about: {
             intro: about.intro,
             skills: about.skills,
@@ -68,16 +75,30 @@ const useAboutAPI = () => {
         // for (let pair of formData.entries()) {
         //   console.log(pair[0], pair[1]);
         // }
+        if (fromSave) {
+          const res = await api.put("/user", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          console.log(res.data);
+          const userData = res?.data;
 
-        const res = await api.post("/user", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+          if (userData) {
+            dispatch(setAboutData(userData?.about));
+            dispatch({ type: "about/setUser", payload: userData }); // optional
+          }
 
-        dispatch(setAboutData(res.data?.data?.about));
-        toast.success("About section updated successfully!");
-
-        setLoading(false);
-        return res.data;
+          setLoading(false);
+          toast.success("About section updated successfully!");
+          return res.data;
+        } else {
+          const res = await api.post("/user", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          toast.success("About section updated successfully!");
+          setLoading(false);
+          dispatch(setAboutData(res.data?.data?.about));
+          return res.data;
+        }
       } catch (err) {
         console.error(err);
         setLoading(false);

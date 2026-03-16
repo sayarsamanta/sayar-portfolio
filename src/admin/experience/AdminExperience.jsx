@@ -8,7 +8,6 @@ import useExperienceAPI from "../../hooks/useExperienceAPI";
 
 export default function AdminExperience() {
   const { exp } = useSelector((state) => state.experience || {});
-  console.log(exp);
   const { addExperienceCall, deleteExperienceAction } = useExperienceAPI();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);

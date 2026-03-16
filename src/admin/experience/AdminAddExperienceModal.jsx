@@ -81,7 +81,6 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
 
   const handleSubmitAction = () => {
     if (!validateExp(form, setErrors)) {
-      console.log(errors);
       return;
     }
     onSave(form, !!item, item?.slug, item?._id);

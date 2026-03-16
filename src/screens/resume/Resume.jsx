@@ -2,33 +2,36 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import Resume from "../../components/resume/Resume";
 import EmptySection from "../../components/admin/experience/EmptySection";
+import { useState } from "react";
 // Modern way to import worker
 
 export default function ResumePage() {
   const about = useSelector((state) => state.about);
   const { resume } = about.user || "";
-
+  const [error, setError] = useState(false);
   return (
     <div
       className="min-h-screen bg-[var(--background)] flex flex-col items-center py-10 px-4"
       style={{ paddingTop: "5rem" }}
     >
       {/* Header */}
-      {!resume && <EmptySection type={"Resume"} />}
-      {resume && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-4 mb-8"
-        >
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-[var(--text-primary)]">
-            Resume
-          </h1>
-        </motion.div>
+      {(!resume || error) && <EmptySection type={"Resume"} />}
+      {resume && !error && (
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center gap-4 mb-8"
+          >
+            <h1 className="text-3xl md:text-4xl font-heading font-bold text-[var(--text-primary)]">
+              Resume
+            </h1>
+          </motion.div>
+          <Resume pdfUrl={resume} setError={setError} />
+        </>
       )}
 
       {/* PDF Viewer */}
-      <Resume pdfUrl={resume} />
     </div>
   );
 }

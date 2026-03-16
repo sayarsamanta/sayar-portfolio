@@ -1,6 +1,11 @@
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProject, editProjects, setProjects } from "../store/slices/projects/projectSlice";
+import {
+  addProject,
+  deleteProjects,
+  editProjects,
+  setProjects,
+} from "../store/slices/projects/projectSlice";
 import StatusCode from "../utils/StatusCode";
 import api from "../services/api";
 import toast from "react-hot-toast";
@@ -8,7 +13,7 @@ const useProjectAPI = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { projects } = useSelector((state) => state.projects);
-  // Fetch user data
+
   const fetchProjects = useCallback(async () => {
     try {
       setLoading(true);
@@ -35,46 +40,85 @@ const useProjectAPI = () => {
   }, [dispatch, projects]);
 
   const addProjectCall = useCallback(
-    async (data, isEdit = false, slug = "", id = "") => {
+    async (data, isEdit = false, slug = "", id = "", rawFiles = []) => {
       try {
         setLoading(true);
 
-        const payload = {
-          role: data.role,
-          company: data.company,
-          duration: formatDuration(data.startDate, data.endDate),
-          description: data.description,
-          tech: data.tech,
-        };
+        const payload = data;
         if (isEdit) {
-          const res = await api.put(`/projects/${slug}`, payload, {
-            headers: { "Content-Type": "application/json" },
-          });
-          if (res) {
-            const newExp = res?.data?.data;
-            dispatch(
-              editProjects({
-                id: newExp._id,
-                updatedData: newExp,
-              })
-            );
-            toast.success("Project section updated successfully!");
+          const data = new FormData();
 
-            setLoading(false);
-            return res.data;
-          }
+          // 1. Add text fields
+          Object.keys(payload).forEach((key) => {
+            if (key !== "screenshots" && key !== "tech" && key !== "features") {
+              const value = payload[key];
+
+              // ONLY append if the value exists and isn't null
+              // This prevents sending "null" strings to your backend
+              if (value !== null && value !== undefined) {
+                data.append(key, value);
+              }
+            }
+          });
+
+          const cleanTech = payload.tech.flat();
+          cleanTech.forEach((item) => {
+            if (item && item.trim() !== "") {
+              data.append("tech", item);
+            }
+          });
+
+          payload.features.forEach((item) => {
+            if (item.trim() !== "") {
+              data.append("features", item);
+            }
+          });
+
+          rawFiles.forEach((file) => {
+            data.append("screenshots", file);
+          });
+          console.log(JSON.stringify(data));
+          const result = await api.put(`/projects/${slug}`, data);
+          console.log(result);
+          toast.success("Project updated successfully!!");
+          setLoading(false);
+          dispatch(editProjects({ id: result.data.data._id, updatedData: result.data.data }));
+          return result?.data;
         } else {
-          const res = await api.post("/projects", payload, {
-            headers: { "Content-Type": "application/json" },
-          });
-          if (res) {
-            const newExp = res?.data?.data;
-            dispatch(addProject(newExp));
-            toast.success("Project section created successfully!");
+          console.log(payload);
+          setLoading(true);
+          const data = new FormData();
 
-            setLoading(false);
-            return res.data;
-          }
+          Object.keys(payload).forEach((key) => {
+            if (key !== "screenshots" && key !== "tech" && key !== "features") {
+              data.append(key, payload[key]);
+            }
+          });
+
+          // form.tech.forEach((t) => data.append("tech", t));
+          // form.features.forEach((f) => data.append("features", f));
+          payload.tech.forEach((item) => {
+            if (item.trim() !== "") {
+              data.append("tech", item);
+            }
+          });
+
+          payload.features.forEach((item) => {
+            if (item.trim() !== "") {
+              data.append("features", item);
+            }
+          });
+
+          rawFiles.forEach((file) => {
+            data.append("screenshots", file);
+          });
+
+          const result = await api.post("/projects", data);
+          console.log(result);
+          toast.success("Project created successfully!!");
+          setLoading(false);
+          dispatch(addProject(result.data.data));
+          return result?.data;
         }
       } catch (err) {
         setLoading(false);
@@ -92,7 +136,7 @@ const useProjectAPI = () => {
           headers: { "Content-Type": "application/json" },
         });
         if (res) {
-          dispatch(deleteExperience(slug));
+          dispatch(deleteProjects(slug));
           toast.success("Experience deleted successfully!");
         }
       } catch (err) {
@@ -103,7 +147,7 @@ const useProjectAPI = () => {
     [dispatch, projects]
   );
 
-  return { fetchProjects, deleteProjectAction, addProjectCall, deleteProjectAction };
+  return { fetchProjects, deleteProjectAction, addProjectCall, deleteProjectAction, loading };
 };
 
 export default useProjectAPI;

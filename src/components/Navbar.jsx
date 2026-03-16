@@ -16,6 +16,7 @@ const navItems = [
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.about || null);
+  console.log(user);
   const [scrolled, setScrolled] = useState(
     typeof window !== "undefined" ? window.scrollY > 10 : false
   );
@@ -23,7 +24,12 @@ const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const { profileImg, role } = user || {};
+  const {
+    about: {
+      intro: { profileImg },
+    },
+    role,
+  } = user || {};
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;

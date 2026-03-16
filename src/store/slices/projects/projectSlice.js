@@ -162,7 +162,7 @@ const projectSlice = createSlice({
       state.projects = action.payload;
     },
     addProject(state, action) {
-      state.projects.push(action.payload);
+      state.projects.unshift(action.payload);
     },
     editProjects(state, action) {
       const { id, updatedData } = action.payload;

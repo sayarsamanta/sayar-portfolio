@@ -3,7 +3,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
-const Resume = ({ pdfUrl }) => {
+const Resume = ({ pdfUrl, setError }) => {
   const [numPages, setNumPages] = useState(null);
   const [pageWidth, setPageWidth] = useState(window.innerWidth * 0.8);
   const [loading, setLoading] = useState(true);
@@ -123,7 +123,15 @@ const Resume = ({ pdfUrl }) => {
           )}
 
           {/* PDF Document */}
-          <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+          <Document
+            file={pdfUrl}
+            onLoadError={(error) => {
+              console.error(error);
+              setError(true);
+              setLoading(false);
+            }}
+            onLoadSuccess={onDocumentLoadSuccess}
+          >
             {Array.from(new Array(numPages), (_, index) => (
               <div
                 key={index}

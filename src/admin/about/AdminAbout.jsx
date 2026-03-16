@@ -13,6 +13,8 @@ import useAboutAPI from "../../hooks/useAboutAPI";
 import placeholder from "../../assets/placeholder.jpg";
 export default function AdminAboutPage({}) {
   const aboutFromStore = useSelector((state) => state.about);
+  console.log(aboutFromStore);
+  const { data } = aboutFromStore || {};
   const { saveAbout, loading } = useAboutAPI();
   const [about, setAbout] = useState({
     intro: { profileImg: "", headline: "", subText: "", story: "", qoute: "", bio: "", brief: "" },
@@ -53,19 +55,19 @@ export default function AdminAboutPage({}) {
         // const res = await axios.get("/api/about");
         // const data = res.data || {};
         setAbout({
-          intro: aboutFromStore.intro,
-          skills: aboutFromStore.skills || [],
-          achievements: aboutFromStore.achievements || [],
-          education: aboutFromStore.education || [],
-          featuredProjects: aboutFromStore.featuredProjects || [],
-          personalInterests: aboutFromStore.personalInterests || [],
+          intro: data?.intro,
+          skills: data?.skills || [],
+          achievements: data?.achievements || [],
+          education: data?.education || [],
+          featuredProjects: data?.featuredProjects || [],
+          personalInterests: data?.personalInterests || [],
         });
       } catch (err) {
         console.error(err);
       }
     }
     fetchAbout();
-  }, []);
+  }, [data]);
 
   const updateItem = (field, item) => {
     const id = item.id || uuidv4();
@@ -107,17 +109,39 @@ export default function AdminAboutPage({}) {
   };
 
   const saveAll = async () => {
-    await saveAbout(about, validateIntro);
+    if (data?.intro?.headline != "") {
+      console.log("need to call edit");
+      await saveAbout(about, validateIntro, true);
+    } else {
+      console.log("need to call create");
+      await saveAbout(about, validateIntro, false);
+    }
+    //await saveAbout(about, validateIntro, data);
   };
   return (
     <div
-      className={`h-[calc(100vh-80px)] 
-      grid grid-cols-1 
-      2xl:grid-cols-[minmax(520px,1fr)_minmax(420px,1fr)] 
-      gap-8 p-6 overflow-hidden text-[var(--text-primary)] font-sans`}
+      className="
+    min-h-[calc(100vh-80px)]
+    grid
+    grid-cols-1
+    xl:grid-cols-[minmax(520px,1fr)_minmax(420px,1fr)]
+    gap-8
+    p-6
+    text-[var(--text-primary)]
+    font-sans
+  "
     >
       {/* LEFT PANEL */}
-      <div className="space-y-8 overflow-y-auto pr-2 max-h-[calc(100vh-120px)] hide-scrollbar">
+      <div
+        className="
+      space-y-8
+      overflow-y-auto
+      pr-2
+      min-h-screen
+      xl:max-h-[calc(100vh-120px)]
+      hide-scrollbar
+    "
+      >
         {/* Header */}
         <div>
           <h2 className="text-2xl font-semibold">About Section</h2>
@@ -125,6 +149,7 @@ export default function AdminAboutPage({}) {
             Edit your portfolio’s About section content below.
           </p>
         </div>
+
         <div className="flex justify-center">
           <ProfileAvatar
             src={profileImg || placeholder}
@@ -157,9 +182,6 @@ export default function AdminAboutPage({}) {
         </div>
 
         <AboutIntroEditor about={about} setAbout={setAbout} />
-
-        {/* Skills */}
-
         <AboutSkillEditor
           about={about}
           skillForm={skillForm}
@@ -167,7 +189,6 @@ export default function AdminAboutPage({}) {
           updateItem={updateItem}
           removeItem={removeItem}
         />
-        {/* Achievements */}
         <AboutAchievementEditor
           achForm={achForm}
           setAchForm={setAchForm}
@@ -175,7 +196,6 @@ export default function AdminAboutPage({}) {
           removeItem={removeItem}
           updateItem={updateItem}
         />
-        {/* Education */}
         <AboutEducationEditor
           updateItem={updateItem}
           about={about}
@@ -183,7 +203,6 @@ export default function AdminAboutPage({}) {
           setEduForm={setEduForm}
           removeItem={removeItem}
         />
-        {/* Personal Interests */}
         <AboutInterestEditor
           interestInput={interestInput}
           setInterestInput={setInterestInput}
@@ -191,44 +210,55 @@ export default function AdminAboutPage({}) {
           addInterest={addInterest}
           removeInterest={removeInterest}
         />
-        {/* Save All */}
+
         <div>
           <button
             onClick={saveAll}
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md flex items-center"
           >
             {loading ? (
-              <>
-                <svg
-                  className="animate-spin h-5 w-5 mr-2 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
-                </svg>
-              </>
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                />
+              </svg>
             ) : (
               "Save All"
             )}
           </button>
         </div>
       </div>
+
       {/* RIGHT PREVIEW PANEL */}
-      <div className="rounded-2xl overflow-y-auto h-full hide-scrollbar border border-[var(--border)] p-5 shadow-md">
+      <div
+        className="
+      rounded-2xl
+      border
+      border-[var(--border)]
+      p-5
+      shadow-md
+      xl:h-[calc(100vh-120px)]
+      xl:overflow-y-auto
+      hide-scrollbar
+    "
+      >
         <h2 className="text-2xl font-semibold">Live About Preview</h2>
+
         <AboutContent
           fromPreview={true}
           profileImg={about?.intro?.profileImg || placeholder}

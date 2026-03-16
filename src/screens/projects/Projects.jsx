@@ -87,13 +87,16 @@ export default function Projects() {
                 </button>
               ))}
             </div>
-            <div className="w-full mx-auto px-8">
-              <div className="flex flex-wrap gap-8 justify-center">
-                {/* Project Cards */}
-                {filteredProjects.map((proj, idx) => (
-                  <ProjectCard proj={proj} key={idx} onClick={() => setSelectedProject(proj)} />
-                ))}
-              </div>
+
+            <div
+              className="
+              flex flex-wrap justify-center gap-10 w-full max-w-[1400px] mx-auto px-4
+"
+            >
+              {/* Project Cards */}
+              {filteredProjects.map((proj, idx) => (
+                <ProjectCard proj={proj} key={idx} onClick={() => setSelectedProject(proj)} />
+              ))}
             </div>
           </>
         )}

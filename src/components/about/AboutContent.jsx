@@ -7,7 +7,6 @@ import PreviewEmptyState from "./PreviewEmptyState";
 import placeholder from "../../assets/placeholder.jpg";
 const MAX_LENGTH = 200;
 const AboutContent = ({
-  profileImg,
   intro,
   skills,
   achievements,
@@ -15,7 +14,7 @@ const AboutContent = ({
   personalInterests,
   fromPreview = false,
 }) => {
-  const { headline, subText, story } = intro || {};
+  const { headline, subText, story, profileImg } = intro || {};
   const [skillCategory, setSkillCategory] = useState("All");
   const [expanded, setExpanded] = useState(false);
   const isLong = story?.length > MAX_LENGTH;

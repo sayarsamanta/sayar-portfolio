@@ -23,11 +23,10 @@ const Home = () => {
   const { user } = useSelector((state) => state.about);
   const {
     name,
-    profileImg,
     stats: { projects, experienceYears, clients },
     about: {
       skills,
-      intro: { bio, brief, qoute },
+      intro: { bio, brief, qoute, profileImg },
     },
   } = user || {};
 
