@@ -4,9 +4,9 @@ import SectionLayout from "../SectionLayout";
 import AboutSectionRenderer from "./AboutSectionRenderer";
 import ProfileAvatar from "../profilepic/ProfileAvatar";
 import PreviewEmptyState from "./PreviewEmptyState";
+import placeholder from "../../assets/placeholder.jpg";
 const MAX_LENGTH = 200;
 const AboutContent = ({
-  profileImg,
   intro,
   skills,
   achievements,
@@ -14,7 +14,7 @@ const AboutContent = ({
   personalInterests,
   fromPreview = false,
 }) => {
-  const { headline, subText, story } = intro || {};
+  const { headline, subText, story, profileImg } = intro || {};
   const [skillCategory, setSkillCategory] = useState("All");
   const [expanded, setExpanded] = useState(false);
   const isLong = story?.length > MAX_LENGTH;
@@ -32,17 +32,17 @@ const AboutContent = ({
       transition={{ duration: 0.7 }}
     >
       {/* Hero / Intro */}
-      <section className="w-full py-14 px-6">
+      <section className="w-full py-10 px-6">
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
           {/* Profile Image */}
-          {profileImg && (
+          {(profileImg || placeholder) && (
             <div className={fromPreview ? `block` : `lg:hidden`}>
-              <ProfileAvatar src={profileImg} />
+              <ProfileAvatar src={profileImg || placeholder} />
             </div>
           )}
 
           {headline || subText || story ? (
-            <section>
+            <section className="flex flex-col justify-center items-center">
               {/* existing content */}
               {/* Headline */}
               {headline && (
@@ -67,14 +67,15 @@ const AboutContent = ({
               )}
 
               {/* See More / Less */}
-              {isLong && (
-                <button
-                  onClick={() => setExpanded(!expanded)}
-                  className="mt-4 text-sm font-medium text-[var(--primary)] hover:underline transition-all"
-                >
-                  {expanded ? "See less" : "See more"}
-                </button>
-              )}
+              {expanded ||
+                (isLong && (
+                  <button
+                    onClick={() => setExpanded(!expanded)}
+                    className="mt-4 text-sm font-medium text-[var(--primary)] hover:underline transition-all"
+                  >
+                    {"See more"}
+                  </button>
+                ))}
             </section>
           ) : (
             <PreviewEmptyState
@@ -88,6 +89,7 @@ const AboutContent = ({
         <SectionLayout
           title="Skills & Expertise"
           description="Technologies and tools I use to build scalable and modern web applications."
+          maxWidth="max-w-4xl"
         >
           {/* filter pills */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">

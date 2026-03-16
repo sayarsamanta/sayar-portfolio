@@ -11,16 +11,24 @@ import {
   FiUser,
 } from "react-icons/fi";
 
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 const navItems = [
   { name: "Dashboard", path: "/admin", icon: FiHome },
   { name: "Projects", path: "/admin/projects", icon: FiFolder },
   { name: "Experience", path: "/admin/experience", icon: FiBriefcase },
-  { name: "Resume", path: "/admin/resume", icon: FiFileText },
+  // { name: "Resume", path: "/admin/resume", icon: FiFileText },
   { name: "Settings", path: "/admin/settings", icon: FiSettings },
   { name: "About", path: "/admin/about", icon: FiUser },
 ];
 export function SidebarContent({ close }) {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Clear token
+    localStorage.removeItem("adminToken");
+
+    // Redirect to public dashboard
+    navigate("/", { replace: true });
+  };
   return (
     <div className="flex flex-col h-full p-4 font-sans">
       {/* Logo */}
@@ -61,7 +69,10 @@ export function SidebarContent({ close }) {
       </nav>
 
       {/* Logout */}
-      <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-red-500 hover:bg-red-50 transition">
+      <button
+        className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-red-500 hover:bg-red-50 transition"
+        onClick={handleLogout}
+      >
         <FiLogOut size={18} />
         Logout
       </button>

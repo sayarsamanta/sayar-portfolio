@@ -25,10 +25,15 @@ export default function AdminItemCard({ type, data, onDelete }) {
     switch (type) {
       case "achievement":
         return (
-          <>
-            <p className="font-medium text-[15px]">{data.title}</p>
-            <p className="text-xs text-[var(--text-secondary)]">{data.year}</p>
-          </>
+          <div className=" rounded-lg bg-[var(--card)] hover:border-[var(--primary)] transition">
+            <p className="font-medium text-[15px] text-[var(--text-primary)]">{data.title}</p>
+
+            <p className="text-sm text-[var(--text-secondary)] mt-1 leading-relaxed">
+              {data.description}
+            </p>
+
+            <p className="text-xs text-[var(--text-secondary)] mt-2">{data.year}</p>
+          </div>
         );
 
       case "education":

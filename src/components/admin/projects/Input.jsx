@@ -1,8 +1,18 @@
-export function Input({ error, ...props }) {
+import React from "react";
+
+export const Input = ({ type, name, value, onChange, placeholder, error }) => {
   return (
-    <div>
-      <input {...props} className="input-glass w-full" />
-      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
+    <div className="flex flex-col">
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-transparent text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-purple-500 transition`}
+      />
+      {/* Reserve space for error message */}
+      <div className="min-h-[1.25rem] mt-1 text-xs text-red-500">{error || " "}</div>
     </div>
   );
-}
+};

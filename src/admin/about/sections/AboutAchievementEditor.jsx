@@ -1,5 +1,6 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
+import { validateSection } from "../../../utils/helper";
 
 const AboutAchievementEditor = ({ achForm, setAchForm, updateItem, about, removeItem }) => {
   return (
@@ -18,6 +19,17 @@ placeholder:text-sm placeholder:text-[var(--text-secondary)] placeholder:opacity
 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
         <input
+          placeholder="Description"
+          value={achForm.description}
+          onChange={(e) => setAchForm({ ...achForm, description: e.target.value })}
+          className="w-full rounded-lg border border-[var(--border)] 
+bg-[var(--input-bg)] 
+px-4 py-2.5 
+text-sm text-[var(--text-primary)] 
+placeholder:text-sm placeholder:text-[var(--text-secondary)] placeholder:opacity-70
+focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+        />
+        <input
           placeholder="Year"
           value={achForm.year}
           onChange={(e) => setAchForm({ ...achForm, year: e.target.value })}
@@ -28,19 +40,26 @@ text-sm text-[var(--text-primary)]
 placeholder:text-sm placeholder:text-[var(--text-secondary)] placeholder:opacity-70
 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
-        <input
-          placeholder="Icon"
-          value={achForm.icon}
-          onChange={(e) => setAchForm({ ...achForm, icon: e.target.value })}
+        <select
+          value={achForm.type}
+          onChange={(e) => setAchForm({ ...achForm, type: e.target.value })}
           className="w-full rounded-lg border border-[var(--border)] 
 bg-[var(--input-bg)] 
 px-4 py-2.5 
-text-sm text-[var(--text-primary)] 
-placeholder:text-sm placeholder:text-[var(--text-secondary)] placeholder:opacity-70
+text-sm text-[var(--text-primary)]
 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
-        />
+        >
+          <option value="">Select Achievement Type</option>
+          <option value="award">Award</option>
+          <option value="competition">Competition</option>
+          <option value="milestone">Milestone</option>
+          <option value="certification">Certification</option>
+        </select>
         <button
           onClick={() => {
+            if (!validateSection("Achievments", achForm)) {
+              return;
+            }
             updateItem("achievements", achForm);
             setAchForm({
               id: "",

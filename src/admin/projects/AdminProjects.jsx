@@ -1,64 +1,38 @@
 import { useState } from "react";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import AdminAddProjectModal from "./AdminAddProjectModal";
-import sample1 from "../../assets/sample1.jpg";
-import sample2 from "../../assets/sample2.jpg";
-
-const dummyProjects = [
-  {
-    id: 1,
-    name: "DevTinder",
-    type: "Fullstack",
-    description: "A developer networking platform...",
-    role: "Full Stack Developer",
-    duration: "Jan 2025 – Mar 2025",
-    team: "Solo",
-    year: "2025",
-    github: "https://github.com/yourusername/devtinder",
-    live: "https://devtinder.live",
-    problem: "Developers struggle to find collaboration partners...",
-    solution: "Built a swipe-based matching platform...",
-    features: [
-      "Authentication with JWT",
-      "Real-time notifications",
-      "Premium subscription via Razorpay",
-    ],
-    tech: ["React", "Node.js", "MongoDB"],
-    screenshots: [sample1, sample2],
-    status: "Published",
-  },
-  {
-    id: 2,
-    name: "Portfolio Website",
-    type: "Fullstack",
-    description: "A developer networking platform...",
-    role: "Full Stack Developer",
-    duration: "Jan 2025 – Mar 2025",
-    team: "Solo",
-    year: "2025",
-    github: "https://github.com/yourusername/devtinder",
-    live: "https://devtinder.live",
-    problem: "Developers struggle to find collaboration partners...",
-    solution: "Built a swipe-based matching platform...",
-    features: [
-      "Authentication with JWT",
-      "Real-time notifications",
-      "Premium subscription via Razorpay",
-    ],
-    tech: ["React", "Node.js", "MongoDB"],
-    screenshots: [sample1, sample2],
-    status: "Draft",
-  },
-];
+import useProjectAPI from "../../hooks/useProjectAPI";
+import { useSelector } from "react-redux";
+import DeleteModal from "../../components/admin/DeleteModal";
 
 export default function AdminProjects() {
-  const [projects, setProjects] = useState(dummyProjects);
+  const { projects } = useSelector((state) => state.projects);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-
+  const { addProjectCall, deleteProjectAction, loading } = useProjectAPI();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [toDelete, setToDelete] = useState(null);
   const handleEdit = (project) => {
     setSelectedProject(project); // pass the project to modal
     setIsModalOpen(true); // open modal
+  };
+
+  const handleCreate = async (form, rawFiles, slug, isEdit) => {
+    const res = await addProjectCall(form, isEdit, slug, "", rawFiles);
+    if (res) {
+      setIsModalOpen(false);
+    }
+  };
+  const handleDelete = (proj) => {
+    setToDelete(proj);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    const { slug } = toDelete || "";
+    await deleteProjectAction(slug);
+    setDeleteModalOpen(false);
+    setToDelete(null);
   };
 
   return (
@@ -117,14 +91,14 @@ export default function AdminProjects() {
             <tbody>
               {projects.map((project) => (
                 <tr
-                  key={project.id}
+                  key={project._id}
                   className="
                     border-b border-[var(--border)]
                     hover:bg-[var(--background)]
                     transition-all duration-150
                   "
                 >
-                  <td className="p-4 font-medium">{project.name}</td>
+                  <td className="p-4 font-medium">{project.name || project.title}</td>
 
                   <td className="p-4 text-[var(--text-secondary)]">{project.tech.join(", ")}</td>
 
@@ -158,6 +132,7 @@ export default function AdminProjects() {
                       </button>
 
                       <button
+                        onClick={() => handleDelete(project)}
                         className="
                           p-2
                           rounded-lg
@@ -179,8 +154,15 @@ export default function AdminProjects() {
       <AdminAddProjectModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSave={(newProject) => setProjects([...projects, { ...newProject, id: Date.now() }])}
+        onSave={handleCreate}
         item={selectedProject} // pass selected project for editing
+        loading={loading}
+      />
+      <DeleteModal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        itemName={toDelete?.title || toDelete?.name}
       />
     </div>
   );

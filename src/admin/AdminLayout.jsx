@@ -4,11 +4,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiSun, FiMoon } from "react-icons/fi";
 import { ThemeContext } from "../context/ThemeContext";
 import { SidebarContent } from "../components/admin/SidebarContent";
-
+import useAboutAPI from "../hooks/useAboutAPI";
+import useExperienceAPI from "../hooks/useExperienceAPI";
+import useProjectAPI from "../hooks/useProjectAPI";
 export default function AdminLayout() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const { fetchUser } = useAboutAPI();
+  const { fetchExperience } = useExperienceAPI();
+  const { fetchProjects } = useProjectAPI();
+
+  useEffect(() => {
+    fetchUser();
+    fetchExperience();
+    fetchProjects();
+  }, []);
   useEffect(() => {
     if (darkMode) {
       document.body.classList.remove("light-theme");

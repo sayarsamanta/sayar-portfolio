@@ -3,92 +3,78 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
 import { ThemeContext } from "../context/ThemeContext";
 
-export default function FloatingConnectButton() {
+export default function FloatingConnectButtonVertical() {
   const [showButton, setShowButton] = useState(false);
-  const [alwaysVisible, setAlwaysVisible] = useState(false);
   const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     const checkScrollable = () => {
       const scrollable = document.body.scrollHeight > window.innerHeight + 10;
-      setAlwaysVisible(!scrollable);
+      setShowButton(!scrollable || window.scrollY > 50);
     };
+
     checkScrollable();
+    window.addEventListener("scroll", checkScrollable);
     window.addEventListener("resize", checkScrollable);
 
-    const handleScroll = () => {
-      if (alwaysVisible) {
-        setShowButton(true);
-      } else {
-        setShowButton(window.scrollY > 50);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    handleScroll();
-
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", checkScrollable);
       window.removeEventListener("resize", checkScrollable);
     };
-  }, [alwaysVisible]);
+  }, []);
 
   return (
     <AnimatePresence>
       {showButton && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: 100, opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className={`fixed bottom-8 right-8 z-50 px-5 py-3 rounded-full shadow-lg flex items-center gap-4 transition-colors
-        font-body
-        ${darkMode ? "bg-zinc-900" : "bg-white"}
-      `}
+          className={`fixed right-5 bottom-1/3 z-50 flex flex-col gap-4
+            p-2 rounded-full shadow-xl
+            ${darkMode ? "bg-zinc-900/80" : "bg-white/80"}
+            backdrop-blur-md`}
         >
-          <span
-            className={`font-semibold hidden md:block ${darkMode ? "text-white" : "text-black"}`}
+          {/* Github */}
+          <a
+            href="https://github.com/sayarsamanta"
+            target="_blank"
+            rel="noreferrer"
+            className={`hover:scale-110 transition-transform ${darkMode ? "text-white" : "text-black"}`}
           >
-            Connect with Me
-          </span>
-          <div className="flex gap-3 text-xl items-center">
-            {/* Github */}
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              rel="noreferrer"
-              className={`hover:opacity-80 ${darkMode ? "text-white" : "text-black"}`}
-            >
-              <FaGithub />
-            </a>
-            {/* LinkedIn */}
-            <a
-              href="https://linkedin.com/in/yourusername"
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#0A66C2] hover:opacity-80"
-            >
-              <FaLinkedin />
-            </a>
-            {/* Twitter */}
-            <a
-              href="https://twitter.com/yourusername"
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#1DA1F2] hover:opacity-80"
-            >
-              <FaTwitter />
-            </a>
-            {/* Gmail */}
-            <a
-              href="mailto:yourname@gmail.com"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:opacity-80"
-            >
-              <FaEnvelope style={{ color: "#D14836" }} />
-            </a>
-          </div>
+            <FaGithub size={24} />
+          </a>
+
+          {/* LinkedIn */}
+          <a
+            href="https://www.linkedin.com/in/sayarsamanta/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[#0A66C2] hover:scale-110 transition-transform"
+          >
+            <FaLinkedin size={24} />
+          </a>
+
+          {/* Twitter */}
+          <a
+            href="https://x.com/sayarsamanta"
+            target="_blank"
+            rel="noreferrer"
+            className="text-[#1DA1F2] hover:scale-110 transition-transform"
+          >
+            <FaTwitter size={24} />
+          </a>
+
+          {/* Email */}
+          <a
+            href="mailto:sayarsamanta@gmail.com"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:scale-110 transition-transform"
+          >
+            <FaEnvelope size={24} style={{ color: "#D14836" }} />
+          </a>
         </motion.div>
       )}
     </AnimatePresence>

@@ -1,23 +1,17 @@
-import { useContext, useEffect } from "react";
-import { FiFolder, FiBriefcase, FiCpu, FiHome, FiFileText, FiSettings } from "react-icons/fi";
-import { ThemeContext } from "../../context/ThemeContext";
+import { FiBriefcase, FiCpu, FiFolder } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-const navItems = [
-  { name: "Dashboard", path: "/admin", icon: FiHome },
-  { name: "Projects", path: "/admin/projects", icon: FiFolder },
-  { name: "Experience", path: "/admin/experience", icon: FiBriefcase },
-  { name: "Skills", path: "/admin/skills", icon: FiCpu },
-  { name: "Resume", path: "/admin/resume", icon: FiFileText },
-  { name: "Settings", path: "/admin/settings", icon: FiSettings },
-];
+
 export default function AdminDashboard() {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { projects } = useSelector((state) => state.projects);
+  const { exp } = useSelector((state) => state.experience);
+  const { user } = useSelector((state) => state.about);
+  const { skills } = user?.about || [];
   const stats = [
-    { label: "Projects", value: 8, icon: FiFolder },
-    { label: "Experience", value: 4, icon: FiBriefcase },
-    { label: "Skills", value: 18, icon: FiCpu },
+    { label: "Projects", value: projects?.length || 0, icon: FiFolder },
+    { label: "Experience", value: exp?.length || 0, icon: FiBriefcase },
+    { label: "Skills", value: skills?.length || 0, icon: FiCpu },
   ];
-  console.log("AdminDashboard rendered with darkMode:", darkMode);
 
   return (
     <div className="space-y-8 text-[var(--text-primary)] font-sans">
@@ -33,40 +27,41 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
+          if (stat.value > 0) {
+            return (
+              <div
+                key={index}
+                className="
+              rounded-2xl
+              border border-[var(--border)]
+              bg-[var(--card)]
+              p-6
+              transition-all duration-200
+              hover:border-[var(--primary)]
+              hover:shadow-md
+            "
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-[var(--text-secondary)]">{stat.label}</p>
+                    <h3 className="text-2xl font-semibold mt-1">{stat.value}</h3>
+                  </div>
 
-          return (
-            <div
-              key={index}
-              className="
-            rounded-2xl
-            border border-[var(--border)]
-            bg-[var(--card)]
-            p-6
-            transition-all duration-200
-            hover:border-[var(--primary)]
-            hover:shadow-md
-          "
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-[var(--text-secondary)]">{stat.label}</p>
-                  <h3 className="text-2xl font-semibold mt-1">{stat.value}</h3>
-                </div>
-
-                <div
-                  className="
-                p-3
-                rounded-xl
-                bg-[var(--background)]
-                border border-[var(--border)]
-                text-[var(--text-secondary)]
-              "
-                >
-                  <Icon size={20} />
+                  <div
+                    className="
+                  p-3
+                  rounded-xl
+                  bg-[var(--background)]
+                  border border-[var(--border)]
+                  text-[var(--text-secondary)]
+                "
+                  >
+                    <Icon size={20} />
+                  </div>
                 </div>
               </div>
-            </div>
-          );
+            );
+          }
         })}
       </div>
 
@@ -136,12 +131,6 @@ export default function AdminDashboard() {
             </Link>
 
             {/* Upload Resume */}
-            <Link
-              to="/admin/resume"
-              className="flex items-center gap-3 px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-xl font-medium hover:opacity-90 transition-all duration-200 shadow hover:shadow-lg min-w-[150px] justify-center"
-            >
-              + Upload Resume
-            </Link>
           </div>
         </div>
       </div>

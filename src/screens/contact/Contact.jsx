@@ -1,27 +1,37 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ThemeContext } from "../../context/ThemeContext";
-
+import useContactAPI from "../../hooks/useContactAPI";
+import { Input } from "../../components/admin/projects/Input";
+import { Textarea } from "../../components/admin/projects/Textarea";
+import { validateContactUsForm } from "../../utils/helper";
 export default function Contact() {
-  const { darkMode } = useContext(ThemeContext);
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState({});
 
+  const { sendEmail } = useContactAPI();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    setSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
-    setTimeout(() => setSubmitted(false), 3000);
+    if (!validateContactUsForm(formData, setError)) return;
+    const { name, email, message } = formData;
+
+    const res = await sendEmail(name, email, message);
+    if (res) {
+      setFormData({ name: "", email: "", message: "" });
+      setSubmitted()(true);
+    }
   };
 
   return (
@@ -62,7 +72,7 @@ export default function Contact() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
         onSubmit={handleSubmit}
-        className="max-w-2xl mx-auto rounded-3xl p-10 flex flex-col gap-6 shadow-2xl border transition"
+        className="max-w-2xl w-full sm:w-4/5 md:w-2/3 lg:w-1/2 mx-auto rounded-lg p-6 sm:p-8 md:p-10 flex flex-col gap-6 shadow-2xl border transition"
         style={{
           background: "var(--card-gradient)", // gradient depends on theme
           backdropFilter: "blur(20px)",
@@ -70,57 +80,33 @@ export default function Contact() {
         }}
       >
         {/* Name Input */}
-        <input
+        <Input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
           placeholder="Your Name"
-          required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
-            border: "1px solid var(--border)",
-            color: "var(--text-primary)",
-            caretColor: "var(--primary)",
-            backdropFilter: "blur(12px)",
-          }}
+          error={error.name}
         />
 
         {/* Email Input */}
-        <input
+        <Input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
           placeholder="Your Email"
-          required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full font-body transition shadow-inner"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
-            border: "1px solid var(--border)",
-            color: "var(--text-primary)",
-            caretColor: "var(--primary)",
-            backdropFilter: "blur(12px)",
-          }}
+          error={error.email}
         />
 
         {/* Message Textarea */}
-        <textarea
+        <Textarea
           name="message"
           value={formData.message}
           onChange={handleChange}
           placeholder="Your Message"
           rows={6}
-          required
-          className="px-5 py-3 rounded-2xl focus:outline-none focus:ring-2 w-full resize-none font-body transition shadow-inner"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08))",
-            border: "1px solid var(--border)",
-            color: "var(--text-primary)",
-            caretColor: "var(--primary)",
-            backdropFilter: "blur(12px)",
-          }}
+          error={error.message}
         />
         <motion.button
           whileHover={{

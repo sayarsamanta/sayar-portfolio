@@ -1,50 +1,21 @@
-import { Edit2, Plus, Trash2 } from "lucide-react";
-import { useContext, useState } from "react";
+import { Edit2, Trash2 } from "lucide-react";
+import { useState } from "react";
 import DeleteModal from "../../components/admin/DeleteModal";
-import { ThemeContext } from "../../context/ThemeContext";
 import AdminAddExperienceModal from "./AdminAddExperienceModal";
-// import DeleteModal from "../../components/DeleteModal"; // if you already have a delete modal
+import { useSelector } from "react-redux";
+import EmptySection from "../../components/admin/experience/EmptySection";
+import useExperienceAPI from "../../hooks/useExperienceAPI";
 
 export default function AdminExperience() {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
-
-  const [experiences, setExperiences] = useState([
-    // sample data
-    {
-      id: 1,
-      role: "Full Stack Developer",
-      company: "TechCorp Inc.",
-      duration: "Jan 2023 - Present",
-      description:
-        "Built end-to-end web applications using React, Node.js, and MongoDB. Led a team of 3 developers.",
-      tech: ["React", "Node.js", "MongoDB", "Tailwind", "Framer Motion"],
-    },
-    {
-      id: 2,
-      role: "Frontend Developer",
-      company: "Designify Labs",
-      duration: "Jun 2021 - Dec 2022",
-      description:
-        "Developed interactive UI components, animations, and responsive layouts using React and Tailwind.",
-      tech: ["React", "Tailwind", "Framer Motion", "GSAP"],
-    },
-    {
-      id: 3,
-      role: "Intern - Web Developer",
-      company: "Startup Hub",
-      duration: "Jan 2021 - May 2021",
-      description: "Worked on landing pages and small full-stack features with React and Node.js.",
-      tech: ["React", "Node.js", "Express", "MongoDB"],
-    },
-  ]);
-
+  const { exp } = useSelector((state) => state.experience || {});
+  const { addExperienceCall, deleteExperienceAction } = useExperienceAPI();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState(null);
 
-  // ------------------ Handlers ------------------
+  // Handlers
   const handleAddNew = () => {
     setSelectedExperience(null);
     setModalOpen(true);
@@ -60,85 +31,107 @@ export default function AdminExperience() {
     setDeleteModalOpen(true);
   };
 
-  const confirmDelete = () => {
-    setExperiences((prev) => prev.filter((e) => e.id !== toDelete.id));
+  const confirmDelete = async () => {
+    const { slug } = toDelete || "";
+    await deleteExperienceAction(slug);
     setDeleteModalOpen(false);
     setToDelete(null);
   };
 
-  const handleSave = (data, isEdit) => {
+  const handleSubmit = async (form, isEdit, slug, id) => {
     if (isEdit) {
-      setExperiences((prev) => prev.map((e) => (e.id === data.id ? data : e)));
+      await addExperienceCall(form, isEdit, slug, id);
+      setModalOpen(false);
     } else {
-      setExperiences((prev) => [...prev, { ...data, id: Date.now() }]);
+      await addExperienceCall(form);
+      setModalOpen(false);
     }
   };
 
   return (
-    <div className="p-8 space-y-6 font-sans">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Experience</h1>
-        <button
-          onClick={handleAddNew}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded"
-        >
-          <Plus size={16} />
-          Add Experience
-        </button>
-      </div>
+    <div className="p-6 md:p-8 space-y-6 font-sans min-h-screen bg-[var(--background)]">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 w-full">
+        {/* Heading */}
+        <h1 className="text-4xl sm:text-4xl md:text-4xl font-heading font-bold text-center sm:text-left w-full sm:w-auto">
+          Experience
+        </h1>
 
-      <div className="space-y-4">
-        {experiences.map((exp) => (
-          <div
-            key={exp.id}
-            className="p-4 bg-[var(--card)] border border-[var(--border)] rounded flex justify-between items-start"
+        {/* Add Experience button */}
+        <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+          <button
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md"
+            onClick={handleAddNew}
           >
-            <div>
-              {/* Role + Company */}
-              <h3 className="text-lg font-semibold">
-                {exp.role} @ {exp.company}
-              </h3>
-
-              {/* Duration + Location */}
-              <p className="text-sm text-gray-500 mt-1">
-                {exp.duration} | {exp.location}
-              </p>
-
-              {/* Description */}
-              <p className="text-sm mt-2 text-[var(--text-muted)]">{exp.description}</p>
-
-              {/* Technologies */}
-              <p className="text-sm mt-1 text-[var(--text-muted)]">
-                <strong>Technologies:</strong> {exp.tech.join(", ")}
-              </p>
-            </div>
-
-            {/* Actions */}
-            <div className="flex gap-2 mt-2">
-              <button
-                onClick={() => handleEdit(exp)}
-                className="p-2 bg-yellow-400 rounded"
-                title="Edit"
-              >
-                <Edit2 size={16} />
-              </button>
-              <button
-                onClick={() => handleDelete(exp)}
-                className="p-2 bg-red-500 rounded text-white"
-                title="Delete"
-              >
-                <Trash2 size={16} />
-              </button>
-            </div>
-          </div>
-        ))}
+            Add Experience
+          </button>
+        </div>
       </div>
+      {exp?.length === 0 && <EmptySection isAdmin={true} type={"Experience"} />}
+
+      {/* Experience List */}
+      {exp?.length > 0 && (
+        <div className="flex flex-col w-full gap-4">
+          {exp?.map((exp) => (
+            <div
+              key={exp._id}
+              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-[var(--card)] rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] gap-4"
+            >
+              {/* Content */}
+              <div className="flex-1 w-full">
+                <h3 className="text-lg md:text-xl font-semibold">
+                  {exp.role} @ {exp.company}
+                </h3>
+                <p className="text-sm text-[var(--text-secondary)] mt-1">
+                  {exp.duration} {exp.location ? `| ${exp.location}` : ""}
+                </p>
+
+                <p className="text-sm mt-2 text-[var(--text-muted)]">{exp.description}</p>
+
+                {exp.tech?.some((item) => item.trim() !== "") && (
+                  <p className="text-sm mt-2 text-[var(--text-muted)]">
+                    <strong>Technologies:</strong>{" "}
+                    <span className="flex flex-wrap gap-2 mt-1">
+                      {exp.tech.filter(Boolean).map((t, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 text-xs rounded-full border border-[var(--border)] text-[var(--text-secondary)]"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </span>
+                  </p>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-shrink-0 gap-2 mt-2 md:mt-0">
+                <button
+                  onClick={() => handleEdit(exp)}
+                  className="p-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
+                  title="Edit"
+                >
+                  <Edit2 size={16} />
+                </button>
+                <button
+                  onClick={() => handleDelete(exp)}
+                  className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
+                  title="Delete"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Modals */}
       <AdminAddExperienceModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSave={handleSave}
+        onSave={handleSubmit}
         item={selectedExperience}
       />
 

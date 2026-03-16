@@ -5,7 +5,7 @@ import { FiMenu, FiX, FiSun, FiMoon, FiShield } from "react-icons/fi";
 import { ThemeContext } from "../context/ThemeContext";
 import { useSelector } from "react-redux";
 import ProfileAvatar from "./profilepic/ProfileAvatar";
-
+import placeholder from "../assets/placeholder.jpg";
 const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
@@ -16,6 +16,7 @@ const navItems = [
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.about || null);
+  const token = localStorage.getItem("adminToken");
   const [scrolled, setScrolled] = useState(
     typeof window !== "undefined" ? window.scrollY > 10 : false
   );
@@ -23,7 +24,12 @@ const Navbar = () => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const { profileImg, role } = user || {};
+  const {
+    about: {
+      intro: { profileImg },
+    },
+    role,
+  } = user || {};
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
@@ -74,7 +80,7 @@ const Navbar = () => {
           className="flex items-center gap-3 cursor-pointer"
         >
           <div className="relative rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block">
-            <ProfileAvatar src={profileImg} size="small" />
+            <ProfileAvatar src={profileImg || placeholder} size="small" />
             <motion.div
               animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.15, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -137,7 +143,7 @@ const Navbar = () => {
               )}
             </NavLink>
           ))}
-          {role === "admin" && (
+          {token && (
             <NavLink
               to="/admin"
               className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
@@ -200,7 +206,7 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
-            {role === "admin" && (
+            {token && (
               <NavLink
                 to="/admin"
                 className="py-2 w-full transition-colors duration-300 font-heading flex items-center gap-2"

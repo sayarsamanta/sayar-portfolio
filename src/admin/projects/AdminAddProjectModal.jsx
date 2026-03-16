@@ -1,55 +1,32 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
-
 import { Section } from "../../components/admin/projects/Section";
 import { DynamicList } from "../../components/admin/projects/DynamicList";
 import { Input } from "../../components/admin/projects/Input";
 import { Textarea } from "../../components/admin/projects/Textarea";
-
 import ProjectCard from "../../components/project/ProjectCard";
+import { BLANK_FORM, validateProj } from "../../utils/helper";
+import AdminAddScreenshot from "./AdminAddScreenshot";
 
-export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) {
-  const [form, setForm] = useState({
-    name: "",
-    type: "",
-    description: "",
-    role: "",
-    duration: "",
-    status: "Draft",
-    team: "",
-    year: "",
-    github: "",
-    live: "",
-    problem: "",
-    solution: "",
-    features: [""],
-    tech: [""],
-    screenshots: [],
-  });
+export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, loading }) {
+  const [rawFiles, setRawFiles] = useState([]);
+  const [form, setForm] = useState(BLANK_FORM);
 
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (item) {
-      setForm({
-        name: item.name || "",
-        type: item.type || "",
-        description: item.description || "",
-        role: item.role || "",
-        duration: item.duration || "",
-        status: item.status || "Draft",
-        team: item.team || "",
-        year: item.year || "",
-        github: item.github || "",
-        live: item.live || "",
-        problem: item.problem || "",
-        solution: item.solution || "",
-        features: item.features?.length ? item.features : [""],
-        tech: item.tech?.length ? item.tech : [""],
-        screenshots: item.screenshots || [],
-        id: item.id,
-      });
+    if (isOpen) {
+      if (item) {
+        setForm({
+          ...BLANK_FORM,
+          ...item,
+          features: item.features?.length ? item.features : [""],
+          tech: item.tech?.length ? item.tech : [""],
+        });
+      } else {
+        setForm(BLANK_FORM);
+      }
     }
   }, [item, isOpen]);
 
@@ -57,12 +34,20 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+    }));
   };
 
   const handleArrayChange = (index, field, value) => {
     const updated = [...form[field]];
     updated[index] = value;
     setForm({ ...form, [field]: updated });
+    setErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
   };
 
   const addArrayField = (field) => {
@@ -77,24 +62,30 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
 
   const handleScreenshotUpload = (e) => {
     const files = Array.from(e.target.files);
+
+    // Store the raw files for the API call
+    setRawFiles(files);
+
+    // Store the previews for the Live Preview UI
     const previews = files.map((file) => URL.createObjectURL(file));
     setForm({ ...form, screenshots: previews });
   };
 
-  const validate = () => {
-    const newErrors = {};
-    if (!form.name.trim()) newErrors.name = "Project name required";
-    if (!form.description.trim()) newErrors.description = "Description required";
-    if (!form.year.trim()) newErrors.year = "Year required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = () => {
-    if (!validate()) return;
-    onSave(form);
-    onClose();
+    if (!validateProj(form, setErrors, item, rawFiles)) return;
+    onSave(form, rawFiles, item?.slug, !!item);
+  };
+  const handleClose = () => {
+    // form.screenshots.forEach((url) => {
+    //   if (url.startsWith("blob:")) URL.revokeObjectURL(url);
+    // });
+    setForm(BLANK_FORM);
+    setRawFiles([]);
+    setErrors({});
+
+    setTimeout(() => {
+      onClose();
+    }, 0);
   };
 
   return createPortal(
@@ -119,7 +110,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-xl font-semibold">{item ? "Edit Project" : "Add Project"}</h3>
 
-            <button onClick={onClose}>
+            <button onClick={handleClose}>
               <X size={20} />
             </button>
           </div>
@@ -131,11 +122,11 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
               {/* BASIC INFO */}
               <Section title="Basic Information">
                 <Input
-                  name="name"
+                  name="title"
                   placeholder="Project Name"
-                  value={form.name}
+                  value={form.title}
                   onChange={handleChange}
-                  error={errors.name}
+                  error={errors.title}
                 />
 
                 <Input
@@ -143,6 +134,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                   placeholder="Type (Fullstack / Frontend)"
                   value={form.type}
                   onChange={handleChange}
+                  error={errors.type} // Added
                 />
 
                 <Textarea
@@ -158,6 +150,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                   placeholder="Your Role"
                   value={form.role}
                   onChange={handleChange}
+                  error={errors.role} // Added
                 />
 
                 <Input
@@ -165,6 +158,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                   placeholder="Duration (Jan 2025 – Mar 2025)"
                   value={form.duration}
                   onChange={handleChange}
+                  error={errors.duration} // Added
                 />
 
                 <Input
@@ -172,6 +166,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                   placeholder="Team (Solo / 3 Members)"
                   value={form.team}
                   onChange={handleChange}
+                  error={errors.team} // Added
                 />
 
                 <Input
@@ -190,6 +185,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                   placeholder="GitHub URL"
                   value={form.github}
                   onChange={handleChange}
+                  error={errors.github} // Added
                 />
 
                 <Input
@@ -197,6 +193,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                   placeholder="Live URL"
                   value={form.live}
                   onChange={handleChange}
+                  error={errors.live} // Added
                 />
 
                 <select
@@ -205,8 +202,9 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                   onChange={handleChange}
                   className="input-glass"
                 >
-                  <option value="Draft">Draft</option>
                   <option value="Live">Live</option>
+                  <option value="Development">Development</option>
+                  <option value="Completed">Completed</option>
                 </select>
               </Section>
 
@@ -214,16 +212,17 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
               <Section title="Problem & Solution">
                 <Textarea
                   name="problem"
-                  placeholder="Problem Statement"
+                  placeholder="Problem Description"
                   value={form.problem}
                   onChange={handleChange}
+                  error={errors.problem}
                 />
-
                 <Textarea
                   name="solution"
                   placeholder="Solution Description"
                   value={form.solution}
                   onChange={handleChange}
+                  error={errors.solution}
                 />
               </Section>
 
@@ -235,6 +234,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                 handleArrayChange={handleArrayChange}
                 addArrayField={addArrayField}
                 removeArrayField={removeArrayField}
+                errors={errors}
               />
 
               {/* TECH STACK */}
@@ -245,18 +245,16 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
                 handleArrayChange={handleArrayChange}
                 addArrayField={addArrayField}
                 removeArrayField={removeArrayField}
+                errors={errors}
               />
-
-              {/* SCREENSHOTS */}
-              <Section title="Screenshots">
-                <input type="file" multiple onChange={handleScreenshotUpload} />
-
-                <div className="grid grid-cols-3 gap-4 mt-4">
-                  {form.screenshots.map((src, i) => (
-                    <img key={i} src={src} className="rounded-lg border border-[var(--border)]" />
-                  ))}
-                </div>
-              </Section>
+              <AdminAddScreenshot
+                form={form}
+                handleScreenshotUpload={handleScreenshotUpload}
+                errors={errors}
+                rawFiles={rawFiles || item?.screenshots}
+                setRawFiles={setRawFiles}
+                setForm={setForm}
+              />
 
               {/* ACTION BUTTONS */}
               <div className="flex justify-end gap-4 pt-4">
@@ -269,9 +267,42 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item }) 
 
                 <button
                   onClick={handleSubmit}
-                  className="px-6 py-2 rounded-xl bg-[var(--primary)] text-[var(--text-button)]"
+                  disabled={loading} // Prevent multiple clicks
+                  className={`
+    px-6 py-2 rounded-xl bg-[var(--primary)] text-[var(--text-button)]
+    flex items-center justify-center gap-2 transition-all
+    ${loading ? "opacity-70 cursor-not-allowed" : "hover:brightness-110 active:scale-95"}
+  `}
                 >
-                  {item ? "Save Changes" : "Save Project"}
+                  {loading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-4 w-4 text-current"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      <span>Processing...</span>
+                    </>
+                  ) : item ? (
+                    "Save Changes"
+                  ) : (
+                    "Save Project"
+                  )}
                 </button>
               </div>
             </div>

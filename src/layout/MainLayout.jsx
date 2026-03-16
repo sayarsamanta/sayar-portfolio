@@ -7,12 +7,23 @@ import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import MaintenancePage from "../screens/maintenance/MaintenancePage";
 import useAdminShortcut from "../hooks/useAdminShortcut";
+import useAboutAPI from "../hooks/useAboutAPI";
 
 const MainLayout = () => {
-  const { user } = useSelector((state) => state.about || null);
   const { darkMode } = useContext(ThemeContext);
   const location = useLocation();
   useAdminShortcut();
+
+  const about = useSelector((state) => state.about.data);
+  const user = useSelector((state) => state.about.user); // nested about object
+
+  const { fetchUser, loading } = useAboutAPI();
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  // Theme handling
   useEffect(() => {
     if (darkMode) {
       document.body.classList.remove("light-theme");
@@ -20,29 +31,37 @@ const MainLayout = () => {
       document.body.classList.add("light-theme");
     }
   }, [darkMode]);
-  if (!user) {
+
+  // Show loader while fetching
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+
+  // Show maintenance page if about data is still missing
+  if (!about) {
     return <MaintenancePage />;
   }
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--text-primary)]">
+      {/* Navbar */}
       {user && <Navbar />}
 
-      <AnimatePresence mode="wait">
+      {/* Page Content with animation */}
+      <AnimatePresence mode="wait" className="flex-grow">
         <motion.div
           key={location.pathname}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.4 }}
-          className="flex-grow h-screen pt-14"
-          style={{
-            backgroundColor: "var(--background)",
-            color: "var(--text-primary)",
-          }}
+          className="flex-grow pt-14 pb-32 md:pb-0 overflow-auto" // extra padding bottom for floating button
         >
           <Outlet />
         </motion.div>
       </AnimatePresence>
+
+      {/* Floating Connect Button */}
       <FloatingConnectButton />
     </div>
   );

@@ -1,31 +1,44 @@
+import { Moon, Sun, Trash2 } from "lucide-react";
 import { useContext, useState } from "react";
-import { Sun, Moon, LogOut, Key, Trash2, Download } from "lucide-react";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useSelector } from "react-redux";
+import useResumeHandler from "../../hooks/useResumeHandler";
+import useAboutAPI from "../../hooks/useAboutAPI";
+import toast from "react-hot-toast";
 
 export default function AdminSettingsPage() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
-
-  // --------- STATES ----------
-  const [primaryColor, setPrimaryColor] = useState("#3b82f6"); // Tailwind blue-500
-  const [name, setName] = useState("Admin Name");
-  const [email, setEmail] = useState("admin@example.com");
-  const [password, setPassword] = useState("");
-  const [resumeFileName, setResumeFileName] = useState("Resume.pdf");
-
+  const about = useSelector((state) => state.about);
+  const { uploadResume, loading, deleteResume, deleteLoading } = useResumeHandler();
+  const { saveAbout } = useAboutAPI();
+  const { resume } = about.user || "";
+  const [name, setName] = useState("Sayar Samanta");
+  const [email, setEmail] = useState("sayarsamanta@gmail.com");
+  const [resumeFile, setResumeFile] = useState(null);
   // --------- HANDLERS ----------
   const handleToggleDarkMode = () => setDarkMode(!darkMode);
 
-  const handleSaveProfile = () => {
-    alert("Profile Saved!");
+  const handleSaveProfile = async () => {
     // integrate API later
+    const payload = {
+      name: name || "Sayar Samanta",
+      email: email || "sayarsamanta@gmail.com",
+    };
+    if (!name && !email) {
+      toast.error("Name and Email both can not be empty!!");
+      return;
+    }
+    await saveAbout(payload, "", true);
   };
-  const handleChangePassword = () => {
-    alert("Password Changed!");
-    setPassword("");
-  };
-  const handleDownloadResume = () => {
-    alert("Downloading Resume...");
+  const hadleUploadResume = () => {
     // integrate file download
+    uploadResume(resumeFile);
+  };
+  const handleResumeChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setResumeFile(file);
+    }
   };
   const handleDeleteAccount = () => {
     if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
@@ -34,109 +47,113 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const handleDeleteResume = () => {
+    deleteResume();
+  };
+
   return (
-    <div className="p-8 space-y-8 font-sans">
-      <h1 className="text-2xl font-semibold">Admin Settings</h1>
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 font-sans">
+      <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1>
 
       {/* -------- PROFILE SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
-        <h2 className="text-xl font-semibold">Profile Information</h2>
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold">Profile Information</h2>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
-            className="input-glass"
+            className="input-glass w-full"
           />
+
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="input-glass"
+            className="input-glass w-full"
           />
         </div>
+
         <button
           onClick={handleSaveProfile}
-          className="px-4 py-2 bg-[var(--primary)] text-[var(--text-button)] rounded-xl"
+          className="w-full sm:w-auto px-4 py-2 bg-[var(--primary)] text-[var(--text-button)] rounded-xl"
         >
           Save Profile
         </button>
       </div>
 
       {/* -------- APPEARANCE SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
-        <h2 className="text-xl font-semibold">Appearance & Theme</h2>
-        <div className="flex items-center gap-6">
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
+
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
           <button
             onClick={handleToggleDarkMode}
-            className="flex items-center gap-2 px-4 py-2 border rounded-xl"
+            className="flex items-center justify-center gap-2 px-4 py-2 border rounded-xl w-full sm:w-auto"
           >
             {darkMode ? <Moon size={16} /> : <Sun size={16} />}
             {darkMode ? "Dark Mode" : "Light Mode"}
           </button>
-
-          {/* <label className="flex items-center gap-2">
-            Primary Color:
-            <input
-              type="color"
-              value={primaryColor}
-              onChange={handleColorChange}
-              className="w-10 h-8 border rounded"
-            />
-          </label> */}
         </div>
-      </div>
-
-      {/* -------- PASSWORD SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
-        <h2 className="text-xl font-semibold">Security</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="New Password"
-            className="input-glass"
-          />
-        </div>
-        <button
-          onClick={handleChangePassword}
-          className="px-4 py-2 bg-[var(--primary)] text-[var(--text-button)] rounded-xl flex items-center gap-2"
-        >
-          <Key size={16} /> Change Password
-        </button>
       </div>
 
       {/* -------- RESUME SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
-        <h2 className="text-xl font-semibold">Resume / Portfolio</h2>
-        <div className="flex items-center gap-4">
-          <span>{resumeFileName}</span>
-          <button
-            onClick={handleDownloadResume}
-            className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            <Download size={16} /> Download
-          </button>
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold">Resume / Portfolio</h2>
+
+        <div className="flex flex-col gap-4 w-full">
+          <span className="truncate text-sm sm:text-base max-w-full">
+            {resume?.split("/").pop()}
+          </span>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={handleResumeChange}
+              className="border p-2 rounded flex-1 min-w-[160px]"
+            />
+
+            <button
+              onClick={hadleUploadResume}
+              disabled={loading}
+              className="px-4 py-2 bg-[var(--primary)] text-white rounded whitespace-nowrap disabled:opacity-50 flex items-center gap-2"
+            >
+              {loading && (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              )}
+
+              {loading ? "Uploading..." : "Upload Resume"}
+            </button>
+
+            <button
+              onClick={handleDeleteResume}
+              disabled={deleteLoading}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-all whitespace-nowrap"
+            >
+              {deleteLoading && (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              )}
+              <Trash2 size={16} />
+              {deleteLoading ? "Deleting..." : "Delete"}
+            </button>
+          </div>
         </div>
       </div>
 
       {/* -------- ACCOUNT ACTIONS -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 space-y-4">
-        <h2 className="text-xl font-semibold">Account Actions</h2>
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold">Account Actions</h2>
+
         <button
           onClick={handleDeleteAccount}
-          className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
         >
-          <Trash2 size={16} /> Delete Account
-        </button>
-        <button
-          onClick={() => alert("Logging out...")}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-        >
-          <LogOut size={16} /> Logout
+          <Trash2 size={16} />
+          Delete Account
         </button>
       </div>
     </div>

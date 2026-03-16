@@ -1,5 +1,7 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
+import { validateSection } from "../../../utils/helper";
+
 const percentageOptions = Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
 const AboutSkillEditor = ({ about, skillForm, setSkillForm, updateItem, removeItem }) => {
   return (
@@ -64,6 +66,10 @@ px-4 py-2.5 text-sm text-[var(--text-primary)]"
 
         <button
           onClick={() => {
+            if (!validateSection("Skills", skillForm)) {
+              return;
+            }
+
             updateItem("skills", skillForm);
 
             setSkillForm({
