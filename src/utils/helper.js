@@ -148,13 +148,14 @@ export const validateProj = (form, setErrors, item, rawFiles) => {
   if (!item && rawFiles.length === 0) {
     newErrors.screenshots = "At least one screenshot is required for new projects";
   }
-
+  if (Object.keys(newErrors).length > 0) {
+    toast.error("Please fill in all required fields", {
+      id: "validation-error", // Prevents multiple duplicate toasts if clicked rapidly
+      duration: 3000,
+    });
+  }
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
-  // toast.error("Please fill in all required fields", {
-  //   id: "validation-error", // Prevents multiple duplicate toasts if clicked rapidly
-  //   duration: 3000,
-  // });
 };
 
 export const BLANK_FORM = {
@@ -173,4 +174,16 @@ export const BLANK_FORM = {
   features: [""],
   tech: [""],
   screenshots: [],
+};
+
+export const validateContactUsForm = (form, setErrors) => {
+  const newErrors = {};
+
+  // Required Text Fields
+  if (!form.name.trim()) newErrors.name = "Name is required";
+  if (!form.email.trim()) newErrors.email = "Email is required";
+  if (!form.message.trim()) newErrors.message = "Message can not be empty";
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
 };

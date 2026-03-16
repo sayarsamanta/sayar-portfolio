@@ -131,12 +131,6 @@ export default function AdminDashboard() {
             </Link>
 
             {/* Upload Resume */}
-            <Link
-              to="/admin/resume"
-              className="flex items-center gap-3 px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-xl font-medium hover:opacity-90 transition-all duration-200 shadow hover:shadow-lg min-w-[150px] justify-center"
-            >
-              + Upload Resume
-            </Link>
           </div>
         </div>
       </div>

@@ -7,9 +7,9 @@ const api = axios.create({
 // Add request interceptor to automatically attach token
 api.interceptors.request.use(
   (config) => {
-    const token = import.meta.env.VITE_BEARER_TOKEN; // or any auth storage
+    const token = localStorage.getItem("adminToken"); // ✅ get token dynamically
     if (token) {
-      config.headers["Authorization"] = `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },

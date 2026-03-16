@@ -43,26 +43,25 @@ const MainLayout = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--text-primary)]">
+      {/* Navbar */}
       {user && <Navbar />}
 
-      <AnimatePresence mode="wait">
+      {/* Page Content with animation */}
+      <AnimatePresence mode="wait" className="flex-grow">
         <motion.div
           key={location.pathname}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.4 }}
-          className="flex-grow h-screen pt-14"
-          style={{
-            backgroundColor: "var(--background)",
-            color: "var(--text-primary)",
-          }}
+          className="flex-grow pt-14 pb-32 md:pb-0 overflow-auto" // extra padding bottom for floating button
         >
           <Outlet />
         </motion.div>
       </AnimatePresence>
 
+      {/* Floating Connect Button */}
       <FloatingConnectButton />
     </div>
   );

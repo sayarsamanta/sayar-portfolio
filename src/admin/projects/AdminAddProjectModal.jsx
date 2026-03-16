@@ -10,7 +10,6 @@ import { BLANK_FORM, validateProj } from "../../utils/helper";
 import AdminAddScreenshot from "./AdminAddScreenshot";
 
 export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, loading }) {
-  console.log(item);
   const [rawFiles, setRawFiles] = useState([]);
   const [form, setForm] = useState(BLANK_FORM);
 
@@ -35,12 +34,20 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+    }));
   };
 
   const handleArrayChange = (index, field, value) => {
     const updated = [...form[field]];
     updated[index] = value;
     setForm({ ...form, [field]: updated });
+    setErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
   };
 
   const addArrayField = (field) => {

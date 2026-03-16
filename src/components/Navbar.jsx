@@ -16,7 +16,7 @@ const navItems = [
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.about || null);
-  console.log(user);
+  const token = localStorage.getItem("adminToken");
   const [scrolled, setScrolled] = useState(
     typeof window !== "undefined" ? window.scrollY > 10 : false
   );
@@ -143,7 +143,7 @@ const Navbar = () => {
               )}
             </NavLink>
           ))}
-          {role === "admin" && (
+          {token && (
             <NavLink
               to="/admin"
               className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
@@ -206,7 +206,7 @@ const Navbar = () => {
                 {item.name}
               </NavLink>
             ))}
-            {role === "admin" && (
+            {token && (
               <NavLink
                 to="/admin"
                 className="py-2 w-full transition-colors duration-300 font-heading flex items-center gap-2"

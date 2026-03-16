@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./Experience.css";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import ExpCard from "../../components/experience/expCard";
@@ -17,7 +16,7 @@ export default function Experience() {
 
   return (
     <div
-      className="min-h-screen w-full py-24 px-6"
+      className="min-h-screen w-full py-16 px-4 md:px-6"
       style={{
         backgroundColor: "var(--background)",
         color: "var(--text-primary)",
@@ -25,7 +24,7 @@ export default function Experience() {
     >
       {/* Section Title */}
       {experienceData && experienceData.length > 0 && (
-        <h1 className="text-4xl md:text-6xl font-heading font-bold text-center mb-20">
+        <h1 className="text-3xl md:text-5xl font-heading font-bold text-center mb-16">
           Experience
         </h1>
       )}
@@ -33,43 +32,44 @@ export default function Experience() {
       {experienceData && experienceData.length === 0 && <EmptySection type={"Experience"} />}
 
       {experienceData && experienceData.length > 0 && (
-        <div className="relative max-w-5xl mx-auto">
-          {/* Center Gradient Line */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Vertical Timeline Line */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 top-0 w-[4px] h-full opacity-30"
+            className="absolute left-1/2 -translate-x-1/2 top-0 w-[3px] h-full opacity-30"
             style={{
               background:
                 "linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent))",
             }}
           />
 
-          <div className="flex flex-col gap-16 relative">
+          <div className="flex flex-col gap-10 relative">
             {experienceData.map((exp, index) => {
-              const isLeft = index % 2 === 0; // alternate sides
+              const isLeft = index % 2 === 0;
+
               return (
                 <div
                   key={exp._id}
                   className={`relative w-full flex ${isLeft ? "justify-start" : "justify-end"}`}
                 >
                   {/* Dot on timeline */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-6 w-4 h-4 rounded-full bg-[var(--primary)] z-10 shadow-md"></div>
+                  <div className="absolute left-1/2 -translate-x-1/2 top-3 w-3 h-3 rounded-full bg-[var(--primary)] z-10 shadow-md"></div>
 
-                  {/* Card without border */}
+                  {/* Compact Card */}
                   <motion.div
-                    className="card-motion bg-[var(--card)] rounded-2xl p-6 max-w-md w-full"
+                    className="bg-[var(--card)] rounded-xl p-4 max-w-xs md:max-w-sm w-full shadow-sm cursor-pointer hover:shadow-md transition"
                     layout
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    // initial={{ opacity: 0, y: 10 }}
+                    // whileInView={{ opacity: 1, y: 0 }}
+                    // viewport={{ once: true }}
+                    // transition={{ duration: 0.4, delay: index * 0.05 }}
+                    // whileHover={{ scale: 1.03 }}
                   >
                     <ExpCard
                       expandedId={expandedId}
                       setExpandedId={setExpandedId}
                       index={index}
                       {...exp}
+                      compact={false} // pass prop for compact view if needed
                     />
                   </motion.div>
                 </div>

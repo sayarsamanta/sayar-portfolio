@@ -77,15 +77,12 @@ const useProjectAPI = () => {
           rawFiles.forEach((file) => {
             data.append("screenshots", file);
           });
-          console.log(JSON.stringify(data));
           const result = await api.put(`/projects/${slug}`, data);
-          console.log(result);
           toast.success("Project updated successfully!!");
           setLoading(false);
           dispatch(editProjects({ id: result.data.data._id, updatedData: result.data.data }));
           return result?.data;
         } else {
-          console.log(payload);
           setLoading(true);
           const data = new FormData();
 
@@ -114,7 +111,6 @@ const useProjectAPI = () => {
           });
 
           const result = await api.post("/projects", data);
-          console.log(result);
           toast.success("Project created successfully!!");
           setLoading(false);
           dispatch(addProject(result.data.data));

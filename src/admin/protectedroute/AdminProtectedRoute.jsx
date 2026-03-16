@@ -1,46 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { jwtDecode } from "jwt-decode";
 
 export default function AdminProtectedRoute({ children }) {
-  const [isValid, setIsValid] = useState(true);
+  const [isChecking, setIsChecking] = useState(true); // waiting for token check
+  const [isValid, setIsValid] = useState(false);
 
-  //   useEffect(() => {
-  //     const token = localStorage.getItem("adminToken");
+  useEffect(() => {
+    const token = localStorage.getItem("adminToken");
 
-  //     if (!token) {
-  //       setIsValid(false);
-  //       return;
-  //     }
+    if (!token) {
+      setIsValid(false);
+      setIsChecking(false);
+      return;
+    }
 
-  //     try {
-  //       const decoded = jwtDecode(token);
+    try {
+      const decoded = jwtDecode(token);
+      const isExpired = decoded.exp * 1000 < Date.now();
 
-  //       const isExpired = decoded.exp * 1000 < Date.now();
+      setIsValid(!isExpired);
 
-  //       if (isExpired) {
-  //         localStorage.removeItem("adminToken");
-  //         setIsValid(false);
-  //       } else {
-  //         setIsValid(true);
-  //       }
-  //     } catch (error) {
-  //       localStorage.removeItem("adminToken");
-  //       setIsValid(false);
-  //     }
-  //   }, []);
+      if (isExpired) localStorage.removeItem("adminToken");
+    } catch {
+      localStorage.removeItem("adminToken");
+      setIsValid(false);
+    } finally {
+      setIsChecking(false);
+    }
+  }, []);
 
-  // While checking token
-  if (isValid === null) {
+  // Show loading while checking
+  if (isChecking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{
-            repeat: Infinity,
-            duration: 0.8,
-            ease: "linear",
-          }}
+          transition={{ repeat: Infinity, duration: 0.8, ease: "linear" }}
           className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full"
         />
       </div>

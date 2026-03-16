@@ -42,7 +42,6 @@ const useAboutAPI = () => {
   const saveAbout = useCallback(
     async (about, validateIntro, fromSave = false) => {
       try {
-        console.log(about);
         if (validateIntro && !validateIntro()) return null;
         setLoading(true);
 
@@ -79,7 +78,6 @@ const useAboutAPI = () => {
           const res = await api.put("/user", formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
-          console.log(res.data);
           const userData = res?.data;
 
           if (userData) {

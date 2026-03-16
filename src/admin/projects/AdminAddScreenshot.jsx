@@ -10,7 +10,6 @@ const AdminAddScreenshot = ({
   setRawFiles,
   setForm,
 }) => {
-  console.log(form);
   return (
     <Section title="Screenshots">
       <div className="flex items-center justify-between mb-4">

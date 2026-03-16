@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ExpCard = ({
+const TimelineExpCard = ({
   setExpandedId,
   expandedId,
   role,
@@ -11,82 +11,76 @@ const ExpCard = ({
   description,
   _id,
   index,
-  fromPreview = false,
+  compact = false,
+  timelineGradient = "linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent))",
 }) => {
   const isExpanded = expandedId === _id;
 
   return (
     <motion.div
       key={_id}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="relative w-full flex justify-center md:justify-start"
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      className="w-full flex justify-start"
     >
+      {/* Vertical Accent aligned with timeline */}
+      <div
+        className="w-1 rounded-full mr-3"
+        style={{
+          background: timelineGradient,
+        }}
+      />
+
       {/* Card */}
       <motion.div
         onClick={() => setExpandedId(isExpanded ? null : _id)}
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 200 }}
-        className={`w-full max-w-md md:max-w-[350px] backdrop-blur-xl border rounded-2xl p-6 md:p-8 shadow-lg cursor-pointer transition-all duration-300`}
+        whileHover={{ scale: 1.03 }}
+        className={`flex-1 rounded-xl p-4 shadow-md cursor-pointer transition-all`}
         style={{
-          backgroundColor: "var(--card)",
-          borderColor: "var(--border)",
+          backgroundColor: "var(--card)", // Uses CSS variable for light/dark
+          color: "var(--text-primary)",
         }}
       >
         {/* Role & Company */}
-        <h3 className="text-xl md:text-2xl font-heading font-semibold">{role}</h3>
-        <p className="text-sm mt-1 text-[var(--text-secondary)]">{company}</p>
-        <p className="text-xs mt-1 text-[var(--text-tertiary)]">{duration}</p>
+        <h3 className={`${compact ? "text-lg" : "text-xl"} font-semibold`}>{role}</h3>
+        <p className="text-xs md:text-sm text-[var(--text-secondary)]">
+          {company} • {duration}
+        </p>
 
-        {/* Tech Stack Tags */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          {tech?.some((item) => item.trim() !== "") &&
-            tech?.map((techName, i) => (
+        {/* Tech Tags */}
+        {tech?.some((t) => t.trim() !== "") && (
+          <div className="flex flex-wrap gap-1 mt-2">
+            {tech.map((t, i) => (
               <span
                 key={i}
-                className="text-xs px-3 py-1 rounded-full border hover:bg-[var(--primary)] hover:text-white transition-colors duration-200"
-                style={{
-                  borderColor: "var(--border)",
-                  color: "var(--text-secondary)",
-                }}
+                className="text-[10px] md:text-xs px-2 py-0.5 rounded-full border hover:bg-[var(--primary)] hover:text-white transition-colors duration-200"
+                style={{ borderColor: "var(--border)" }}
               >
-                {techName}
+                {t}
               </span>
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Expandable Description */}
         <AnimatePresence>
-          {isExpanded && !fromPreview && (
+          {!compact && isExpanded && (
             <motion.p
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4 }}
-              className="mt-5 text-sm leading-relaxed text-[var(--text-secondary)] break-words whitespace-pre-line"
+              transition={{ duration: 0.3 }}
+              className="mt-3 text-sm text-[var(--text-secondary)] break-words whitespace-pre-line"
             >
               {description}
             </motion.p>
           )}
         </AnimatePresence>
-
-        {/* Preview Mode Description */}
-        {fromPreview && (
-          <motion.p
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)] break-words whitespace-pre-line"
-          >
-            {description}
-          </motion.p>
-        )}
       </motion.div>
     </motion.div>
   );
 };
 
-export default ExpCard;
+export default TimelineExpCard;

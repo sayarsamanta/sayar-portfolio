@@ -53,6 +53,10 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors((prev) => ({
+      ...prev,
+      [e.target.name]: "",
+    }));
   };
 
   const handleArrayChange = (index, value) => {
@@ -84,8 +88,6 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
       return;
     }
     onSave(form, !!item, item?.slug, item?._id);
-    // onSave(form, !!item);
-    // onClose();
   };
 
   if (!isOpen) return null;
@@ -149,7 +151,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                       type="month"
                       name="startDate"
                       value={form.startDate || ""}
-                      onChange={(e) => setForm({ ...form, startDate: e.target.value })}
+                      onChange={handleChange}
                       className="px-4 py-2
       rounded-md
       border border-[var(--border)]
@@ -168,7 +170,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                       name="endDate"
                       disabled={form.isPresent}
                       value={form.endDate || ""}
-                      onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+                      onChange={handleChange}
                       className={`px-4 py-2
     rounded-md
     border border-[var(--border)]

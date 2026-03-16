@@ -19,7 +19,6 @@ export default function AdminProjects() {
 
   const handleCreate = async (form, rawFiles, slug, isEdit) => {
     const res = await addProjectCall(form, isEdit, slug, "", rawFiles);
-    console.log(res);
     if (res) {
       setIsModalOpen(false);
     }
