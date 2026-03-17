@@ -2,15 +2,12 @@ import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import api from "../services/api";
 
-/**
- * Custom hook for About API
- * Handles fetching user and saving/updating About section
- */
+
 const useLoginAPI = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  // Fetch user data
+  
   const authUser = useCallback(
     async (email, password) => {
       try {

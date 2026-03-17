@@ -51,9 +51,7 @@ export default function ProfileAvatar({
       />
 
       {editable && (
-        <>
-          {/* Upload Button Overlay */}
-          <button
+        <><button
             onClick={() => fileRef.current.click()}
             className="
               absolute

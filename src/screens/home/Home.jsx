@@ -35,7 +35,6 @@ const Home = () => {
       className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 p-10"
       style={{ background: "var(--background)" }}
     >
-      {/* Mobile Profile Image */}
       <div className="flex justify-center">
         <div className="relative">
           <div className="mt-14">
@@ -43,8 +42,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      {/* Hero Content */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -52,7 +49,6 @@ const Home = () => {
         className="relative flex flex-col items-center justify-center text-center 
   max-w-3xl mx-auto gap-5 px-4 sm:px-6 lg:px-8 mt-14 sm:mt-14"
       >
-        {/* Role Badge */}
         <motion.div
           variants={itemVariants}
           className="px-4 py-1.5 text-xs sm:text-sm rounded-full 
@@ -61,8 +57,6 @@ const Home = () => {
         >
           Full Stack Developer
         </motion.div>
-
-        {/* Name */}
         <motion.h1
           variants={itemVariants}
           className="font-heading font-bold leading-tight
@@ -71,8 +65,6 @@ const Home = () => {
         >
           {name || "Sayar Samanta"}
         </motion.h1>
-
-        {/* Bio / Role */}
         <motion.h2
           variants={itemVariants}
           className="text-base sm:text-lg md:text-xl 
@@ -81,8 +73,6 @@ const Home = () => {
         >
           {bio}
         </motion.h2>
-
-        {/* Brief */}
         <motion.p
           variants={itemVariants}
           className="max-w-xl leading-relaxed 
@@ -91,8 +81,6 @@ const Home = () => {
         >
           {brief}
         </motion.p>
-
-        {/* Quote */}
         {qoute && (
           <motion.p
             variants={itemVariants}
@@ -103,8 +91,6 @@ const Home = () => {
             "{qoute}"
           </motion.p>
         )}
-
-        {/* CTA Buttons */}
         <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 mt-6">
           <Link
             to="/projects"
@@ -132,8 +118,6 @@ const Home = () => {
             View Resume
           </Link>
         </motion.div>
-
-        {/* Stats */}
         <motion.div
           variants={itemVariants}
           className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-10"
@@ -143,8 +127,6 @@ const Home = () => {
           <Stat count={clients} label="Clients" />
         </motion.div>
       </motion.div>
-
-      {/* Floating Tech Icons */}
       <div className="hidden md:flex flex-row gap-8 mt-10">
         {skills.map((tech, i) => (
           <motion.div

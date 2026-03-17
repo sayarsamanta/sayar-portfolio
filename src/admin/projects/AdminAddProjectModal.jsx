@@ -63,10 +63,8 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
   const handleScreenshotUpload = (e) => {
     const files = Array.from(e.target.files);
 
-    // Store the raw files for the API call
     setRawFiles(files);
 
-    // Store the previews for the Live Preview UI
     const previews = files.map((file) => URL.createObjectURL(file));
     setForm({ ...form, screenshots: previews });
   };
@@ -76,9 +74,6 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
     onSave(form, rawFiles, item?.slug, !!item);
   };
   const handleClose = () => {
-    // form.screenshots.forEach((url) => {
-    //   if (url.startsWith("blob:")) URL.revokeObjectURL(url);
-    // });
     setForm(BLANK_FORM);
     setRawFiles([]);
     setErrors({});
@@ -90,10 +85,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
 
   return createPortal(
     <div className="fixed inset-0 z-[9999] font-sans">
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-
-      {/* Modal Wrapper */}
       <div className="absolute inset-0 flex justify-center items-start overflow-y-auto py-10 px-6">
         <div
           className="
@@ -106,7 +98,6 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
           p-8
         "
         >
-          {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-xl font-semibold">{item ? "Edit Project" : "Add Project"}</h3>
 
@@ -114,149 +105,139 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
               <X size={20} />
             </button>
           </div>
-
-          {/* Main Layout */}
           <div className="grid grid-cols-1 xl:grid-cols-[1.2fr_0.8fr] gap-12">
-            {/* ================= LEFT : FORM ================= */}
             <div className="space-y-8 max-h-[80vh] overflow-y-auto pr-4">
-              {/* BASIC INFO */}
-              <Section title="Basic Information">
-                <Input
-                  name="title"
-                  placeholder="Project Name"
-                  value={form.title}
-                  onChange={handleChange}
-                  error={errors.title}
+              <div className="px-2">
+                <Section title="Basic Information">
+                  <Input
+                    name="title"
+                    placeholder="Project Name"
+                    value={form.title}
+                    onChange={handleChange}
+                    error={errors.title}
+                    className={"flex-1 border-[var(--border)]"}
+                  />
+
+                  <Input
+                    name="type"
+                    placeholder="Type (Fullstack / Frontend)"
+                    value={form.type}
+                    onChange={handleChange}
+                    error={errors.type}
+                  />
+
+                  <Textarea
+                    name="description"
+                    placeholder="Short Description"
+                    value={form.description}
+                    onChange={handleChange}
+                    error={errors.description}
+                  />
+
+                  <Input
+                    name="role"
+                    placeholder="Your Role"
+                    value={form.role}
+                    onChange={handleChange}
+                    error={errors.role}
+                  />
+
+                  <Input
+                    name="duration"
+                    placeholder="Duration (Jan 2025 – Mar 2025)"
+                    value={form.duration}
+                    onChange={handleChange}
+                    error={errors.duration}
+                  />
+
+                  <Input
+                    name="team"
+                    placeholder="Team (Solo / 3 Members)"
+                    value={form.team}
+                    onChange={handleChange}
+                    error={errors.team}
+                  />
+
+                  <Input
+                    name="year"
+                    placeholder="Year"
+                    value={form.year}
+                    onChange={handleChange}
+                    error={errors.year}
+                  />
+                </Section>
+                <Section title="Links">
+                  <Input
+                    name="github"
+                    placeholder="GitHub URL"
+                    value={form.github}
+                    onChange={handleChange}
+                    error={errors.github}
+                  />
+
+                  <Input
+                    name="live"
+                    placeholder="Live URL"
+                    value={form.live}
+                    onChange={handleChange}
+                    error={errors.live}
+                  />
+
+                  <select
+                    name="status"
+                    value={form.status}
+                    onChange={handleChange}
+                    className="input-glass"
+                  >
+                    <option value="Live">Live</option>
+                    <option value="Development">Development</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </Section>
+                <Section title="Problem & Solution">
+                  <Textarea
+                    name="problem"
+                    placeholder="Problem Description"
+                    value={form.problem}
+                    onChange={handleChange}
+                    error={errors.problem}
+                  />
+                  <Textarea
+                    name="solution"
+                    placeholder="Solution Description"
+                    value={form.solution}
+                    onChange={handleChange}
+                    error={errors.solution}
+                  />
+                </Section>
+                <DynamicList
+                  title="Features"
+                  field="features"
+                  form={form}
+                  handleArrayChange={handleArrayChange}
+                  addArrayField={addArrayField}
+                  removeArrayField={removeArrayField}
+                  errors={errors}
                 />
-
-                <Input
-                  name="type"
-                  placeholder="Type (Fullstack / Frontend)"
-                  value={form.type}
-                  onChange={handleChange}
-                  error={errors.type} // Added
+                <DynamicList
+                  title="Tech Stack"
+                  field="tech"
+                  form={form}
+                  handleArrayChange={handleArrayChange}
+                  addArrayField={addArrayField}
+                  removeArrayField={removeArrayField}
+                  errors={errors}
                 />
-
-                <Textarea
-                  name="description"
-                  placeholder="Short Description"
-                  value={form.description}
-                  onChange={handleChange}
-                  error={errors.description}
+                <AdminAddScreenshot
+                  form={form}
+                  handleScreenshotUpload={handleScreenshotUpload}
+                  errors={errors}
+                  rawFiles={rawFiles || item?.screenshots}
+                  setRawFiles={setRawFiles}
+                  setForm={setForm}
                 />
+              </div>
 
-                <Input
-                  name="role"
-                  placeholder="Your Role"
-                  value={form.role}
-                  onChange={handleChange}
-                  error={errors.role} // Added
-                />
-
-                <Input
-                  name="duration"
-                  placeholder="Duration (Jan 2025 – Mar 2025)"
-                  value={form.duration}
-                  onChange={handleChange}
-                  error={errors.duration} // Added
-                />
-
-                <Input
-                  name="team"
-                  placeholder="Team (Solo / 3 Members)"
-                  value={form.team}
-                  onChange={handleChange}
-                  error={errors.team} // Added
-                />
-
-                <Input
-                  name="year"
-                  placeholder="Year"
-                  value={form.year}
-                  onChange={handleChange}
-                  error={errors.year}
-                />
-              </Section>
-
-              {/* LINKS */}
-              <Section title="Links">
-                <Input
-                  name="github"
-                  placeholder="GitHub URL"
-                  value={form.github}
-                  onChange={handleChange}
-                  error={errors.github} // Added
-                />
-
-                <Input
-                  name="live"
-                  placeholder="Live URL"
-                  value={form.live}
-                  onChange={handleChange}
-                  error={errors.live} // Added
-                />
-
-                <select
-                  name="status"
-                  value={form.status}
-                  onChange={handleChange}
-                  className="input-glass"
-                >
-                  <option value="Live">Live</option>
-                  <option value="Development">Development</option>
-                  <option value="Completed">Completed</option>
-                </select>
-              </Section>
-
-              {/* PROBLEM & SOLUTION */}
-              <Section title="Problem & Solution">
-                <Textarea
-                  name="problem"
-                  placeholder="Problem Description"
-                  value={form.problem}
-                  onChange={handleChange}
-                  error={errors.problem}
-                />
-                <Textarea
-                  name="solution"
-                  placeholder="Solution Description"
-                  value={form.solution}
-                  onChange={handleChange}
-                  error={errors.solution}
-                />
-              </Section>
-
-              {/* FEATURES */}
-              <DynamicList
-                title="Features"
-                field="features"
-                form={form}
-                handleArrayChange={handleArrayChange}
-                addArrayField={addArrayField}
-                removeArrayField={removeArrayField}
-                errors={errors}
-              />
-
-              {/* TECH STACK */}
-              <DynamicList
-                title="Tech Stack"
-                field="tech"
-                form={form}
-                handleArrayChange={handleArrayChange}
-                addArrayField={addArrayField}
-                removeArrayField={removeArrayField}
-                errors={errors}
-              />
-              <AdminAddScreenshot
-                form={form}
-                handleScreenshotUpload={handleScreenshotUpload}
-                errors={errors}
-                rawFiles={rawFiles || item?.screenshots}
-                setRawFiles={setRawFiles}
-                setForm={setForm}
-              />
-
-              {/* ACTION BUTTONS */}
               <div className="flex justify-end gap-4 pt-4">
                 <button
                   onClick={onClose}
@@ -267,7 +248,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
 
                 <button
                   onClick={handleSubmit}
-                  disabled={loading} // Prevent multiple clicks
+                  disabled={loading}
                   className={`
     px-6 py-2 rounded-xl bg-[var(--primary)] text-[var(--text-button)]
     flex items-center justify-center gap-2 transition-all
@@ -306,8 +287,6 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
                 </button>
               </div>
             </div>
-
-            {/* ================= RIGHT : LIVE PREVIEW ================= */}
             <div className="flex flex-col items-center">
               <h4 className="text-lg font-semibold mb-6">Live Preview</h4>
 

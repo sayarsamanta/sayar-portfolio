@@ -1,4 +1,4 @@
-// src/utils/StatusCode.js
+
 class StatusCode {
   static messages = {
     200: "Success",
@@ -13,7 +13,7 @@ class StatusCode {
   };
 
   static getMessage(code, customMessage) {
-    // Use customMessage if provided, else fallback to default
+    
     return customMessage || StatusCode.messages[code] || "Unknown error";
   }
 }

@@ -57,23 +57,22 @@ const Resume = ({ pdfUrl, setError }) => {
             overflowX: "auto",
           }}
         >
-          {/* Download Button */}
           <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
             <button
-              onClick={downloadPDF} // your download function
+              onClick={downloadPDF}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
                 padding: "0.5rem 1rem",
-                backgroundColor: "var(--primary)", // theme-aware
-                color: "var(--text-button)", // theme-aware
+                backgroundColor: "var(--primary)",
+                color: "var(--text-button)",
                 borderRadius: "6px",
-                border: "1px solid var(--primary)", // theme-aware border
+                border: "1px solid var(--primary)",
                 fontWeight: 500,
                 fontSize: "0.9rem",
                 cursor: "pointer",
-                transition: "all 0.3s ease", // smooth animation
+                transition: "all 0.3s ease",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px) scale(1.05)";
@@ -102,8 +101,6 @@ const Resume = ({ pdfUrl, setError }) => {
               Download
             </button>
           </div>
-
-          {/* Loading Spinner */}
           {loading && (
             <div
               style={{
@@ -121,8 +118,6 @@ const Resume = ({ pdfUrl, setError }) => {
               <div className="loader"></div>
             </div>
           )}
-
-          {/* PDF Document */}
           <Document
             file={pdfUrl}
             onLoadError={(error) => {

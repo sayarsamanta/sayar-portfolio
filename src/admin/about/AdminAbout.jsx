@@ -52,8 +52,6 @@ export default function AdminAboutPage({}) {
   useEffect(() => {
     async function fetchAbout() {
       try {
-        // const res = await axios.get("/api/about");
-        // const data = res.data || {};
         setAbout({
           intro: data?.intro,
           skills: data?.skills || [],
@@ -116,7 +114,6 @@ export default function AdminAboutPage({}) {
       console.log("need to call create");
       await saveAbout(about, validateIntro, false);
     }
-    //await saveAbout(about, validateIntro, data);
   };
   return (
     <div
@@ -131,7 +128,6 @@ export default function AdminAboutPage({}) {
     font-sans
   "
     >
-      {/* LEFT PANEL */}
       <div
         className="
       space-y-8
@@ -142,7 +138,6 @@ export default function AdminAboutPage({}) {
       hide-scrollbar
     "
       >
-        {/* Header */}
         <div>
           <h2 className="text-2xl font-semibold">About Section</h2>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -243,8 +238,6 @@ export default function AdminAboutPage({}) {
           </button>
         </div>
       </div>
-
-      {/* RIGHT PREVIEW PANEL */}
       <div
         className="
       rounded-2xl

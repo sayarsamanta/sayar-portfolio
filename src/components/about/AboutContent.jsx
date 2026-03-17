@@ -31,10 +31,8 @@ const AboutContent = ({
       viewport={{ once: true }}
       transition={{ duration: 0.7 }}
     >
-      {/* Hero / Intro */}
       <section className="w-full py-10 px-6">
         <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-          {/* Profile Image */}
           {(profileImg || placeholder) && (
             <div className={fromPreview ? `block` : `lg:hidden`}>
               <ProfileAvatar src={profileImg || placeholder} />
@@ -43,30 +41,22 @@ const AboutContent = ({
 
           {headline || subText || story ? (
             <section className="flex flex-col justify-center items-center">
-              {/* existing content */}
-              {/* Headline */}
               {headline && (
                 <h1 className="text-3xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent sm:mt-4">
                   {headline}
                 </h1>
               )}
-
-              {/* SubText */}
               {subText && (
                 <p className="mt-4 text-lg md:text-xl font-medium text-[var(--text-secondary)] max-w-2xl">
                   {subText}
                 </p>
               )}
-
-              {/* Story */}
               {story && (
                 <p className="mt-6 text-base md:text-lg leading-relaxed text-[var(--text-secondary)] max-w-3xl">
                   {displayedText}
                   {isLong && !expanded && "... "}
                 </p>
               )}
-
-              {/* See More / Less */}
               {expanded ||
                 (isLong && (
                   <button
@@ -91,7 +81,6 @@ const AboutContent = ({
           description="Technologies and tools I use to build scalable and modern web applications."
           maxWidth="max-w-4xl"
         >
-          {/* filter pills */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
             {[...new Set(skills?.map((skill) => skill.type))].map((cat) => (
               <button
@@ -124,7 +113,6 @@ const AboutContent = ({
           description="Milestones and accomplishments throughout my journey."
         >
           <div className="grid grid-cols-1 md:grid-cols-1 gap-6 text-left">
-            {/* achievements */}
             <AboutSectionRenderer type="achievements" items={achievements} />
           </div>
         </SectionLayout>
@@ -141,7 +129,6 @@ const AboutContent = ({
           description="My academic background and foundational learning."
         >
           <div className="flex flex-col gap-6 text-left">
-            {/* education cards */}
             <AboutSectionRenderer type="education" items={education} />
           </div>
         </SectionLayout>
@@ -157,7 +144,6 @@ const AboutContent = ({
           showDivider={false}
         >
           <div className="flex flex-wrap justify-center gap-4">
-            {/* interests */}
             {<AboutSectionRenderer type="interests" items={personalInterests} />}
           </div>
         </SectionLayout>

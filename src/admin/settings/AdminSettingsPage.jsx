@@ -15,11 +15,11 @@ export default function AdminSettingsPage() {
   const [name, setName] = useState("Sayar Samanta");
   const [email, setEmail] = useState("sayarsamanta@gmail.com");
   const [resumeFile, setResumeFile] = useState(null);
-  // --------- HANDLERS ----------
+  
   const handleToggleDarkMode = () => setDarkMode(!darkMode);
 
   const handleSaveProfile = async () => {
-    // integrate API later
+    
     const payload = {
       name: name || "Sayar Samanta",
       email: email || "sayarsamanta@gmail.com",
@@ -31,7 +31,7 @@ export default function AdminSettingsPage() {
     await saveAbout(payload, "", true);
   };
   const hadleUploadResume = () => {
-    // integrate file download
+    
     uploadResume(resumeFile);
   };
   const handleResumeChange = (e) => {
@@ -43,7 +43,7 @@ export default function AdminSettingsPage() {
   const handleDeleteAccount = () => {
     if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
       alert("Account Deleted!");
-      // integrate API
+      
     }
   };
 
@@ -53,10 +53,7 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 font-sans">
-      <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1>
-
-      {/* -------- PROFILE SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Profile Information</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -83,10 +80,7 @@ export default function AdminSettingsPage() {
         >
           Save Profile
         </button>
-      </div>
-
-      {/* -------- APPEARANCE SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      </div><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
@@ -98,10 +92,7 @@ export default function AdminSettingsPage() {
             {darkMode ? "Dark Mode" : "Light Mode"}
           </button>
         </div>
-      </div>
-
-      {/* -------- RESUME SECTION -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      </div><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Resume / Portfolio</h2>
 
         <div className="flex flex-col gap-4 w-full">
@@ -142,10 +133,7 @@ export default function AdminSettingsPage() {
             </button>
           </div>
         </div>
-      </div>
-
-      {/* -------- ACCOUNT ACTIONS -------- */}
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      </div><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Account Actions</h2>
 
         <button

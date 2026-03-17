@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { jwtDecode } from "jwt-decode";
 
 export default function AdminProtectedRoute({ children }) {
-  const [isChecking, setIsChecking] = useState(true); // waiting for token check
+  const [isChecking, setIsChecking] = useState(true); 
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function AdminProtectedRoute({ children }) {
     }
   }, []);
 
-  // Show loading while checking
+  
   if (isChecking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">

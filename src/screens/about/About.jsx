@@ -5,7 +5,5 @@ export default function About() {
   const { user } = useSelector((state) => state.about);
   const { profileImg } = user || {};
 
-  // Toggle light/dark theme class on body
-
   return <AboutContent profileImg={profileImg} {...user?.about} />;
 }

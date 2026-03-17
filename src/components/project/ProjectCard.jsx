@@ -24,9 +24,7 @@ const ProjectCard = ({ proj, onClick }) => {
         backgroundColor: "var(--card)",
         borderColor: "var(--border)",
       }}
-    >
-      {/* IMAGE SECTION */}
-      <div className="p-2 flex-shrink-0 relative">
+    ><div className="p-2 flex-shrink-0 relative">
         <div
           className="rounded-[1.5rem] overflow-hidden h-[210px] w-full relative"
           style={{
@@ -41,19 +39,13 @@ const ProjectCard = ({ proj, onClick }) => {
             showDots={true}
             showArrows={false}
             height="h-full"
-          />
-
-          {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px] z-10">
+          /><div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px] z-10">
             <div className="bg-white/90 text-black px-3 py-1.5 rounded-full flex items-center gap-2 font-semibold text-[11px] scale-95 group-hover:scale-100 transition-transform duration-300 shadow-lg">
               View Details <FiArrowUpRight size={13} />
             </div>
           </div>
         </div>
-      </div>
-
-      {/* CONTENT AREA */}
-      <div className="px-6 pb-6 flex flex-col flex-grow">
+      </div><div className="px-6 pb-6 flex flex-col flex-grow">
         <div className="flex justify-between items-start mb-4">
           <div className="flex flex-col max-w-[80%]">
             <span className="text-[10px] uppercase tracking-[0.18em] text-primary font-semibold opacity-70 mb-1">
@@ -66,10 +58,7 @@ const ProjectCard = ({ proj, onClick }) => {
             >
               {proj.name}
             </h3>
-          </div>
-
-          {/* Status Badge */}
-          <div
+          </div><div
             className="mt-2 flex items-center gap-1.5 px-2.5 py-1 rounded-full border"
             style={{
               backgroundColor: "rgba(255,255,255,0.03)",
@@ -92,10 +81,7 @@ const ProjectCard = ({ proj, onClick }) => {
           style={{ color: "var(--text-secondary)" }}
         >
           {proj.description}
-        </p>
-
-        {/* Bottom Section */}
-        <div
+        </p><div
           className="mt-auto flex items-center justify-between pt-4 border-t"
           style={{ borderColor: "var(--border)" }}
         >

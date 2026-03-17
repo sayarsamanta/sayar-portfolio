@@ -43,9 +43,7 @@ export default function Projects() {
           color: "var(--text-primary)",
         }}
       >
-        {projects && projects.length === 0 && <EmptySection type={"Project"} />}
-        {/* Section Title */}
-        {projects && projects.length > 0 && (
+        {projects && projects.length === 0 && <EmptySection type={"Project"} />}{projects && projects.length > 0 && (
           <>
             <h1
               className="
@@ -60,10 +58,7 @@ export default function Projects() {
               style={{ color: "var(--text-primary)" }}
             >
               Projects
-            </h1>
-
-            {/* Filter Toggle */}
-            <div className="flex justify-center gap-4 mb-10">
+            </h1><div className="flex justify-center gap-4 mb-10">
               {["All", "Fullstack", "Frontend"].map((cat) => (
                 <button
                   key={cat}
@@ -92,17 +87,13 @@ export default function Projects() {
               className="
               flex flex-wrap justify-center gap-10 w-full max-w-[1400px] mx-auto px-4
 "
-            >
-              {/* Project Cards */}
-              {filteredProjects.map((proj, idx) => (
+            >{filteredProjects.map((proj, idx) => (
                 <ProjectCard proj={proj} key={idx} onClick={() => setSelectedProject(proj)} />
               ))}
             </div>
           </>
         )}
-      </div>
-      {/* Projects Grid */}
-      {selectedProject && (
+      </div>{selectedProject && (
         <DetailedModel selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
       )}
     </>

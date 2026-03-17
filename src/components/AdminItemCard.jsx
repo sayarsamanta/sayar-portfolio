@@ -52,17 +52,9 @@ export default function AdminItemCard({ type, data, onDelete }) {
         return (
           <>
             <div className="flex items-center justify-between w-full">
-              <p className="font-medium text-[15px]">{data.name}</p>
+              <p className="font-medium text-[15px]">{data.name}</p></div>
 
-              {/* <span className="text-xs text-[var(--text-secondary)]">
-                {data.percentage}%
-              </span> */}
-            </div>
-
-            <p className="text-xs text-[var(--text-secondary)]">{data.type}</p>
-
-            {/* Skill Progress */}
-            <div className="w-full h-1.5 bg-[var(--border)] rounded-full mt-1 overflow-hidden">
+            <p className="text-xs text-[var(--text-secondary)]">{data.type}</p><div className="w-full h-1.5 bg-[var(--border)] rounded-full mt-1 overflow-hidden">
               <div
                 className="h-full bg-[var(--primary)] rounded-full"
                 style={{ width: `${data.percentage}%` }}
@@ -92,16 +84,11 @@ export default function AdminItemCard({ type, data, onDelete }) {
         hover:border-[var(--primary)]
         hover:shadow-lg
       "
-    >
-      {/* LEFT CONTENT */}
-      <div className="flex items-start gap-3">
+    ><div className="flex items-start gap-3">
         <div className="mt-1 opacity-80">{getIcon()}</div>
 
         <div className="flex flex-col gap-0.5">{renderContent()}</div>
-      </div>
-
-      {/* DELETE BUTTON */}
-      <button
+      </div><button
         onClick={onDelete}
         className="
           flex items-center gap-1

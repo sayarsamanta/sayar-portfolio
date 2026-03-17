@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiMenu, FiX, FiSun, FiMoon, FiShield } from "react-icons/fi";
 import { ThemeContext } from "../context/ThemeContext";
@@ -60,9 +60,7 @@ const Navbar = () => {
       initial={{ y: 0 }}
       animate={{
         y: visible ? 0 : -100,
-        backgroundColor: darkMode
-          ? "rgba(0, 0, 0, 0.9)" // Dark mode + scrolled
-          : "rgba(255, 255, 255, 0.5)", // Light mode + scrolled
+        backgroundColor: darkMode ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.5)",
         borderBottom: scrolled
           ? darkMode
             ? "1px solid rgba(255, 255, 255, 0.1)"
@@ -73,23 +71,23 @@ const Navbar = () => {
       className="fixed shadow-lg left-0 right-0 top-0 z-50 backdrop-blur-md font-heading"
     >
       <div className="flex justify-between items-center px-8 py-5">
-        {/* Logo / Profile */}
         <motion.div
           whileHover={{ scale: 1.1, rotate: 2 }}
           transition={{ type: "spring", stiffness: 300 }}
           className="flex items-center gap-3 cursor-pointer"
         >
-          <div className="relative rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block">
+          <Link
+            to={"/"}
+            className="relative rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block"
+          >
             <ProfileAvatar src={profileImg || placeholder} size="small" />
             <motion.div
               animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.15, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)] blur-xl z-[-1]"
             />
-          </div>
+          </Link>
         </motion.div>
-
-        {/* Desktop Links + Theme Icon */}
         <div className="hidden md:flex gap-6 items-center relative">
           {navItems.map((item) => (
             <NavLink
@@ -101,7 +99,6 @@ const Navbar = () => {
             >
               {({ isActive }) => (
                 <div className="relative px-1 py-1">
-                  {/* Text */}
                   <span
                     className="
           transition-colors duration-300
@@ -113,8 +110,6 @@ const Navbar = () => {
                   >
                     {item.name}
                   </span>
-
-                  {/* Hover Underline */}
                   {!isActive && (
                     <span
                       className="
@@ -126,8 +121,6 @@ const Navbar = () => {
           "
                     />
                   )}
-
-                  {/* Active Indicator (Animated) */}
                   {isActive && (
                     <motion.div
                       layoutId="activeIndicator"
@@ -155,8 +148,6 @@ const Navbar = () => {
               </div>
             </NavLink>
           )}
-
-          {/* Theme Toggle Icon */}
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="ml-4 p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
@@ -164,18 +155,13 @@ const Navbar = () => {
             {darkMode ? <FiSun color="#FBBF24" size={20} /> : <FiMoon size={20} />}
           </button>
         </div>
-
-        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-3">
-          {/* Mobile Theme Toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
           >
             {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
-
-          {/* Hamburger */}
           <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
             <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -183,8 +169,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div

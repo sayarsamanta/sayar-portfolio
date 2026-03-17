@@ -4,15 +4,12 @@ import toast from "react-hot-toast";
 import api from "../services/api";
 import { setAboutData } from "../store/slices/about/aboutSlice";
 
-/**
- * Custom hook for About API
- * Handles fetching user and saving/updating About section
- */
+
 const useAboutAPI = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  // Fetch user data
+  
   const fetchUser = useCallback(async () => {
     try {
       setLoading(true);
@@ -22,7 +19,7 @@ const useAboutAPI = () => {
 
       if (userData) {
         dispatch(setAboutData(userData?.about));
-        dispatch({ type: "about/setUser", payload: userData }); // optional
+        dispatch({ type: "about/setUser", payload: userData }); 
       }
 
       setLoading(false);
@@ -38,7 +35,7 @@ const useAboutAPI = () => {
     }
   }, [dispatch]);
 
-  // Save or update About
+  
   const saveAbout = useCallback(
     async (about, validateIntro, fromSave = false) => {
       try {
@@ -70,10 +67,10 @@ const useAboutAPI = () => {
           formData.append("profileImg", about.intro.profileFile);
         }
 
-        // Optional: debug FormData
-        // for (let pair of formData.entries()) {
-        //   console.log(pair[0], pair[1]);
-        // }
+        
+        
+        
+        
         if (fromSave) {
           const res = await api.put("/user", formData, {
             headers: { "Content-Type": "multipart/form-data" },
@@ -82,7 +79,7 @@ const useAboutAPI = () => {
 
           if (userData) {
             dispatch(setAboutData(userData?.about));
-            dispatch({ type: "about/setUser", payload: userData }); // optional
+            dispatch({ type: "about/setUser", payload: userData }); 
           }
 
           setLoading(false);

@@ -65,8 +65,6 @@ export default function FloatingConnectButtonVertical() {
           >
             <FaTwitter size={24} />
           </a>
-
-          {/* Email */}
           <a
             href="mailto:sayarsamanta@gmail.com"
             target="_blank"

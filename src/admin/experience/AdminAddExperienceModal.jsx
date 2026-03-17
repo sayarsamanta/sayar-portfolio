@@ -63,6 +63,10 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
     const updated = [...form?.tech];
     updated[index] = value;
     setForm({ ...form, tech: updated });
+    setErrors((prev) => ({
+      ...prev,
+      tech: "",
+    }));
   };
 
   const addTechnology = () => setForm({ ...form, tech: [...form?.tech, ""] });
@@ -103,12 +107,10 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
 
   return createPortal(
     <div className="fixed inset-0 z-[9999]">
-      {/* backdrop */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
       <div className="absolute inset-0 flex justify-center items-start overflow-y-auto py-10 px-4">
         <div className="w-full max-w-5xl bg-[var(--card)] border border-[var(--border)] rounded-md shadow-xl p-8">
-          {/* header */}
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-xl font-semibold">{item ? "Edit Experience" : "Add Experience"}</h3>
 
@@ -119,10 +121,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
               <X size={20} />
             </button>
           </div>
-
-          {/* layout */}
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10">
-            {/* FORM */}
             <div className="space-y-6">
               <Section title="Basic Info">
                 <Input
@@ -143,7 +142,6 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                 />
 
                 <div className="grid grid-cols-2 gap-4">
-                  {/* Start Date */}
                   <div className="flex flex-col gap-1">
                     <label className="text-xs text-[var(--text-secondary)]">Start Date</label>
 
@@ -160,8 +158,6 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                       error={errors.startDate}
                     />
                   </div>
-
-                  {/* End Date */}
                   <div className="flex flex-col gap-1">
                     <label className="text-xs text-[var(--text-secondary)]">End Date</label>
 
@@ -208,13 +204,14 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                 {form.tech &&
                   form.tech.length > 0 &&
                   form.tech.map((tech, index) => (
-                    <div key={index} className="flex gap-3 items-center">
+                    <div key={tech}>
                       <Input
                         type="text"
                         value={tech}
                         onChange={(e) => handleArrayChange(index, e.target.value)}
                         placeholder="Technology"
                         error={errors.tech}
+                        className="flex-1" // <-- add this
                       />
 
                       {form.tech.length > 1 && (
@@ -227,6 +224,8 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                         </button>
                       )}
                     </div>
+
+                    // </div>
                   ))}
 
                 <button
@@ -238,8 +237,6 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                 </button>
               </Section>
             </div>
-
-            {/* PREVIEW */}
             <div className="space-y-4 sticky top-6 h-fit">
               <h4 className="text-sm font-medium text-[var(--text-secondary)]">Live Preview</h4>
 
@@ -255,8 +252,6 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
               </div>
             </div>
           </div>
-
-          {/* footer */}
           <div className="flex justify-end gap-4 mt-10">
             <button
               onClick={onClose}

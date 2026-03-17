@@ -48,13 +48,13 @@ const useProjectAPI = () => {
         if (isEdit) {
           const data = new FormData();
 
-          // 1. Add text fields
+          
           Object.keys(payload).forEach((key) => {
             if (key !== "screenshots" && key !== "tech" && key !== "features") {
               const value = payload[key];
 
-              // ONLY append if the value exists and isn't null
-              // This prevents sending "null" strings to your backend
+              
+              
               if (value !== null && value !== undefined) {
                 data.append(key, value);
               }
@@ -92,8 +92,8 @@ const useProjectAPI = () => {
             }
           });
 
-          // form.tech.forEach((t) => data.append("tech", t));
-          // form.features.forEach((f) => data.append("features", f));
+          
+          
           payload.tech.forEach((item) => {
             if (item.trim() !== "") {
               data.append("tech", item);

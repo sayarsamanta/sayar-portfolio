@@ -59,12 +59,12 @@ const ImageSlider = ({
 
   return (
     <div
-      className={`relative overflow-hidden ${height} ${rounded} border bg-[var(--card)] group shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]`}
+      className={`relative flex flex-col overflow-hidden ${height} ${rounded} border bg-[var(--card)] group shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]`}
       style={{ borderColor: "var(--border)" }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Browser Top */}
+      {/* Top “window controls” section */}
       <div
         className="h-7 flex items-center px-4 gap-2 border-b"
         style={{
@@ -77,12 +77,11 @@ const ImageSlider = ({
           <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
           <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
         </div>
-
         <div className="mx-auto h-3 w-1/3 rounded-full bg-white/5" />
       </div>
 
-      {/* Image Area */}
-      <div className="relative h-[calc(100%-32px)] bg-gradient-to-b from-black/[0.03] to-black/[0.06] p-2">
+      {/* Image Container */}
+      <div className="relative flex-1 bg-gradient-to-b from-black/[0.03] to-black/[0.06] p-2">
         <div
           className="absolute inset-2 rounded-xl overflow-hidden border shadow-inner"
           style={{
@@ -104,7 +103,7 @@ const ImageSlider = ({
           </AnimatePresence>
         </div>
 
-        {/* Arrows */}
+        {/* Navigation Arrows */}
         {showArrows && images.length > 1 && (
           <div className="absolute inset-0 flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button

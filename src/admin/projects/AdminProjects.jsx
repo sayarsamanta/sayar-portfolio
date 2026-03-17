@@ -13,8 +13,8 @@ export default function AdminProjects() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const handleEdit = (project) => {
-    setSelectedProject(project); // pass the project to modal
-    setIsModalOpen(true); // open modal
+    setSelectedProject(project); 
+    setIsModalOpen(true); 
   };
 
   const handleCreate = async (form, rawFiles, slug, isEdit) => {
@@ -36,9 +36,7 @@ export default function AdminProjects() {
   };
 
   return (
-    <div className="space-y-8 text-[var(--text-primary)]">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div className="space-y-8 text-[var(--text-primary)]"><div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-semibold">Projects</h2>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -57,15 +55,12 @@ export default function AdminProjects() {
             transition-all duration-200
             hover:opacity-90
           "
-          onClick={() => handleEdit(null) /* pass null to indicate adding new project */}
+          onClick={() => handleEdit(null) }
         >
           <Plus size={16} />
           Add Project
         </button>
-      </div>
-
-      {/* Projects Table */}
-      <div
+      </div><div
         className="
           rounded-2xl
           border border-[var(--border)]
@@ -155,7 +150,7 @@ export default function AdminProjects() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleCreate}
-        item={selectedProject} // pass selected project for editing
+        item={selectedProject} 
         loading={loading}
       />
       <DeleteModal

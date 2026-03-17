@@ -42,7 +42,6 @@ export default function Contact() {
         color: "var(--text-primary)",
       }}
     >
-      {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -64,8 +63,6 @@ export default function Contact() {
           via social platforms below.
         </p>
       </motion.div>
-
-      {/* Glassmorphic Form */}
       <motion.form
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -74,12 +71,11 @@ export default function Contact() {
         onSubmit={handleSubmit}
         className="max-w-2xl w-full sm:w-4/5 md:w-2/3 lg:w-1/2 mx-auto rounded-lg p-6 sm:p-8 md:p-10 flex flex-col gap-6 shadow-2xl border transition"
         style={{
-          background: "var(--card-gradient)", // gradient depends on theme
+          background: "var(--card-gradient)",
           backdropFilter: "blur(20px)",
           borderColor: "var(--border)",
         }}
       >
-        {/* Name Input */}
         <Input
           type="text"
           name="name"
@@ -88,8 +84,6 @@ export default function Contact() {
           placeholder="Your Name"
           error={error.name}
         />
-
-        {/* Email Input */}
         <Input
           type="email"
           name="email"
@@ -98,8 +92,6 @@ export default function Contact() {
           placeholder="Your Email"
           error={error.email}
         />
-
-        {/* Message Textarea */}
         <Textarea
           name="message"
           value={formData.message}

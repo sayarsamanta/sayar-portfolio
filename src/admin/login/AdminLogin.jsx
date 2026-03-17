@@ -50,15 +50,12 @@ export default function AdminLogin() {
       if (res) {
         localStorage.setItem("adminToken", res.data.token);
 
-        // Trigger success animation
         setSuccess(true);
 
-        // Redirect after animation
         setTimeout(() => {
           navigate("/admin", { replace: true });
         }, 900);
       }
-      // Save token in localStorage
     } catch {
       setApiError("Invalid credentials");
     } finally {
@@ -68,7 +65,6 @@ export default function AdminLogin() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-tr from-purple-50 to-indigo-50 overflow-hidden">
-      {/* Animated Background Glow */}
       <motion.div
         className="absolute w-[500px] h-[500px] bg-purple-400/20 rounded-full blur-3xl top-[-100px] left-[-100px]"
         initial={{ opacity: 0 }}
@@ -81,8 +77,6 @@ export default function AdminLogin() {
         animate={{ opacity: 0.4 }}
         transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
       />
-
-      {/* Login Card */}
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={success ? { scale: 0.9, opacity: 0 } : { y: 0, opacity: 1 }}
@@ -97,7 +91,6 @@ export default function AdminLogin() {
         {apiError && <p className="text-red-500 text-sm mb-4 text-center">{apiError}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email */}
           <div className="relative">
             <input
               type="email"
@@ -109,8 +102,6 @@ export default function AdminLogin() {
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
-
-          {/* Password */}
           <div className="relative">
             <input
               type="password"
@@ -122,8 +113,6 @@ export default function AdminLogin() {
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
-
-          {/* Submit Button */}
           <motion.button
             whileTap={{ scale: 0.97 }}
             whileHover={{ scale: 1.02 }}
@@ -150,8 +139,6 @@ export default function AdminLogin() {
             )}
           </motion.button>
         </form>
-
-        {/* Back Link */}
         <div className="mt-6 text-center">
           <Link to="/" className="text-sm text-gray-700 hover:text-purple-500 transition">
             ← Back to Portfolio

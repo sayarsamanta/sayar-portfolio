@@ -14,17 +14,13 @@ export function DynamicList({
   return (
     <Section title={title}>
       <div className="space-y-3">
-        {" "}
-        {/* Added spacing between rows */}
-        {form[field].map((item, index) => (
-          <div key={index} className="flex gap-3 items-center w-full">
-            {/* Added className="flex-1" here */}
-            <div className="flex-1">
+        {" "}{form[field].map((item, index) => (
+          <div key={index} className="flex gap-3 items-center w-full"><div className="flex-1">
               <Input
                 name={field}
                 value={item}
                 onChange={(e) => handleArrayChange(index, field, e.target.value)}
-                error={errors?.[field]} // Use dynamic field key
+                error={errors?.[field]} 
                 placeholder={`Enter ${title.toLowerCase()}...`}
               />
             </div>

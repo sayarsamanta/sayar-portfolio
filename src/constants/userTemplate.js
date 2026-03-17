@@ -1,4 +1,4 @@
-// template.js
+
 export const userTemplate = {
   about: {
     id: "user_001",
@@ -8,7 +8,7 @@ export const userTemplate = {
     role: "admin",
 
     profileImg:
-      "https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/short/linkedin-profile-picture-maker/dummy_image/thumb/004.webp",
+      "https:
     intro: {
       headline: "Fullstack Developer Crafting Modern Web Experiences",
       subText:
@@ -67,7 +67,7 @@ export const userTemplate = {
         duration: "2018 – 2022",
         grade: "8.5 CGPA",
         description: "Specialized in Software Engineering, Data Structures, and Web Technologies.",
-        logo: "https://picsum.photos/100/100?random=20",
+        logo: "https:
       },
       {
         id: "edu_002",
@@ -77,7 +77,7 @@ export const userTemplate = {
         duration: "2016 – 2018",
         grade: "85%",
         description: "Focused on Mathematics, Physics, and Computer Science fundamentals.",
-        logo: "https://picsum.photos/100/100?random=21",
+        logo: "https:
       },
     ],
 
@@ -90,28 +90,28 @@ export const userTemplate = {
     ],
     stats: { projects: 4, experienceYears: 7, clients: 10 },
 
-    // featuredProjects: [
-    //   {
-    //     id: "proj_001",
-    //     title: "Portfolio Builder SaaS",
-    //     description: "A full-featured SaaS platform to create and host developer portfolios.",
-    //     link: "https://portfolio-builder.example.com",
-    //     techStack: ["React", "Node.js", "Tailwind CSS", "MongoDB"],
-    //   },
-    //   {
-    //     id: "proj_002",
-    //     title: "AI Task Manager",
-    //     description: "An AI-powered productivity app that automates task management and reminders.",
-    //     link: "https://ai-task.example.com",
-    //     techStack: ["React", "Express", "TensorFlow.js"],
-    //   },
-    //   {
-    //     id: "proj_003",
-    //     title: "E-commerce Platform",
-    //     description: "A scalable e-commerce website with real-time inventory and payment integration.",
-    //     link: "https://shop-example.com",
-    //     techStack: ["Next.js", "Node.js", "Stripe API", "MongoDB"],
-    //   },
-    // ],
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   },
 };

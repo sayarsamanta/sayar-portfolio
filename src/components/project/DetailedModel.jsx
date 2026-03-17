@@ -11,17 +11,13 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-    >
-      {/* Modal */}
-      <motion.div
+    ><motion.div
         initial={{ opacity: 0, y: 35 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 35 }}
         transition={{ duration: 0.3 }}
         className="relative w-full max-w-5xl max-h-[90vh] bg-[var(--card)] rounded-3xl shadow-2xl flex flex-col"
-      >
-        {/* Close Button */}
-        <button
+      ><button
           onClick={() => setSelectedProject(null)}
           className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full flex items-center justify-center border transition hover:scale-110"
           style={{
@@ -31,10 +27,7 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
           }}
         >
           <FaTimes size={14} color="white" />
-        </button>
-
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto pt-5 px-5 md:px-6">
+        </button><div className="flex-1 overflow-y-auto pt-5 px-5 md:px-6">
           <ImageSlider
             images={selectedProject.screenshots}
             autoplay
@@ -49,10 +42,7 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
             <h2 className="text-2xl md:text-3xl font-semibold mb-3">{selectedProject.title}</h2>
             <p className="text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               {selectedProject.description}
-            </p>
-
-            {/* Metadata */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 text-sm">
+            </p><div className="grid grid-cols-2 lg:grid-cols-4 gap-5 text-sm">
               {[
                 ["Role", selectedProject.role],
                 ["Duration", selectedProject.duration],
@@ -71,10 +61,7 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
                   <p className="font-medium mt-1">{value}</p>
                 </div>
               ))}
-            </div>
-
-            {/* Problem */}
-            <section
+            </div><section
               className="rounded-2xl border p-6"
               style={{
                 borderColor: "var(--border)",
@@ -86,10 +73,7 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
                 className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
                 dangerouslySetInnerHTML={{ __html: selectedProject.problem }}
               />
-            </section>
-
-            {/* Solution */}
-            <section
+            </section><section
               className="rounded-2xl border p-6"
               style={{
                 borderColor: "var(--border)",
@@ -101,10 +85,7 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
                 className="[&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
                 dangerouslySetInnerHTML={{ __html: selectedProject.solution }}
               />
-            </section>
-
-            {/* Features */}
-            <section>
+            </section><section>
               <h3 className="text-xl font-semibold mb-4">Key Features</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 {selectedProject.features.map((feat, i) => (
@@ -120,10 +101,7 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
                   </div>
                 ))}
               </div>
-            </section>
-
-            {/* Tech Stack */}
-            <section>
+            </section><section>
               <h3 className="text-xl font-semibold mb-4">Tech Stack</h3>
               <div className="flex flex-wrap gap-2">
                 {selectedProject.tech.map((skill, i) => (
@@ -140,10 +118,7 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
                   </span>
                 ))}
               </div>
-            </section>
-
-            {/* CTA */}
-            <div className="flex flex-wrap gap-4 pt-2">
+            </section><div className="flex flex-wrap gap-4 pt-2">
               {selectedProject.github && (
                 <a
                   href={selectedProject.github}

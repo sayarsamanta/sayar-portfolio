@@ -12,19 +12,14 @@ const AdminAddScreenshot = ({
 }) => {
   return (
     <Section title="Screenshots">
-      <div className="flex items-center justify-between mb-4">
-        {/* The actual input is hidden */}
-        <input
+      <div className="flex items-center justify-between mb-4"><input
           type="file"
           multiple
           id="screenshot-upload"
           className="hidden"
           onChange={handleScreenshotUpload}
-          error={errors?.screenshots} // Added
-        />
-
-        {/* The Label acts as the visible button */}
-        <label
+          error={errors?.screenshots} 
+        /><label
           htmlFor="screenshot-upload"
           className="
         cursor-pointer 
@@ -54,10 +49,7 @@ const AdminAddScreenshot = ({
             Clear Selection ({rawFiles.length})
           </button>
         )}
-      </div>
-
-      {/* Preview Grid with a "Empty State" placeholder */}
-      {form?.screenshots?.length > 0 ? (
+      </div>{form?.screenshots?.length > 0 ? (
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
           {form.screenshots.map((src, i) => (
             <div
