@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { Trash2, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { Section } from "../../components/admin/projects/Section";
 import { Input } from "../../components/admin/projects/Input";
-import ExpCard from "../../components/experience/ExpCard";
+import TimelineExpCard from "../../components/experience/TimelineExpCard";
 import { formatDuration, parseDuration, validateExp } from "../../utils/helper";
 import { Textarea } from "../../components/admin/projects/Textarea";
 
@@ -41,7 +41,9 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
       setForm({
         company: "",
         role: "",
-        duration: "",
+        startDate: "",
+        endDate: "",
+        isPresent: false,
         location: "",
         description: "",
         tech: [""],
@@ -204,36 +206,39 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
                 {form.tech &&
                   form.tech.length > 0 &&
                   form.tech.map((tech, index) => (
-                    <div key={tech}>
-                      <Input
-                        type="text"
-                        value={tech}
-                        onChange={(e) => handleArrayChange(index, e.target.value)}
-                        placeholder="Technology"
-                        error={errors.tech}
-                        className="flex-1" // <-- add this
-                      />
+                    <div key={index} className="flex gap-3 items-start mb-3 w-full">
+                      {/* Input container takes 80% */}
+                      <div className="flex-[0_0_80%]">
+                        <Input
+                          type="text"
+                          value={tech}
+                          onChange={(e) => handleArrayChange(index, e.target.value)}
+                          placeholder="Technology"
+                          error={errors.tech}
+                          className="w-full"
+                        />
+                      </div>
 
+                      {/* Icon Button container takes 20% */}
                       {form.tech.length > 1 && (
                         <button
                           type="button"
                           onClick={() => removeTechnology(index)}
-                          className="text-xs px-3 py-1 rounded-md bg-red-500 text-white"
+                          title="Remove technology"
+                          className="flex-[0_0_5%] h-[42px] flex items-center justify-center text-red-500 hover:text-red-700 transition-colors"
                         >
-                          Delete
+                          <Trash2 size={18} />
                         </button>
                       )}
                     </div>
-
-                    // </div>
                   ))}
 
                 <button
                   type="button"
                   onClick={addTechnology}
-                  className="text-sm px-4 py-2 rounded-md border border-dashed border-[var(--border)] hover:bg-[var(--bg-soft)]"
+                  className="mt-2 text-sm px-4 py-2 rounded-md border border-dashed border-[var(--border)] hover:bg-[var(--bg-soft)] flex items-center gap-2"
                 >
-                  + Add Technology
+                  <span>+</span> Add Technology
                 </button>
               </Section>
             </div>
@@ -241,7 +246,7 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
               <h4 className="text-sm font-medium text-[var(--text-secondary)]">Live Preview</h4>
 
               <div className="border border-[var(--border)] rounded-md p-4 bg-[var(--bg-soft)]">
-                <ExpCard
+                <TimelineExpCard
                   {...previewData}
                   tech={previewData.tech}
                   index={0}

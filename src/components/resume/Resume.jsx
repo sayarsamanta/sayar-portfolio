@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -32,7 +33,8 @@ const Resume = ({ pdfUrl, setError }) => {
       a.remove();
       window.URL.revokeObjectURL(url);
     } catch (err) {
-      console.error("Download failed", err);
+      const message = err.response?.data?.message;
+      toast.error(message || "Error downloading resume");
     }
   };
 
@@ -121,7 +123,6 @@ const Resume = ({ pdfUrl, setError }) => {
           <Document
             file={pdfUrl}
             onLoadError={(error) => {
-              console.error(error);
               setError(true);
               setLoading(false);
             }}

@@ -185,3 +185,43 @@ export const validateContactUsForm = (form, setErrors) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
 };
+
+export function optimizeCloudinaryURL(
+  url,
+  transformations = "c_fill,g_face,dpr_auto,f_auto,q_auto"
+) {
+  // Find the /upload/ segment
+  const uploadIndex = url.indexOf("/upload/");
+  if (uploadIndex === -1) return url; // Not a Cloudinary URL
+
+  const prefix = url.substring(0, uploadIndex + 8); // includes /upload/
+  let rest = url.substring(uploadIndex + 8); // rest of the URL after /upload/
+
+  // Check if a version exists
+  const versionMatch = rest.match(/^v\d+\//);
+  let version = "";
+  if (versionMatch) {
+    version = versionMatch[0]; // e.g., v1773649591/
+    rest = rest.substring(version.length); // remove version from rest
+  }
+
+  // Construct optimized URL
+  return `${prefix}${transformations}/${version}${rest}`;
+}
+
+export const hasData = (obj) =>
+  obj &&
+  Object.values(obj).some((value) => {
+    if (Array.isArray(value)) return value.length > 0;
+    if (typeof value === "object" && value !== null) return Object.keys(value).length > 0;
+    return value !== null && value !== undefined;
+  });
+
+export const validateLoginForm = (form, setErrors) => {
+  const newErrors = {};
+  if (!form.email) newErrors.email = "Email is required";
+  if (!form.password) newErrors.password = "Password is required";
+  if (form.password && form.password.length < 6) newErrors.password = "Minimum 6 characters";
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};

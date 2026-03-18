@@ -4,12 +4,10 @@ import toast from "react-hot-toast";
 import api from "../services/api";
 import { setAboutData } from "../store/slices/about/aboutSlice";
 
-
 const useAboutAPI = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  
   const fetchUser = useCallback(async () => {
     try {
       setLoading(true);
@@ -19,7 +17,7 @@ const useAboutAPI = () => {
 
       if (userData) {
         dispatch(setAboutData(userData?.about));
-        dispatch({ type: "about/setUser", payload: userData }); 
+        dispatch({ type: "about/setUser", payload: userData });
       }
 
       setLoading(false);
@@ -35,16 +33,14 @@ const useAboutAPI = () => {
     }
   }, [dispatch]);
 
-  
   const saveAbout = useCallback(
-    async (about, validateIntro, fromSave = false) => {
+    async (about, validateIntro, fromSave = false, updateName = {}) => {
       try {
         if (validateIntro && !validateIntro()) return null;
         setLoading(true);
-
         const payload = {
-          name: about?.name,
-          email: about?.email,
+          name: "name" in updateName ? updateName.name : about?.name,
+          email: "email" in updateName ? updateName.email : about?.email,
           role: about?.role || "admin",
           stats: about?.stats || {
             projects: 2,
@@ -67,21 +63,15 @@ const useAboutAPI = () => {
           formData.append("profileImg", about.intro.profileFile);
         }
 
-        
-        
-        
-        
         if (fromSave) {
           const res = await api.put("/user", formData, {
             headers: { "Content-Type": "multipart/form-data" },
           });
           const userData = res?.data;
-
           if (userData) {
             dispatch(setAboutData(userData?.about));
-            dispatch({ type: "about/setUser", payload: userData }); 
+            dispatch({ type: "about/setUser", payload: userData });
           }
-
           setLoading(false);
           toast.success("About section updated successfully!");
           return res.data;
@@ -95,7 +85,6 @@ const useAboutAPI = () => {
           return res.data;
         }
       } catch (err) {
-        console.error(err);
         setLoading(false);
         toast.error(err.response?.data?.message || "Error updating about");
         return null;

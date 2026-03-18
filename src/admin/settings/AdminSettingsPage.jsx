@@ -1,25 +1,27 @@
 import { Moon, Sun, Trash2 } from "lucide-react";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { useSelector } from "react-redux";
 import useResumeHandler from "../../hooks/useResumeHandler";
 import useAboutAPI from "../../hooks/useAboutAPI";
-import toast from "react-hot-toast";
 
 export default function AdminSettingsPage() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const about = useSelector((state) => state.about);
+  const { user } = useSelector((state) => state.about);
   const { uploadResume, loading, deleteResume, deleteLoading } = useResumeHandler();
   const { saveAbout } = useAboutAPI();
   const { resume } = about.user || "";
-  const [name, setName] = useState("Sayar Samanta");
+
+  const [name, setName] = useState("Samanta Sayar");
   const [email, setEmail] = useState("sayarsamanta@gmail.com");
   const [resumeFile, setResumeFile] = useState(null);
-  
+  // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  // const [toDelete, setToDelete] = useState(null);
+
   const handleToggleDarkMode = () => setDarkMode(!darkMode);
 
-  const handleSaveProfile = async () => {
-    
+  const handleSaveProfile = useCallback(async () => {
     const payload = {
       name: name || "Sayar Samanta",
       email: email || "sayarsamanta@gmail.com",
@@ -28,11 +30,10 @@ export default function AdminSettingsPage() {
       toast.error("Name and Email both can not be empty!!");
       return;
     }
-    await saveAbout(payload, "", true);
-  };
-  const hadleUploadResume = () => {
-    
-    uploadResume(resumeFile);
+    await saveAbout(user?.about, "", true, payload);
+  }, [name, email, saveAbout]);
+  const handleUploadResume = async () => {
+    await uploadResume(resumeFile);
   };
   const handleResumeChange = (e) => {
     const file = e.target.files[0];
@@ -40,20 +41,20 @@ export default function AdminSettingsPage() {
       setResumeFile(file);
     }
   };
-  const handleDeleteAccount = () => {
-    if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
-      alert("Account Deleted!");
-      
-    }
-  };
+  // const handleDeleteAccount = () => {
+  //   setDeleteModalOpen(true);
+  // };
 
-  const handleDeleteResume = () => {
-    deleteResume();
+  // const confirmDelete = () => {};
+
+  const handleDeleteResume = async () => {
+    await deleteResume();
   };
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 font-sans">
-      <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1>
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Profile Information</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -80,7 +81,8 @@ export default function AdminSettingsPage() {
         >
           Save Profile
         </button>
-      </div><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      </div>
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
@@ -92,7 +94,8 @@ export default function AdminSettingsPage() {
             {darkMode ? "Dark Mode" : "Light Mode"}
           </button>
         </div>
-      </div><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      </div>
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Resume / Portfolio</h2>
 
         <div className="flex flex-col gap-4 w-full">
@@ -109,7 +112,7 @@ export default function AdminSettingsPage() {
             />
 
             <button
-              onClick={hadleUploadResume}
+              onClick={handleUploadResume}
               disabled={loading}
               className="px-4 py-2 bg-[var(--primary)] text-white rounded whitespace-nowrap disabled:opacity-50 flex items-center gap-2"
             >
@@ -133,7 +136,8 @@ export default function AdminSettingsPage() {
             </button>
           </div>
         </div>
-      </div><div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      </div>
+      {/* <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Account Actions</h2>
 
         <button
@@ -144,6 +148,12 @@ export default function AdminSettingsPage() {
           Delete Account
         </button>
       </div>
+      <DeleteModal
+        isOpen={deleteModalOpen}
+        onClose={() => setDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        itemName={name + " @ " + email}
+      /> */}
     </div>
   );
 }

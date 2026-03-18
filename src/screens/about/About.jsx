@@ -4,6 +4,5 @@ import AboutContent from "../../components/about/AboutContent";
 export default function About() {
   const { user } = useSelector((state) => state.about);
   const { profileImg } = user || {};
-
-  return <AboutContent profileImg={profileImg} {...user?.about} />;
+  return <AboutContent profileImg={profileImg} {...user?.about}></AboutContent>;
 }

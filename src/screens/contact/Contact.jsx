@@ -110,7 +110,7 @@ export default function Contact() {
           className="px-8 py-3 rounded-2xl font-heading font-semibold transition shadow-lg border-2"
           style={{
             background: "linear-gradient(135deg, var(--primary), var(--secondary), var(--accent))",
-            color: "var(--button-text)",
+            color: "white",
             borderColor: "var(--primary)",
             boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
           }}

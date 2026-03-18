@@ -108,7 +108,7 @@ const Home = () => {
           <Link
             to="/resume"
             className="px-6 sm:px-7 py-3 rounded-xl text-sm sm:text-base 
-      border transition-all duration-300 
+      border transition-all duration-300 hover:scale-105
       hover:bg-[var(--background-alt)]"
             style={{
               borderColor: "var(--primary)",

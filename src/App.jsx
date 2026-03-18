@@ -1,22 +1,28 @@
-import About from "./screens/about/About";
+import { lazy, Suspense } from "react";
 import Home from "./screens/home/Home";
 import MainLayout from "./layout/MainLayout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Projects from "./screens/projects/Projects";
-import Experience from "./screens/experience/Experience";
-import Contact from "./screens/contact/Contact";
 import { ThemeProvider } from "./context/ThemeContext";
-import ResumePage from "./screens/resume/Resume";
-import AdminLayout from "./admin/AdminLayout";
-import AdminDashboard from "./admin/dashboard/AdminDashboard";
-import AdminProjects from "./admin/projects/AdminProjects";
-import AdminExperience from "./admin/experience/AdminExperience";
-import AdminResumePage from "./admin/resume/AdminResumePage";
-import AdminSettingsPage from "./admin/settings/AdminSettingsPage";
-import AdminAboutPageSingleAPI from "./admin/about/AdminAbout";
-import AdminLogin from "./admin/login/AdminLogin";
 import AdminProtectedRoute from "./admin/protectedroute/AdminProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import RouteLoader from "./components/common/RouteLoader";
+import AdminLayout from "./admin/AdminLayout";
+import ProjectCardSkeleton from "./components/skeleton/ProjectCardSkeleton";
+import AboutSkeleton from "./components/skeleton/AboutSkeleton";
+import TimelineExpSkeleton from "./components/skeleton/TimelineExpSkeleton";
+const About = lazy(() => import("./screens/about/About"));
+const Projects = lazy(() => import("./screens/projects/Projects"));
+const Experience = lazy(() => import("./screens/experience/Experience"));
+const Contact = lazy(() => import("./screens/contact/Contact"));
+const ResumePage = lazy(() => import("./screens/resume/Resume"));
+
+const AdminDashboard = lazy(() => import("./admin/dashboard/AdminDashboard"));
+const AdminProjects = lazy(() => import("./admin/projects/AdminProjects"));
+const AdminExperience = lazy(() => import("./admin/experience/AdminExperience"));
+const AdminResumePage = lazy(() => import("./admin/resume/AdminResumePage"));
+const AdminSettingsPage = lazy(() => import("./admin/settings/AdminSettingsPage"));
+const AdminAboutPageSingleAPI = lazy(() => import("./admin/about/AdminAbout"));
+const AdminLogin = lazy(() => import("./admin/login/AdminLogin"));
 
 function App() {
   return (
@@ -31,13 +37,57 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="projects" element={<Projects />} />
-              <Route path="experience" element={<Experience />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="resume" element={<ResumePage />} />
+              <Route
+                path="about"
+                element={
+                  <Suspense fallback={<AboutSkeleton />}>
+                    <About />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="projects"
+                element={
+                  <Suspense fallback={<ProjectCardSkeleton />}>
+                    <Projects />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="experience"
+                element={
+                  <Suspense fallback={<TimelineExpSkeleton />}>
+                    <Experience />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="contact"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Contact..." />}>
+                    <Contact />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="resume"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Resume..." />}>
+                    <ResumePage />
+                  </Suspense>
+                }
+              />
             </Route>
-            <Route path="/admin/login" element={<AdminLogin />} />
+
+            <Route
+              path="/admin/login"
+              element={
+                <Suspense fallback={<RouteLoader label="Loading Admin Login..." />}>
+                  <AdminLogin />
+                </Suspense>
+              }
+            />
+
             <Route
               path="/admin/*"
               element={
@@ -46,25 +96,72 @@ function App() {
                 </AdminProtectedRoute>
               }
             >
-              <Route index element={<AdminDashboard />} />
-              <Route path="admindashboard" element={<AdminDashboard />} />
-              <Route path="projects" element={<AdminProjects />} />
-              <Route path="experience" element={<AdminExperience />} />
-              <Route path="resume" element={<AdminResumePage />} />
-              <Route path="settings" element={<AdminSettingsPage />} />
-              <Route path="about" element={<AdminAboutPageSingleAPI />}></Route>
-              <Route path="*" element={<AdminDashboard />} />
+              <Route
+                index
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Dashboard..." />}>
+                    <AdminDashboard />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="projects"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Projects..." />}>
+                    <AdminProjects />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="experience"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Experience..." />}>
+                    <AdminExperience />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="resume"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Resume..." />}>
+                    <AdminResumePage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="settings"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Settings..." />}>
+                    <AdminSettingsPage />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="about"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading About..." />}>
+                    <AdminAboutPageSingleAPI />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <Suspense fallback={<RouteLoader label="Loading Dashboard..." />}>
+                    <AdminDashboard />
+                  </Suspense>
+                }
+              />
             </Route>
           </Routes>
+
           <Toaster
             position="top-right"
             reverseOrder={false}
             containerStyle={{
-              
               zIndex: 99999,
             }}
             toastOptions={{
-              
               style: {
                 zIndex: 99999,
                 background: "var(--card)",

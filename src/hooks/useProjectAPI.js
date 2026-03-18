@@ -28,7 +28,6 @@ const useProjectAPI = () => {
       setLoading(false);
       return projectData;
     } catch (err) {
-      console.error(err.message);
       setLoading(false);
 
       const status = err.response?.status;
@@ -48,13 +47,10 @@ const useProjectAPI = () => {
         if (isEdit) {
           const data = new FormData();
 
-          
           Object.keys(payload).forEach((key) => {
             if (key !== "screenshots" && key !== "tech" && key !== "features") {
               const value = payload[key];
 
-              
-              
               if (value !== null && value !== undefined) {
                 data.append(key, value);
               }
@@ -92,8 +88,6 @@ const useProjectAPI = () => {
             }
           });
 
-          
-          
           payload.tech.forEach((item) => {
             if (item.trim() !== "") {
               data.append("tech", item);

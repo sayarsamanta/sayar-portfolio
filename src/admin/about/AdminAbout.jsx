@@ -13,7 +13,6 @@ import useAboutAPI from "../../hooks/useAboutAPI";
 import placeholder from "../../assets/placeholder.jpg";
 export default function AdminAboutPage({}) {
   const aboutFromStore = useSelector((state) => state.about);
-  console.log(aboutFromStore);
   const { data } = aboutFromStore || {};
   const { saveAbout, loading } = useAboutAPI();
   const [about, setAbout] = useState({
@@ -50,21 +49,14 @@ export default function AdminAboutPage({}) {
   const { profileImg } = about.intro || {};
   const [interestInput, setInterestInput] = useState("");
   useEffect(() => {
-    async function fetchAbout() {
-      try {
-        setAbout({
-          intro: data?.intro,
-          skills: data?.skills || [],
-          achievements: data?.achievements || [],
-          education: data?.education || [],
-          featuredProjects: data?.featuredProjects || [],
-          personalInterests: data?.personalInterests || [],
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchAbout();
+    setAbout({
+      intro: data?.intro,
+      skills: data?.skills || [],
+      achievements: data?.achievements || [],
+      education: data?.education || [],
+      featuredProjects: data?.featuredProjects || [],
+      personalInterests: data?.personalInterests || [],
+    });
   }, [data]);
 
   const updateItem = (field, item) => {
@@ -107,11 +99,9 @@ export default function AdminAboutPage({}) {
   };
 
   const saveAll = async () => {
-    if (data?.intro?.headline != "") {
-      console.log("need to call edit");
+    if (data) {
       await saveAbout(about, validateIntro, true);
     } else {
-      console.log("need to call create");
       await saveAbout(about, validateIntro, false);
     }
   };
