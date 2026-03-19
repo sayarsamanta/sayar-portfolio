@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 import { Document, Page, pdfjs } from "react-pdf";
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).href;
+import pdfWorker from "pdfjs-dist/build/pdf.worker.min?url";
+
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const Resume = ({ pdfUrl, setError }) => {
   const [numPages, setNumPages] = useState(null);
   const [pageWidth, setPageWidth] = useState(900);
   const [loading, setLoading] = useState(true);
-
+  const file = useMemo(() => ({ url: pdfUrl }), [pdfUrl]);
+  const options = useMemo(
+    () => ({
+      cMapUrl: "https://unpkg.com/pdfjs-dist@5.4.296/cmaps/",
+      standardFontDataUrl: "https://unpkg.com/pdfjs-dist@5.4.296/standard_fonts/",
+    }),
+    []
+  );
   useEffect(() => {
     const updateWidth = () => {
       const width = Math.min(window.innerWidth * 0.9, 900);
@@ -109,14 +115,8 @@ const Resume = ({ pdfUrl, setError }) => {
           )}
 
           <Document
-            file={{
-              url: pdfUrl,
-              withCredentials: false,
-            }}
-            options={{
-              cMapUrl: "https://unpkg.com/pdfjs-dist@5.4.296/cmaps/",
-              standardFontDataUrl: "https://unpkg.com/pdfjs-dist@5.4.296/standard_fonts/",
-            }}
+            file={file}
+            options={options}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={(error) => {
               console.error(error);
