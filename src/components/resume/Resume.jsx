@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Document, Page, pdfjs } from "react-pdf";
-import { getFileNameFromCloudinary } from "../../utils/helper";
-
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
   import.meta.url
-).toString();
+).href;
 
 const Resume = ({ pdfUrl, setError }) => {
   const [numPages, setNumPages] = useState(null);
@@ -114,6 +112,10 @@ const Resume = ({ pdfUrl, setError }) => {
             file={{
               url: pdfUrl,
               withCredentials: false,
+            }}
+            options={{
+              cMapUrl: "https://unpkg.com/pdfjs-dist@5.4.296/cmaps/",
+              standardFontDataUrl: "https://unpkg.com/pdfjs-dist@5.4.296/standard_fonts/",
             }}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={(error) => {
