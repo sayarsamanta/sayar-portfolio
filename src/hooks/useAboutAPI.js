@@ -28,7 +28,6 @@ const useAboutAPI = () => {
       const status = err.response?.status;
       const message = err.response?.data?.message;
 
-      alert(StatusCode.getMessage(status, message));
       return null;
     }
   }, [dispatch]);

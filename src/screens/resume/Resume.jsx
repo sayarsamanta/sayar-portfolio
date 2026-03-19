@@ -4,16 +4,18 @@ import Resume from "../../components/resume/Resume";
 import EmptySection from "../../components/admin/experience/EmptySection";
 import { useState } from "react";
 
-
 export default function ResumePage() {
   const about = useSelector((state) => state.about);
   const { resume } = about.user || "";
+  console.log(resume);
   const [error, setError] = useState(false);
+  console.log(error);
   return (
     <div
       className="min-h-screen bg-[var(--background)] flex flex-col items-center py-10 px-4"
       style={{ paddingTop: "5rem" }}
-    >{(!resume || error) && <EmptySection type={"Resume"} />}
+    >
+      {(!resume || error) && <EmptySection type={"Resume"} />}
       {resume && !error && (
         <>
           <motion.div
@@ -27,6 +29,7 @@ export default function ResumePage() {
           </motion.div>
           <Resume pdfUrl={resume} setError={setError} />
         </>
-      )}</div>
+      )}
+    </div>
   );
 }

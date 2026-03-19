@@ -15,32 +15,12 @@ const TimelineExpCard = ({
   const isExpanded = expandedId === _id;
 
   return (
-    <motion.div
-      layout
-      transition={{
-        layout: {
-          duration: 0.45,
-          type: "spring",
-          stiffness: 120,
-          damping: 18,
-        },
-      }}
-      className="w-full"
-    >
+    <motion.div className="w-full">
       <motion.div
-        layout
         onClick={() => setExpandedId(isExpanded ? null : _id)}
         whileHover={{
           y: -4,
           scale: 1.005,
-        }}
-        transition={{
-          layout: {
-            duration: 0.4,
-            type: "spring",
-            stiffness: 120,
-            damping: 18,
-          },
         }}
         className="
           rounded-2xl p-5 lg:p-6 border cursor-pointer

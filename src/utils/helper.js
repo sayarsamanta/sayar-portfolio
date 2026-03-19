@@ -225,3 +225,7 @@ export const validateLoginForm = (form, setErrors) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
 };
+
+export const getFileNameFromCloudinary = (url) => {
+  return url.split("/").pop();
+};
