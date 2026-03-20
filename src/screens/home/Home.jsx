@@ -127,7 +127,7 @@ const Home = () => {
           <Stat count={clients} label="Clients" />
         </motion.div>
       </motion.div>
-      <div className="hidden md:flex flex-row gap-8 mt-10">
+      <div className="flex flex-wrap gap-2 sm:gap-8 justify-center items-center mt-8">
         {skills.map((tech, i) => (
           <motion.div
             key={i}
@@ -138,7 +138,16 @@ const Home = () => {
               duration: 2,
               repeat: Infinity,
             }}
-            className="bg-[var(--card)] p-2 rounded-full shadow-lg text-[var(--text-primary)] font-body text-xs"
+            className="
+        bg-[var(--card)]
+        px-3 py-2
+        rounded-full
+        shadow-lg
+        text-[var(--text-primary)]
+        font-body
+        text-xs sm:text-sm
+        whitespace-nowrap
+      "
           >
             {tech?.name}
           </motion.div>
