@@ -91,7 +91,7 @@ const Resume = ({ pdfUrl, setError }) => {
                 gap: "0.5rem",
                 padding: "0.6rem 1rem",
                 backgroundColor: "var(--primary)",
-                color: "var(--text-button)",
+                color: "white",
                 borderRadius: "6px",
                 border: "1px solid var(--primary)",
                 fontWeight: 500,

@@ -4,6 +4,7 @@ import useContactAPI from "../../hooks/useContactAPI";
 import { Input } from "../../components/admin/projects/Input";
 import { Textarea } from "../../components/admin/projects/Textarea";
 import { validateContactUsForm } from "../../utils/helper";
+import { Trash2 } from "lucide-react";
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -12,6 +13,7 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const { sendEmail } = useContactAPI();
   const handleChange = (e) => {
@@ -26,11 +28,17 @@ export default function Contact() {
     e.preventDefault();
     if (!validateContactUsForm(formData, setError)) return;
     const { name, email, message } = formData;
-
-    const res = await sendEmail(name, email, message);
-    if (res) {
-      setFormData({ name: "", email: "", message: "" });
-      setSubmitted()(true);
+    setLoading(true);
+    try {
+      const res = await sendEmail(name, email, message);
+      if (res) {
+        setLoading(false);
+        setFormData({ name: "", email: "", message: "" });
+        setSubmitted(true);
+      }
+    } catch (error) {
+      setLoading(false);
+      setSubmitted(false);
     }
   };
 
@@ -101,13 +109,14 @@ export default function Contact() {
           error={error.message}
         />
         <motion.button
+          disabled={loading}
           whileHover={{
             scale: 1.05,
             boxShadow: "0 8px 20px rgba(255,255,255,0.3)",
           }}
           whileTap={{ scale: 0.95 }}
           type="submit"
-          className="px-8 py-3 rounded-2xl font-heading font-semibold transition shadow-lg border-2"
+          className="px-8 py-3 flex items-center justify-center rounded-2xl font-heading font-semibold transition shadow-lg border-2"
           style={{
             background: "linear-gradient(135deg, var(--primary), var(--secondary), var(--accent))",
             color: "white",
@@ -115,7 +124,10 @@ export default function Contact() {
             boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
           }}
         >
-          {submitted ? "Message Sent ✅" : "Send Message"}
+          <span>{loading ? "Sending..." : "Send"}</span>
+          {loading && (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin ml-2" />
+          )}
         </motion.button>
       </motion.form>
     </div>
