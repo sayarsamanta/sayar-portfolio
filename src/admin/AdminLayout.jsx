@@ -13,6 +13,7 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { user } = useSelector((state) => state.about);
+  const profileImg = user?.about?.intro?.profileImg || "";
   const name = user?.name || "Sayar Samanta";
   const { fetchUser } = useAboutAPI();
   const { fetchExperience } = useExperienceAPI();
@@ -79,12 +80,15 @@ export default function AdminLayout() {
             >
               {darkMode ? <FiSun color="#FBBF24" size={18} /> : <FiMoon size={18} />}
             </button>
-            <div className="w-9 h-9 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-medium">
-              {name &&
+            <div className="w-9 h-9 rounded-full overflow-hidden bg-[var(--primary)] text-white flex items-center justify-center font-medium">
+              {profileImg ? (
+                <img src={profileImg} alt={name} className="w-full h-full object-cover" />
+              ) : (
                 name
-                  .split(" ")
+                  ?.split(" ")
                   .map((word) => word[0].toUpperCase())
-                  .join("")}
+                  .join("")
+              )}
             </div>
           </div>
         </div>
