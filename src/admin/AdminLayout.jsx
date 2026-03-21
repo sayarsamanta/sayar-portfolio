@@ -7,10 +7,13 @@ import { SidebarContent } from "../components/admin/SidebarContent";
 import useAboutAPI from "../hooks/useAboutAPI";
 import useExperienceAPI from "../hooks/useExperienceAPI";
 import useProjectAPI from "../hooks/useProjectAPI";
+import { useSelector } from "react-redux";
 export default function AdminLayout() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const { user } = useSelector((state) => state.about);
+  const name = user?.name || "Sayar Samanta";
   const { fetchUser } = useAboutAPI();
   const { fetchExperience } = useExperienceAPI();
   const { fetchProjects } = useProjectAPI();
@@ -29,9 +32,11 @@ export default function AdminLayout() {
   }, [darkMode]);
 
   return (
-    <div className="h-screen bg-[var(--background)] flex overflow-hidden"><div className="hidden lg:flex w-64 border-r border-[var(--border)] bg-[var(--card)]">
+    <div className="h-screen bg-[var(--background)] flex overflow-hidden">
+      <div className="hidden lg:flex w-64 border-r border-[var(--border)] bg-[var(--card)]">
         <SidebarContent />
-      </div><AnimatePresence>
+      </div>
+      <AnimatePresence>
         {sidebarOpen && (
           <>
             <motion.div
@@ -52,7 +57,10 @@ export default function AdminLayout() {
             </motion.div>
           </>
         )}
-      </AnimatePresence><div className="flex-1 flex flex-col h-full"><div className="h-14 flex items-center justify-between px-6 border-b border-[var(--border)] bg-[var(--background)]"><div className="flex items-center gap-4">
+      </AnimatePresence>
+      <div className="flex-1 flex flex-col h-full">
+        <div className="h-14 flex items-center justify-between px-6 border-b border-[var(--border)] bg-[var(--background)]">
+          <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden p-2 rounded-md hover:bg-[var(--card)] transition"
@@ -63,16 +71,24 @@ export default function AdminLayout() {
             <h1 className="text-lg font-semibold capitalize">
               {location.pathname.split("/")[2] || "dashboard"}
             </h1>
-          </div><div className="flex items-center gap-4"><button
+          </div>
+          <div className="flex items-center gap-4">
+            <button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition"
             >
               {darkMode ? <FiSun color="#FBBF24" size={18} /> : <FiMoon size={18} />}
-            </button><div className="w-9 h-9 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-medium">
-              A
+            </button>
+            <div className="w-9 h-9 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-medium">
+              {name &&
+                name
+                  .split(" ")
+                  .map((word) => word[0].toUpperCase())
+                  .join("")}
             </div>
           </div>
-        </div><div className="p-6 flex-1 overflow-y-auto">
+        </div>
+        <div className="p-6 flex-1 overflow-y-auto">
           <Outlet />
         </div>
       </div>
