@@ -14,12 +14,14 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="space-y-8 text-[var(--text-primary)] font-sans"><div>
+    <div className="space-y-8 text-[var(--text-primary)] font-sans">
+      <div>
         <h2 className="text-2xl font-semibold">Dashboard Overview</h2>
         <p className="text-sm text-[var(--text-secondary)] mt-1">
           Manage your portfolio content and monitor activity.
         </p>
-      </div><div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           if (stat.value > 0) {
@@ -29,7 +31,7 @@ export default function AdminDashboard() {
                 className="
               rounded-2xl
               border border-[var(--border)]
-              bg-[var(--card)]
+              
               p-6
               transition-all duration-200
               hover:border-[var(--primary)]
@@ -58,20 +60,25 @@ export default function AdminDashboard() {
             );
           }
         })}
-      </div><div className="grid grid-cols-1 xl:grid-cols-3 gap-6"><div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-md">
+      </div>
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="rounded-2xl border border-[var(--border)] p-6 shadow-md">
           <h3 className="text-lg font-semibold mb-6">Quick Actions</h3>
 
-          <div className="flex flex-wrap gap-4"><Link
+          <div className="flex flex-wrap gap-4">
+            <Link
               to="/admin/projects"
               className="flex items-center gap-3 px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-xl font-medium hover:opacity-90 transition-all duration-200 shadow hover:shadow-lg min-w-[150px] justify-center"
             >
               + Add Project
-            </Link><Link
+            </Link>
+            <Link
               to="/admin/experience"
               className="flex items-center gap-3 px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-xl font-medium hover:opacity-90 transition-all duration-200 shadow hover:shadow-lg min-w-[150px] justify-center"
             >
               + Add Experience
-            </Link></div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

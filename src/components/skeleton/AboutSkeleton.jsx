@@ -2,7 +2,10 @@ import React from "react";
 
 const AboutSkeleton = () => {
   return (
-    <div className="min-h-screen px-6 md:px-14 lg:px-24 xl:px-32 py-16 flex flex-col gap-14">
+    <div
+      className="min-h-screen px-6 md:px-14 lg:px-24 xl:px-32 py-16 flex flex-col gap-14"
+      style={{ background: "var(--gradient-bg)" }}
+    >
       {/* Intro Section */}
       <section className="w-full py-10 flex flex-col items-center text-center animate-pulse">
         {/* Avatar */}

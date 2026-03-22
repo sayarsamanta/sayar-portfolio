@@ -5,8 +5,9 @@ import { validateSection } from "../../../utils/helper";
 const percentageOptions = Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
 const AboutSkillEditor = ({ about, skillForm, setSkillForm, updateItem, removeItem }) => {
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
-      <h3 className="text-lg font-semibold mb-2">Skills</h3><div className="flex flex-wrap gap-2 mb-2">
+    <div className="rounded-2xl border border-[var(--border)] p-6 space-y-4">
+      <h3 className="text-lg font-semibold mb-2">Skills</h3>
+      <div className="flex flex-wrap gap-2 mb-2">
         <input
           placeholder="Skill Name (React, Node, etc)"
           value={skillForm.name}
@@ -85,7 +86,8 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         >
           Add / Save
         </button>
-      </div>{about.skills?.map((item) => (
+      </div>
+      {about.skills?.map((item) => (
         <AdminItemCard
           key={item.id}
           type="skill"

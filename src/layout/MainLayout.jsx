@@ -3,7 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import FloatingConnectButton from "../components/FloatingConnectButton";
 import { ThemeContext } from "../context/ThemeContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import MaintenancePage from "../screens/maintenance/MaintenancePage";
 import useAdminShortcut from "../hooks/useAdminShortcut";
@@ -25,12 +25,8 @@ const MainLayout = () => {
     }
   }, [fetchUser, about]);
 
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.remove("light-theme");
-    } else {
-      document.body.classList.add("light-theme");
-    }
+  useLayoutEffect(() => {
+    document.body.classList.toggle("light-theme", !darkMode);
   }, [darkMode]);
 
   if (loading) {
@@ -42,7 +38,7 @@ const MainLayout = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--text-primary)]">
+    <div className="min-h-screen flex flex-col">
       {user && <Navbar />}
       <AnimatePresence mode="wait" className="flex-grow">
         <motion.div
@@ -51,7 +47,7 @@ const MainLayout = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
           transition={{ duration: 0.4 }}
-          className="flex-grow pt-14 pb-32 md:pb-0 overflow-auto"
+          className="flex-grow pb-32 md:pb-0 overflow-auto"
         >
           <Outlet />
         </motion.div>

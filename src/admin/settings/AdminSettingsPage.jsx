@@ -54,7 +54,7 @@ export default function AdminSettingsPage() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 font-sans">
       <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1>
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      <div className=" border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Profile Information</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -82,7 +82,7 @@ export default function AdminSettingsPage() {
           Save Profile
         </button>
       </div>
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      <div className="border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
@@ -95,7 +95,7 @@ export default function AdminSettingsPage() {
           </button>
         </div>
       </div>
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      <div className="border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Resume / Portfolio</h2>
 
         <div className="flex flex-col gap-4 w-full">

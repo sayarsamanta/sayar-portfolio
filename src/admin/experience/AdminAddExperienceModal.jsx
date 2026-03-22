@@ -112,7 +112,10 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
       <div className="absolute inset-0 flex justify-center items-start overflow-y-auto py-10 px-4">
-        <div className="w-full max-w-5xl bg-[var(--card)] border border-[var(--border)] rounded-md shadow-xl p-8">
+        <div
+          className="w-full max-w-5xl bg-[var(--card)] border border-[var(--border)] rounded-md shadow-xl p-8"
+          style={{ background: "var(--gradient-bg)" }}
+        >
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-xl font-semibold">{item ? "Edit Experience" : "Add Experience"}</h3>
 

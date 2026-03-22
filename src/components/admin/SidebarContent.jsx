@@ -16,29 +16,37 @@ const navItems = [
   { name: "Dashboard", path: "/admin", icon: FiHome },
   { name: "Projects", path: "/admin/projects", icon: FiFolder },
   { name: "Experience", path: "/admin/experience", icon: FiBriefcase },
-  
+
   { name: "Settings", path: "/admin/settings", icon: FiSettings },
   { name: "About", path: "/admin/about", icon: FiUser },
 ];
 export function SidebarContent({ close }) {
   const navigate = useNavigate();
   const handleLogout = () => {
-    
     localStorage.removeItem("adminToken");
 
-    
     navigate("/", { replace: true });
   };
   return (
-    <div className="flex flex-col h-full p-4 font-sans"><div className="text-xl font-bold mb-8 tracking-wide">Admin Panel</div>
+    <div className="flex flex-col h-full p-4 font-sans text-[var(--text-primary)]">
+      <div className="text-xl font-bold mb-8 tracking-wide">Admin Panel</div>
+
       <div className="mb-6">
         <Link
-          to="/" 
-          className="flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-[var(--primary)] hover:text-[var(--text-button)] transition-all duration-200"
+          to="/"
+          className="
+        flex items-center gap-3 px-4 py-2 rounded-xl
+        hover:bg-[var(--glass-hover)]
+        hover:text-[var(--primary)]
+        transition-all duration-200
+      "
         >
-          <BarChart size={18} /> User Dashboard
+          <BarChart size={18} />
+          User Dashboard
         </Link>
-      </div><nav className="flex-1 space-y-2">
+      </div>
+
+      <nav className="flex-1 space-y-2">
         {navItems.map((item) => {
           const Icon = item.icon;
 
@@ -49,12 +57,12 @@ export function SidebarContent({ close }) {
               end={item.path === "/admin"}
               onClick={close}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all
-                  ${
-                    isActive
-                      ? "bg-[var(--primary)] text-white"
-                      : "text-[var(--text-secondary)] hover:bg-[var(--background)]"
-                  }`
+                `flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-300
+            ${
+              isActive
+                ? "bg-[var(--glass-bg)] text-[var(--primary)] border border-[var(--border)] backdrop-blur-sm"
+                : "text-[var(--text-secondary)] hover:bg-[var(--glass-hover)] hover:text-[var(--text-primary)]"
+            }`
               }
             >
               <Icon size={18} />
@@ -62,8 +70,15 @@ export function SidebarContent({ close }) {
             </NavLink>
           );
         })}
-      </nav><button
-        className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-red-500 hover:bg-red-50 transition"
+      </nav>
+
+      <button
+        className="
+      flex items-center gap-3 px-3 py-2 rounded-xl text-sm
+      text-red-500
+      hover:bg-red-500/10
+      transition-all duration-300
+    "
         onClick={handleLogout}
       >
         <FiLogOut size={18} />

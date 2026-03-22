@@ -67,6 +67,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
 
     const previews = files.map((file) => URL.createObjectURL(file));
     setForm({ ...form, screenshots: previews });
+    e.target.value = null; // important
   };
 
   const handleSubmit = () => {
@@ -91,12 +92,13 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
           className="
           w-full
           max-w-7xl
-          bg-[var(--card)]
+          
           border border-[var(--border)]
           rounded-2xl
           shadow-xl
           p-8
         "
+          style={{ background: "var(--gradient-bg)" }}
         >
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-xl font-semibold">{item ? "Edit Project" : "Add Project"}</h3>
@@ -115,7 +117,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
                     value={form.title}
                     onChange={handleChange}
                     error={errors.title}
-                    className={"flex-1 border-[var(--border)]"}
+                    className={"flex-1"}
                   />
 
                   <Input

@@ -13,8 +13,8 @@ export default function AdminProjects() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const handleEdit = (project) => {
-    setSelectedProject(project); 
-    setIsModalOpen(true); 
+    setSelectedProject(project);
+    setIsModalOpen(true);
   };
 
   const handleCreate = async (form, rawFiles, slug, isEdit) => {
@@ -36,7 +36,8 @@ export default function AdminProjects() {
   };
 
   return (
-    <div className="space-y-8 text-[var(--text-primary)]"><div className="flex items-center justify-between">
+    <div className="space-y-8 text-[var(--text-primary)]">
+      <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-semibold">Projects</h2>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -55,12 +56,13 @@ export default function AdminProjects() {
             transition-all duration-200
             hover:opacity-90
           "
-          onClick={() => handleEdit(null) }
+          onClick={() => handleEdit(null)}
         >
           <Plus size={16} />
           Add Project
         </button>
-      </div><div
+      </div>
+      <div
         className="
           rounded-2xl
           border border-[var(--border)]
@@ -74,7 +76,7 @@ export default function AdminProjects() {
           </div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-[var(--background)]">
+            <thead style={{ background: "var(--gradient-bg)" }}>
               <tr>
                 <th className="text-left p-4 border-b border-[var(--border)]">Title</th>
                 <th className="text-left p-4 border-b border-[var(--border)]">Tech Stack</th>
@@ -89,9 +91,10 @@ export default function AdminProjects() {
                   key={project._id}
                   className="
                     border-b border-[var(--border)]
-                    hover:bg-[var(--background)]
+                    hover:bg-[var(--gradient-bg)]
                     transition-all duration-150
                   "
+                  style={{ background: "var(--gradient-bg)" }}
                 >
                   <td className="p-4 font-medium">{project.name || project.title}</td>
 
@@ -150,7 +153,7 @@ export default function AdminProjects() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleCreate}
-        item={selectedProject} 
+        item={selectedProject}
         loading={loading}
       />
       <DeleteModal

@@ -9,7 +9,7 @@ const AboutInterestEditor = ({
   removeInterest,
 }) => {
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
+    <div className="rounded-2xl border border-[var(--border)]  p-6 space-y-4">
       <h3 className="text-lg font-semibold mb-2">Personal Interests</h3>
       <div className="flex gap-2 mb-2">
         <input

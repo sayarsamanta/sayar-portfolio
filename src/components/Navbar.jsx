@@ -60,15 +60,15 @@ const Navbar = () => {
       initial={{ y: 0 }}
       animate={{
         y: visible ? 0 : -100,
-        backgroundColor: darkMode ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.5)",
-        borderBottom: scrolled
-          ? darkMode
-            ? "1px solid rgba(255, 255, 255, 0.1)"
-            : "1px solid rgba(0, 0, 0, 0.05)"
-          : "1px solid rgba(0, 0, 0, 0)",
+        // backgroundColor: darkMode ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.5)",
+        // borderBottom: scrolled
+        //   ? darkMode
+        //     ? "1px solid rgba(255, 255, 255, 0.1)"
+        //     : "1px solid rgba(0, 0, 0, 0.05)"
+        //   : "1px solid rgba(0, 0, 0, 0)",
       }}
       transition={{ duration: 0.3 }}
-      className="fixed shadow-lg left-0 right-0 top-0 z-50 backdrop-blur-md font-heading"
+      className="fixed left-0 right-0 top-0 z-50 backdrop-blur-md font-heading"
     >
       <div className="flex justify-between items-center px-8 py-5">
         <motion.div

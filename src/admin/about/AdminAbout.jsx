@@ -238,7 +238,9 @@ export default function AdminAboutPage({}) {
       xl:h-[calc(100vh-120px)]
       xl:overflow-y-auto
       hide-scrollbar
+      
     "
+        style={{ background: "var(--gradient-bg)" }}
       >
         <h2 className="text-2xl font-semibold">Live About Preview</h2>
 

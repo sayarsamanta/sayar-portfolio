@@ -48,10 +48,7 @@ const ImageSlider = ({
     return (
       <div
         className={`w-full ${height} ${rounded} flex items-center justify-center border`}
-        style={{
-          backgroundColor: "rgba(255,255,255,0.02)",
-          borderColor: "var(--border)",
-        }}
+        style={{ background: "var(--gradient-bg)" }}
       >
         {" "}
         <span className="text-xs opacity-40">No Image</span>{" "}
@@ -61,8 +58,8 @@ const ImageSlider = ({
 
   return (
     <div
-      className={`relative flex flex-col overflow-hidden ${height} ${rounded} border bg-[var(--card)] group shadow-lg transition-all duration-500`}
-      style={{ borderColor: "var(--border)" }}
+      className={`relative flex flex-col overflow-hidden ${height} ${rounded}  group shadow-lg transition-all duration-500`}
+      // style={{ borderColor: "var(--border)" }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

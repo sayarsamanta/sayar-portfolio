@@ -28,12 +28,7 @@ function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
-        <main
-          style={{
-            backgroundColor: "var(--background)",
-            color: "var(--text-primary)",
-          }}
-        >
+        <main>
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />

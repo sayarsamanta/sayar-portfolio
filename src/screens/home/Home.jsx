@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <div
       className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 p-10"
-      style={{ background: "var(--background)" }}
+      style={{ background: "var(--gradient-bg)" }}
     >
       <div className="flex justify-center">
         <div className="relative">
@@ -139,7 +139,6 @@ const Home = () => {
               repeat: Infinity,
             }}
             className="
-        bg-[var(--card)]
         px-3 py-2
         rounded-full
         shadow-lg

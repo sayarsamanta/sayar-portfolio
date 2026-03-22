@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 html,
 body,
 main,
@@ -8,16 +9,16 @@ main,
   margin: 0;
   padding: 0;
   height: 100%;
-  /* Match this hex code to your dark mode background color */
+  min-height: 100%;
 }
-/* Global base styles for the portfolio */
+
+/* Global base styles */
 @layer base {
-  /* Body: default text and font */
   body {
-    @apply font-body text-text-secondary bg-white dark:bg-black;
+    @apply font-body text-text-secondary;
+    background: var(--gradient-bg);
   }
 
-  /* Headings: h1–h6 use heading font and primary color */
   h1,
   h2,
   h3,
@@ -27,13 +28,11 @@ main,
     @apply font-heading text-text-primary;
   }
 
-  /* Links and buttons use heading font */
   a,
   button {
     @apply font-heading;
   }
 
-  /* Optional: smooth font rendering */
   body,
   button,
   input,
@@ -42,63 +41,66 @@ main,
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Optional: set default line-height and spacing for paragraphs */
   p {
     @apply leading-relaxed mb-4;
   }
 
-  /* Optional: smaller text for small elements like captions */
   small {
     @apply text-sm font-body text-text-secondary;
   }
 
-  /* Responsive default text sizes for headings */
   h1 {
     @apply text-4xl sm:text-5xl md:text-7xl;
   }
+
   h2 {
     @apply text-2xl sm:text-3xl md:text-4xl;
   }
+
   h3 {
     @apply text-xl sm:text-2xl md:text-3xl;
   }
+
   h4 {
     @apply text-lg sm:text-xl md:text-2xl;
   }
+
   h5 {
     @apply text-base sm:text-lg md:text-xl;
   }
+
   h6 {
     @apply text-sm sm:text-base md:text-lg;
   }
 }
-.input-glass {
-  @apply px-5 py-3 rounded-md focus:outline-none focus:ring-2 shadow-inner w-full font-body;
-  background-color: rgba(255, 255, 255, 0.07); /* slightly more visible */
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  caret-color: var(--primary);
-  transition: all 0.3s ease;
-}
 
-.input-glass:focus {
-  background-color: rgba(255, 255, 255, 0.12); /* stronger on focus */
-  border-color: var(--primary);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
-}
+/* Theme Variables */
 :root {
-  --background: #000000; /* page background */
-  --background-alt: #1a1a1a; /* card, badge background */
-  --card: #1a1a1a;
-  --border: #333333;
+  --background: #0b1120;
+  --background-alt: #111827;
+  --card: #111827;
+
+  --border: rgba(255, 255, 255, 0.16);
+  --border-width: 1.5px;
+
   --primary: #6366f1;
   --secondary: #8b5cf6;
   --accent: #ec4899;
-  --text-primary: #ffffff; /* main text */
-  --text-secondary: #aaaaaa; /* secondary text */
+
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
   --text-button: #000000;
+
   --calendar-icon-filter: invert(1);
   --bg-disabled: #374151;
+
+  --gradient-bg:
+    radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.24), transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.2), transparent 25%), #0b1120;
+
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(255, 255, 255, 0.08);
+  --avatar-ring: rgba(255, 255, 255, 0.1);
 }
 
 /* Light Theme */
@@ -106,30 +108,56 @@ main,
   --background: #ffffff;
   --background-alt: #ffffff;
   --card: #ffffff;
+
   --border: #dddddd;
+  --border-width: 1px;
+
   --primary: #6366f1;
   --secondary: #8b5cf6;
   --accent: #ec4899;
+
   --text-primary: #111111;
   --text-secondary: #555555;
   --text-button: #ffffff;
+
   --calendar-icon-filter: invert(0);
   --bg-disabled: #e5e7eb;
+
+  --gradient-bg:
+    radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.08), transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.08), transparent 25%), #f8fafc;
+
+  --glass-bg: rgba(15, 23, 42, 0.04);
+  --glass-hover: rgba(15, 23, 42, 0.07);
+  --avatar-ring: rgba(15, 23, 42, 0.08);
 }
-/* Hide scrollbar for Chrome, Safari and Edge */
+
+/* Inputs */
+.input-glass {
+  @apply px-5 py-3 rounded-md focus:outline-none focus:ring-2 shadow-inner w-full font-body;
+  background-color: rgba(255, 255, 255, 0.07);
+  border: var(--border-width) solid var(--border);
+  color: var(--text-primary);
+  caret-color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.input-glass:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+/* Scrollbar */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for Firefox */
 .hide-scrollbar {
   scrollbar-width: none;
-}
-
-/* Hide scrollbar for IE, Edge */
-.hide-scrollbar {
   -ms-overflow-style: none;
 }
+
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -142,65 +170,13 @@ main,
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary);
 }
+
+/* Month Picker */
 input[type="month"]::-webkit-calendar-picker-indicator {
   filter: var(--calendar-icon-filter);
 }
-/* Toolbar */
-.editor-wrapper .ql-toolbar {
-  background: var(--card-bg);
-  border: none !important;
-  border-bottom: 1px solid var(--border-color);
-}
 
-/* Editor container */
-.editor-wrapper .ql-container {
-  background: var(--card-bg);
-  border: none !important;
-  color: var(--text-primary);
-}
-
-/* Text editor */
-.editor-wrapper .ql-editor {
-  min-height: 140px;
-  font-size: 14px;
-  /* color: var(--text-primary); */
-}
-
-/* Placeholder */
-.editor-wrapper .ql-editor.ql-blank::before {
-  color: var(--text-secondary);
-}
-
-/* Icons */
-.editor-wrapper .ql-stroke {
-  stroke: var(--text-primary);
-}
-
-.editor-wrapper .ql-fill {
-  fill: var(--text-primary);
-}
-
-/* Hover */
-.editor-wrapper .ql-toolbar button:hover {
-  background: var(--hover-bg);
-}
-
-/* Rounded corners */
-.editor-wrapper .ql-toolbar {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.editor-wrapper .ql-container {
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-.ql-editor {
-  min-height: 120px;
-  max-height: 220px;
-  overflow-y: auto;
-  word-break: break-word;
-}
+/* Loader */
 .loader {
   border: 4px solid #f3f3f3;
   border-top: 4px solid var(--primary);
@@ -214,10 +190,13 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
+
+/* Utility */
 .inner-shadow {
   box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
 }

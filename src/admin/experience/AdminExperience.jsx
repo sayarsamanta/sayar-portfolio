@@ -48,7 +48,7 @@ export default function AdminExperience() {
   };
 
   return (
-    <div className="p-6 md:p-8 space-y-6 font-sans min-h-screen bg-[var(--background)]">
+    <div className="p-6 md:p-8 space-y-6 font-sans min-h-screen">
       <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 w-full">
         <h1 className="text-4xl sm:text-4xl md:text-4xl font-heading font-bold text-center sm:text-left w-full sm:w-auto">
           Experience
@@ -68,7 +68,7 @@ export default function AdminExperience() {
           {exp?.map((exp) => (
             <div
               key={exp._id}
-              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-[var(--card)] rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] gap-4"
+              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4  rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] gap-4"
             >
               <div className="flex-1 w-full">
                 <h3 className="text-lg md:text-xl font-semibold">
