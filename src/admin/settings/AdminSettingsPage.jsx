@@ -46,7 +46,7 @@ export default function AdminSettingsPage() {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 font-sans">
+    <div className="w-full mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 font-sans">
       <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1>
       <div className=" border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Profile Information</h2>

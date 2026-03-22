@@ -14,13 +14,13 @@ const Button = ({
   ...props
 }) => {
   const variantStyles = {
-    primary: "px-6 py-2.5 rounded-lg bg-[var(--primary)] text-white hover:brightness-110",
-    secondary: "px-6 py-2.5 rounded-lg bg-[var(--secondary)] text-white hover:brightness-110",
+    primary: "px-4 py-3 rounded bg-[var(--primary)] text-white hover:brightness-110",
+    secondary: "px-4 py-3 rounded-lg bg-[var(--secondary)] text-white hover:brightness-110",
     outline:
-      "px-6 py-2.5 rounded-lg border-2 border-[var(--primary)] text-[var(--primary)] bg-transparent hover:bg-[var(--primary)] hover:text-white",
-    cancel: "px-6 py-2.5 rounded-lg border border-[var(--border)] hover:bg-[var(--bg-soft)]",
+      "px-4 py-3 rounded-lg border-2 border-[var(--primary)] text-[var(--primary)] bg-transparent hover:bg-[var(--primary)] hover:text-white",
+    cancel: "px-4 py-3 rounded-lg border border-[var(--border)] hover:bg-[var(--bg-soft)]",
     delete: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700",
-    edit: "p-0 bg-transparent border-none",
+    edit: " bg-transparent border-none",
     secondarydelete: "p-2 bg-red-500 rounded-full text-white hover:bg-red-600",
   };
 
