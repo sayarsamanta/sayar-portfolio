@@ -67,6 +67,7 @@ export default function AdminAddProjectModal({ isOpen, onClose, onSave, item, lo
 
     const previews = files.map((file) => URL.createObjectURL(file));
     setForm({ ...form, screenshots: previews });
+    e.target.value = null; // important
   };
 
   const handleSubmit = () => {
