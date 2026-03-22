@@ -44,7 +44,7 @@ export default function Contact() {
 
   return (
     <div
-      className="relative min-h-screen px-6 md:px-20 py-20 flex flex-col gap-20 font-body"
+      className="relative min-h-screen mt-6 px-6 md:px-20 py-20 flex flex-col gap-20 font-body"
       style={{ background: "var(--gradient-bg)" }}
     >
       <motion.div

@@ -4,6 +4,7 @@ import AdminAddProjectModal from "./AdminAddProjectModal";
 import useProjectAPI from "../../hooks/useProjectAPI";
 import { useSelector } from "react-redux";
 import DeleteModal from "../../components/admin/DeleteModal";
+import Button from "../../components/common/Button";
 
 export default function AdminProjects() {
   const { projects } = useSelector((state) => state.projects);
@@ -45,22 +46,21 @@ export default function AdminProjects() {
           </p>
         </div>
 
-        <button
+        <Button
+          onClick={() => handleEdit(null)}
+          variant="primary"
           className="
             flex items-center gap-2
             px-4 py-2
-            rounded-xl
             bg-[var(--primary)]
             text-[var(--text-button)]
             text-sm
             transition-all duration-200
             hover:opacity-90
           "
-          onClick={() => handleEdit(null)}
         >
-          <Plus size={16} />
           Add Project
-        </button>
+        </Button>
       </div>
       <div
         className="
@@ -116,31 +116,21 @@ export default function AdminProjects() {
 
                   <td className="p-4">
                     <div className="flex justify-end gap-3">
-                      <button
-                        className="
-                          p-2
-                          rounded-lg
-                          border border-[var(--border)]
-                          hover:border-[var(--primary)]
-                          transition
-                        "
-                        onClick={() => handleEdit(project)}
-                      >
-                        <Pencil size={16} />
-                      </button>
+                      <Button
+                        variant="edit"
+                        onClick={() => {
+                          handleEdit(project);
+                        }}
+                        className="p-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
+                        icon={<Pencil size={16} />}
+                      ></Button>
 
-                      <button
+                      <Button
                         onClick={() => handleDelete(project)}
-                        className="
-                          p-2
-                          rounded-lg
-                          border border-[var(--border)]
-                          hover:border-red-500
-                          transition
-                        "
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                        variant="secondarydelete"
+                        className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
+                        icon={<Trash2 size={16} />}
+                      ></Button>
                     </div>
                   </td>
                 </tr>

@@ -104,7 +104,7 @@ const useExperienceAPI = () => {
     [dispatch, exp]
   );
 
-  return { fetchExperience, addExperienceCall, deleteExperienceAction };
+  return { fetchExperience, addExperienceCall, deleteExperienceAction, loading };
 };
 
 export default useExperienceAPI;

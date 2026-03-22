@@ -7,13 +7,11 @@ import { useState } from "react";
 export default function ResumePage() {
   const about = useSelector((state) => state.about);
   const { resume } = about.user || "";
-  console.log(resume);
   const [error, setError] = useState(false);
-  console.log(error);
   return (
     <div
-      className="min-h-screen bg-[var(--background)] flex flex-col items-center py-10 px-4"
-      style={{ paddingTop: "5rem" }}
+      className="min-h-screen  flex flex-col items-center py-10 px-4"
+      style={{ background: "var(--gradient-bg)", paddingTop: "7rem" }}
     >
       {(!resume || error) && <EmptySection type={"Resume"} />}
       {resume && !error && (

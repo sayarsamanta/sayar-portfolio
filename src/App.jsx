@@ -10,11 +10,15 @@ import AdminLayout from "./admin/AdminLayout";
 import ProjectCardSkeleton from "./components/skeleton/ProjectCardSkeleton";
 import AboutSkeleton from "./components/skeleton/AboutSkeleton";
 import TimelineExpSkeleton from "./components/skeleton/TimelineExpSkeleton";
+import ResumePageSkeleton from "./components/skeleton/ResumePageSkeleton";
 const About = lazy(() => import("./screens/about/About"));
 const Projects = lazy(() => import("./screens/projects/Projects"));
 const Experience = lazy(() => import("./screens/experience/Experience"));
 const Contact = lazy(() => import("./screens/contact/Contact"));
-const ResumePage = lazy(() => import("./screens/resume/Resume"));
+const ResumePage = lazy(
+  () => new Promise((resolve) => setTimeout(() => resolve(import("./screens/resume/Resume")), 3000))
+);
+//const ResumePage = lazy(() => import("./screens/resume/Resume"));
 
 const AdminDashboard = lazy(() => import("./admin/dashboard/AdminDashboard"));
 const AdminProjects = lazy(() => import("./admin/projects/AdminProjects"));
@@ -56,18 +60,11 @@ function App() {
                   </Suspense>
                 }
               />
-              <Route
-                path="contact"
-                element={
-                  <Suspense fallback={<RouteLoader label="Loading Contact..." />}>
-                    <Contact />
-                  </Suspense>
-                }
-              />
+              <Route path="contact" element={<Contact />} />
               <Route
                 path="resume"
                 element={
-                  <Suspense fallback={<RouteLoader label="Loading Resume..." />}>
+                  <Suspense fallback={<ResumePageSkeleton />}>
                     <ResumePage />
                   </Suspense>
                 }

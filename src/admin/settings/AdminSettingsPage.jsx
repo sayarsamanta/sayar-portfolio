@@ -4,6 +4,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { useSelector } from "react-redux";
 import useResumeHandler from "../../hooks/useResumeHandler";
 import useAboutAPI from "../../hooks/useAboutAPI";
+import Button from "../../components/common/Button";
 
 export default function AdminSettingsPage() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
@@ -16,8 +17,6 @@ export default function AdminSettingsPage() {
   const [name, setName] = useState("Samanta Sayar");
   const [email, setEmail] = useState("sayarsamanta@gmail.com");
   const [resumeFile, setResumeFile] = useState(null);
-  // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  // const [toDelete, setToDelete] = useState(null);
 
   const handleToggleDarkMode = () => setDarkMode(!darkMode);
 
@@ -41,11 +40,6 @@ export default function AdminSettingsPage() {
       setResumeFile(file);
     }
   };
-  // const handleDeleteAccount = () => {
-  //   setDeleteModalOpen(true);
-  // };
-
-  // const confirmDelete = () => {};
 
   const handleDeleteResume = async () => {
     await deleteResume();
@@ -74,13 +68,9 @@ export default function AdminSettingsPage() {
             className="input-glass w-full"
           />
         </div>
-
-        <button
-          onClick={handleSaveProfile}
-          className="w-full sm:w-auto px-4 py-2 bg-[var(--primary)] text-[var(--text-button)] rounded-xl"
-        >
+        <Button onClick={handleSaveProfile} variant="primary">
           Save Profile
-        </button>
+        </Button>
       </div>
       <div className="border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
@@ -108,52 +98,37 @@ export default function AdminSettingsPage() {
               type="file"
               accept=".pdf,.doc,.docx"
               onChange={handleResumeChange}
-              className="border p-2 rounded flex-1 min-w-[160px]"
+              className="border border-[var(--border)] p-2 flex-1 min-w-[160px] 
+              /* The main input background */
+             file:mr-4 file:py-2 file:px-4
+             file:rounded-md file:border-0
+             file:text-sm file:font-semibold
+             file:bg-[var(--primary)] file:text-white
+             hover:file:bg-[var(--primary)]
+             transition-all cursor-pointer"
             />
 
-            <button
+            <Button
               onClick={handleUploadResume}
-              disabled={loading}
-              className="px-4 py-2 bg-[var(--primary)] text-white rounded whitespace-nowrap disabled:opacity-50 flex items-center gap-2"
+              loading={loading}
+              variant="primary"
+              loadingText="Uploading Resume..."
             >
-              {loading && (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              )}
-
-              {loading ? "Uploading..." : "Upload Resume"}
-            </button>
-
-            <button
+              Upload Resume
+            </Button>
+            <Button
               onClick={handleDeleteResume}
               disabled={deleteLoading}
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-all whitespace-nowrap"
+              variant="delete"
+              loadingText="Deleting resume ...."
+              loading={deleteLoading}
+              icon={<Trash2 size={18} />}
             >
-              {deleteLoading && (
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              )}
-              <Trash2 size={16} />
-              {deleteLoading ? "Deleting..." : "Delete"}
-            </button>
+              Delete
+            </Button>
           </div>
         </div>
       </div>
-      {/* <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
-        <h2 className="text-lg sm:text-xl font-semibold">Account Actions</h2>
-
-        <button
-          onClick={handleDeleteAccount}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-        >
-          <Trash2 size={16} />
-          Delete Account
-        </button>
-      </div>
-      <DeleteModal
-        isOpen={deleteModalOpen}
-        onClose={() => setDeleteModalOpen(false)}
-        onConfirm={confirmDelete}
-        itemName={name + " @ " + email}
-      /> */}
     </div>
   );
 }

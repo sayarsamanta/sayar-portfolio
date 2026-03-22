@@ -5,10 +5,11 @@ import AdminAddExperienceModal from "./AdminAddExperienceModal";
 import { useSelector } from "react-redux";
 import EmptySection from "../../components/admin/experience/EmptySection";
 import useExperienceAPI from "../../hooks/useExperienceAPI";
+import Button from "../../components/common/Button";
 
 export default function AdminExperience() {
   const { exp } = useSelector((state) => state.experience || {});
-  const { addExperienceCall, deleteExperienceAction } = useExperienceAPI();
+  const { addExperienceCall, deleteExperienceAction, loading } = useExperienceAPI();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
 
@@ -54,12 +55,13 @@ export default function AdminExperience() {
           Experience
         </h1>
         <div className="w-full sm:w-auto flex justify-center sm:justify-end">
-          <button
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md"
+          <Button
             onClick={handleAddNew}
+            variant="primary"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md"
           >
             Add Experience
-          </button>
+          </Button>
         </div>
       </div>
       {exp?.length === 0 && <EmptySection isAdmin={true} type={"Experience"} />}
@@ -97,20 +99,18 @@ export default function AdminExperience() {
                 )}
               </div>
               <div className="flex flex-shrink-0 gap-2 mt-2 md:mt-0">
-                <button
+                <Button
                   onClick={() => handleEdit(exp)}
-                  className="p-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
-                  title="Edit"
-                >
-                  <Edit2 size={16} />
-                </button>
-                <button
+                  className="px-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
+                  icon={<Edit2 size={16} />}
+                  variant="edit"
+                ></Button>
+                <Button
                   onClick={() => handleDelete(exp)}
+                  variant="secondarydelete"
                   className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
-                  title="Delete"
-                >
-                  <Trash2 size={16} />
-                </button>
+                  icon={<Trash2 size={16} />}
+                ></Button>
               </div>
             </div>
           ))}
@@ -121,6 +121,7 @@ export default function AdminExperience() {
         onClose={() => setModalOpen(false)}
         onSave={handleSubmit}
         item={selectedExperience}
+        loading={loading}
       />
 
       <DeleteModal

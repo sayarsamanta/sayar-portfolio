@@ -1,5 +1,6 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
+import Button from "../../../components/common/Button";
 
 const AboutInterestEditor = ({
   interestInput,
@@ -23,12 +24,13 @@ text-sm text-[var(--text-primary)]
 placeholder:text-sm placeholder:text-[var(--text-secondary)] placeholder:opacity-70
 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
-        <button
+        <Button
           onClick={addInterest}
+          variant="primary"
           className="px-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md"
         >
           Add
-        </button>
+        </Button>
       </div>
       {about.personalInterests.map((item, id) => (
         <AdminItemCard key={item} type="interest" data={item} onDelete={() => removeInterest(id)} />
