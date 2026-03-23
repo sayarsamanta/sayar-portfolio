@@ -12,7 +12,7 @@ import Footer from "../components/footer/Footer";
 import ScrollToTop from "../components/common/ScrollToTop";
 
 const MainLayout = () => {
-  const { darkMode } = useContext(ThemeContext);
+  const { mode } = useContext(ThemeContext);
   const location = useLocation();
   useAdminShortcut();
 
@@ -26,9 +26,9 @@ const MainLayout = () => {
     }
   }, [fetchUser, about]);
 
-  useLayoutEffect(() => {
-    document.body.classList.toggle("light-theme", !darkMode);
-  }, [darkMode]);
+  // useLayoutEffect(() => {
+  //   document.body.classList.toggle("light-theme", !darkMode);
+  // }, [darkMode]);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;

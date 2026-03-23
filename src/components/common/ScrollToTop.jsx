@@ -37,25 +37,20 @@ const ScrollToTop = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 flex items-center justify-center group"
+          className="fixed bottom-24 right-8 z-50 flex items-center justify-center group"
           style={{ background: "none", border: "none", padding: 0 }}
         >
-          {/* Progress Ring Container */}
           <svg width="64" height="64" className="rotate-[-90deg]">
-            {/* THE CHANNEL (The background track) */}
             <circle
               cx="32"
               cy="32"
               r="28"
-              // Uses text color at 10% opacity so it shows as a light grey in light mode
-              // and a faint white in dark mode.
               stroke="currentColor"
               className="text-[var(--text-main, #000)] opacity-10"
               strokeWidth="4"
               fill="none"
             />
 
-            {/* THE PROGRESS (Indigo border) */}
             <motion.circle
               cx="32"
               cy="32"
@@ -68,7 +63,6 @@ const ScrollToTop = () => {
             />
           </svg>
 
-          {/* CENTRAL BUTTON (Secondary Purple) */}
           <div
             className="absolute inset-0 m-auto w-11 h-11 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 group-hover:brightness-110"
             style={{

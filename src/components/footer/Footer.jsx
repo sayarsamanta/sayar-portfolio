@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
-import { Linkedin, Github, Instagram, Mail } from "lucide-react"; // updated imports
+import { AnimatePresence, motion } from "framer-motion";
+import { Linkedin, Github, Instagram, Mail } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
-
+import { version } from "../../../package.json";
+import ThemeSwitcher from "../common/ThemeSwitcher";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 const socialLinks = [
   {
     id: "linkedin",
@@ -13,7 +16,7 @@ const socialLinks = [
   {
     id: "twitter",
     enabled: true,
-    url: "https://x.com/sayarsamanta", // Update with your handle
+    url: "https://x.com/sayarsamanta",
     platform: "twitter",
   },
   {
@@ -34,98 +37,78 @@ const iconMap = {
 };
 
 export default function Footer() {
+  const { mode } = useContext(ThemeContext);
+  const [isVisible, setIsVisible] = useState(false);
+  const sentinelRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: "0px 0px 40px 0px",
+      }
+    );
+
+    if (sentinelRef.current) observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <motion.footer
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      // FIX: Changed mt-20 to pt-20 and removed background to make it part of the page
-      className="w-full px-4 sm:px-10 pb-10 pt-20 relative"
-    >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Card 1: Identity */}
-        <div
-          className="md:col-span-2 p-6 rounded-3xl border border-black/10 dark:border-white/10 shadow-xl flex flex-col justify-center backdrop-blur-md"
-          style={{
-            background: "rgba(255, 255, 255, 0.03)",
-          }}
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            <div className="space-y-1">
-              {/* THEMED TEXT: Frontend Engineer */}
-              <h3 className="text-xl font-bold tracking-tight text-[var(--text-primary)] leading-tight">
-                Frontend Engineer
-              </h3>
-              <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-[0.2em]">
-                Full Stack Capable
-              </p>
-            </div>
-            <div className="h-10 w-[1px] bg-black/10 dark:bg-white/10 hidden sm:block" />
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed max-w-[220px]">
-              Building scalable digital experiences with modern UI precision.
-            </p>
-          </div>
-        </div>
+    <>
+      <div ref={sentinelRef} className="h-0 w-full pointer-events-none" />
 
-        {/* Card 2: Socials */}
-        <div
-          className="p-4 rounded-3xl border border-black/10 dark:border-white/10 shadow-xl flex items-center justify-center backdrop-blur-md"
-          style={{ background: "rgba(255, 255, 255, 0.03)" }}
-        >
-          <div className="flex flex-wrap justify-center gap-3">
-            {socialLinks
-              ?.filter((item) => item.enabled)
-              .map((item) => (
-                <a
-                  key={item.id}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-black/5 dark:bg-white/5 text-[var(--text-secondary)] rounded-2xl hover:bg-[var(--primary)] hover:text-white transition-all duration-300 border border-transparent"
-                >
-                  <div className="w-4 h-4 flex items-center justify-center">
-                    {iconMap[item.platform]}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.footer
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-6 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none"
+          >
+            <div className="pointer-events-auto flex items-center bg-[var(--card)] border border-[var(--border)] backdrop-blur-2xl rounded-2xl p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transform-gpu">
+              <div className="flex flex-col px-4 py-1 border-r border-[var(--border)] min-w-[110px]">
+                <span className="text-[10px] font-black tracking-tighter text-[var(--text-primary)]">
+                  SAYAR.S
+                </span>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-[7px] font-bold text-[var(--text-secondary)] opacity-50 tracking-[0.2em]">
+                    v{version}
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <span className="h-1 w-1 rounded-full bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]" />
+                    <span className="text-[6px] font-bold tracking-[0.3em] text-green-600 dark:text-green-400">
+                      ACTIVE
+                    </span>
                   </div>
-                </a>
-              ))}
-          </div>
-        </div>
+                </div>
+              </div>
 
-        {/* Card 3: Status */}
-        <div
-          className="p-6 rounded-3xl border border-black/10 dark:border-white/10 shadow-xl flex items-center justify-center backdrop-blur-md"
-          style={{ background: "rgba(255, 255, 255, 0.03)" }}
-        >
-          <div className="flex flex-col items-center gap-4">
-            <div className="space-y-1 text-center">
-              <p className="text-[10px] font-bold text-[var(--primary)] uppercase tracking-[0.2em]">
-                Freelance & Full-time
-              </p>
-              <h4 className="text-lg font-bold text-[var(--text-primary)] leading-tight">
-                Available for Hire
-              </h4>
+              <div className="flex items-center gap-1 bg-black/5 dark:bg-white/5 rounded-xl p-1 mx-2 border border-black/5 dark:border-white/5">
+                {socialLinks
+                  ?.filter((s) => s.enabled)
+                  .map((item) => (
+                    <a
+                      key={item.id}
+                      href={item.url}
+                      target="_blank"
+                      className="p-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-all"
+                    >
+                      <div className="w-4 h-4 flex items-center justify-center">
+                        {iconMap[item.platform]}
+                      </div>
+                    </a>
+                  ))}
+              </div>
+              <div className="pl-1 pr-1 border-l border-[var(--border)]">
+                <ThemeSwitcher />
+              </div>
             </div>
-
-            <div className="flex items-center gap-2 px-3 py-1 bg-black/5 dark:bg-white/5 rounded-full border border-black/5 dark:border-white/5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-              <span className="text-[9px] font-bold text-[var(--text-secondary)] uppercase tracking-widest">
-                Active Search: 2026
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Metadata Line */}
-      <div className="max-w-7xl mx-auto mt-10 px-4 flex flex-col sm:flex-row justify-between items-center text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--text-secondary)] gap-4 opacity-50">
-        <p>© 2026 Sayar Samanta</p>
-        <div className="flex gap-4">
-          <span>React Ecosystem</span>
-          <span className="opacity-30">•</span>
-          <span>Tailwind CSS</span>
-        </div>
-      </div>
-    </motion.footer>
+          </motion.footer>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
