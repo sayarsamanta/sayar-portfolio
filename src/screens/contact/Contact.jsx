@@ -44,11 +44,8 @@ export default function Contact() {
 
   return (
     <div
-      className="relative min-h-screen px-6 md:px-20 py-20 flex flex-col gap-20 font-body"
-      style={{
-        backgroundColor: "var(--background)",
-        color: "var(--text-primary)",
-      }}
+      className="relative min-h-screen mt-6 px-6 md:px-20 py-20 flex flex-col gap-20 font-body"
+      style={{ background: "var(--gradient-bg)" }}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}

@@ -37,13 +37,13 @@ const AboutContent = ({
       flex flex-col gap-14
       relative
       transition-colors duration-500
-      bg-[var(--background)]
-      text-[var(--text-primary)]
+      
       font-body`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7 }}
+      style={{ background: fromPreview ? "" : "var(--gradient-bg)" }}
     >
       {" "}
       <section className="w-full py-10">
@@ -118,11 +118,16 @@ const AboutContent = ({
           <div className="flex flex-wrap justify-center gap-3 mb-10">
             <button
               onClick={() => setSkillCategory("All")}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2 rounded-full text-sm transition-all duration-300 ${
                 skillCategory === "All"
-                  ? "bg-[var(--primary)] text-white shadow-md"
-                  : "bg-[var(--card)] border border-[var(--border)] text-[var(--text-secondary)]"
+                  ? "shadow-md border border-white/20 transform scale-105 font-bold"
+                  : "border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:brightness-105 hover:scale-105"
               }`}
+              style={
+                skillCategory === "All"
+                  ? { background: "var(--gradient-bg)", color: "var(--text-light)" }
+                  : {}
+              }
             >
               All
             </button>
@@ -131,11 +136,16 @@ const AboutContent = ({
               <button
                 key={cat}
                 onClick={() => setSkillCategory(cat)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-5 py-2 rounded-full text-sm transition-all duration-300 ${
                   skillCategory === cat
-                    ? "bg-[var(--primary)] text-white shadow-md"
-                    : "bg-[var(--card)] border border-[var(--border)] text-[var(--text-secondary)]"
+                    ? "shadow-md border border-white/20 transform scale-105 font-bold"
+                    : "border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:brightness-105 hover:scale-105"
                 }`}
+                style={
+                  skillCategory === cat
+                    ? { background: "var(--gradient-bg)", color: "var(--text-light)" }
+                    : {}
+                }
               >
                 {cat}
               </button>

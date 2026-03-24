@@ -12,14 +12,16 @@ const AdminAddScreenshot = ({
 }) => {
   return (
     <Section title="Screenshots">
-      <div className="flex items-center justify-between mb-4"><input
+      <div className="flex items-center justify-between mb-4">
+        <input
           type="file"
           multiple
           id="screenshot-upload"
           className="hidden"
           onChange={handleScreenshotUpload}
-          error={errors?.screenshots} 
-        /><label
+          error={errors?.screenshots}
+        />
+        <label
           htmlFor="screenshot-upload"
           className="
         cursor-pointer 
@@ -49,7 +51,8 @@ const AdminAddScreenshot = ({
             Clear Selection ({rawFiles.length})
           </button>
         )}
-      </div>{form?.screenshots?.length > 0 ? (
+      </div>
+      {form?.screenshots?.length > 0 ? (
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
           {form.screenshots.map((src, i) => (
             <div
@@ -57,7 +60,13 @@ const AdminAddScreenshot = ({
               className="aspect-video rounded-lg overflow-hidden border border-white/10 relative group bg-black/20"
             >
               <img
-                src={"url" in src ? src?.url : src}
+                src={
+                  src && typeof src === "object" && "url" in src
+                    ? src.url
+                    : typeof src === "string"
+                      ? src
+                      : URL.createObjectURL(src) // fallback for File/Blob
+                }
                 alt="preview"
                 className="w-full h-full object-cover"
               />

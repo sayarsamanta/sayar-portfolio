@@ -2,19 +2,12 @@ import { useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
-import { Stat } from "../../components/Stat";
 import { useSelector } from "react-redux";
 import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
 import placeholder from "../../assets/placeholder.jpg";
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-};
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -32,114 +25,69 @@ const Home = () => {
 
   return (
     <div
-      className="relative min-h-[90vh] flex flex-col items-center overflow-hidden px-4 p-10"
-      style={{ background: "var(--background)" }}
+      className="relative min-h-screen px-6 py-16 flex flex-col items-center justify-center overflow-hidden"
+      style={{ background: "var(--gradient-bg)" }}
     >
-      <div className="flex justify-center">
-        <div className="relative">
-          <div className="mt-14">
-            <ProfileAvatar src={profileImg || placeholder} size="large" />
-          </div>
-        </div>
-      </div>
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="relative flex flex-col items-center justify-center text-center 
-  max-w-3xl mx-auto gap-5 px-4 sm:px-6 lg:px-8 mt-14 sm:mt-14"
-      >
-        <motion.div
-          variants={itemVariants}
-          className="px-4 py-1.5 text-xs sm:text-sm rounded-full 
-    border border-[var(--border)] bg-[var(--background-alt)] 
-    text-[var(--text-secondary)]"
-        >
-          Full Stack Developer
-        </motion.div>
-        <motion.h1
-          variants={itemVariants}
-          className="font-heading font-bold leading-tight
-    text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
-          style={{ color: "var(--text-primary)" }}
+      {/* Desktop UI */}
+      <div className="hidden md:flex relative z-10 flex-col items-center text-center max-w-4xl">
+        <ProfileAvatar src={profileImg || placeholder} size="large" />
+        <h1
+          className="mt-6 text-5xl sm:text-6xl font-extrabold bg-clip-text text-transparent"
+          style={{ backgroundImage: "var(--gradient-text)" }}
         >
           {name || "Sayar Samanta"}
-        </motion.h1>
-        <motion.h2
-          variants={itemVariants}
-          className="text-base sm:text-lg md:text-xl 
-    font-medium max-w-xl"
-          style={{ color: "var(--text-secondary)" }}
-        >
-          {bio}
-        </motion.h2>
-        <motion.p
-          variants={itemVariants}
-          className="max-w-xl leading-relaxed 
-    text-sm sm:text-base md:text-lg"
-          style={{ color: "var(--text-secondary)" }}
-        >
-          {brief}
-        </motion.p>
+        </h1>
+        <p className="mt-3 text-[var(--text-secondary)]">{bio}</p>
+        <p className="mt-2 text-[var(--text-secondary)]">{brief}</p>
         {qoute && (
-          <motion.p
-            variants={itemVariants}
-            className="italic text-xs sm:text-sm 
-      text-[var(--text-tertiary)] 
-      border-l-2 border-[var(--primary)] pl-3 mt-2"
+          <p
+            className="mt-4 italic text-[var(--text-tertiary)] border-l-2 pl-3"
+            style={{ borderColor: "var(--primary)" }}
           >
             "{qoute}"
-          </motion.p>
+          </p>
         )}
-        <motion.div variants={itemVariants} className="flex flex-wrap justify-center gap-4 mt-6">
-          <Link
-            to="/projects"
-            className="px-6 sm:px-7 py-3 rounded-xl text-sm sm:text-base 
-      font-medium transition-all duration-300 
-      hover:scale-105 shadow-md"
-            style={{
-              backgroundColor: "var(--primary)",
-              color: darkMode ? "#000" : "#fff",
-            }}
-          >
-            View Projects
-          </Link>
 
-          <Link
-            to="/resume"
-            className="px-6 sm:px-7 py-3 rounded-xl text-sm sm:text-base 
-      border transition-all duration-300 hover:scale-105
-      hover:bg-[var(--background-alt)]"
-            style={{
-              borderColor: "var(--primary)",
-              color: "var(--text-primary)",
-            }}
-          >
-            View Resume
-          </Link>
-        </motion.div>
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-wrap justify-center gap-6 sm:gap-10 mt-10"
-        >
-          <Stat count={projects} label="Projects" />
-          <Stat count={experienceYears} label="Years Exp" />
-          <Stat count={clients} label="Clients" />
-        </motion.div>
-      </motion.div>
-      <div className="flex flex-wrap gap-2 sm:gap-8 justify-center items-center mt-8">
-        {skills.map((tech, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              delay: 0.8 * i,
-              duration: 2,
-              repeat: Infinity,
-            }}
-            className="
-        bg-[var(--card)]
+        {/* Stats Cards */}
+        <div className="mt-12 w-full flex flex-wrap justify-center gap-4 px-2 sm:px-0">
+          {[
+            { label: "Projects", count: projects, color: "var(--primary)" },
+            { label: "Years Exp", count: experienceYears, color: "var(--primary)" },
+            { label: "Clients", count: clients, color: "var(--primary)" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 * i, duration: 0.6 }}
+              className={`
+        flex items-center gap-4 px-6 py-4 
+        bg-white/10 backdrop-blur-md border-l-4 rounded-lg shadow-lg 
+        min-w-[200px] flex-1
+        transition-transform hover:scale-105
+      `}
+              style={{ borderColor: stat.color }}
+            >
+              <h2 className="text-2xl font-bold text-[var(--text-primary)]">{stat.count}</h2>
+              <p className="text-[var(--text-secondary)]">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Skills badges */}
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {skills.map((tech, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                delay: 0.8 * i,
+                duration: 2,
+                repeat: Infinity,
+              }}
+              className="
         px-3 py-2
         rounded-full
         shadow-lg
@@ -148,10 +96,132 @@ const Home = () => {
         text-xs sm:text-sm
         whitespace-nowrap
       "
+            >
+              {tech?.name}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-8 flex gap-4">
+          <Link
+            className="px-6 py-2 rounded-xl font-medium transition hover:scale-105 shadow-md"
+            style={{
+              background: "var(--primary)",
+              color: darkMode ? "#000" : "#fff",
+            }}
+            to="/projects"
           >
-            {tech?.name}
-          </motion.div>
-        ))}
+            Projects
+          </Link>
+          <Link
+            className="px-6 py-2 rounded-xl border font-medium transition hover:bg-[var(--background-alt)]"
+            style={{
+              borderColor: "var(--primary)",
+              color: "var(--text-primary)",
+            }}
+            to="/resume"
+          >
+            Resume
+          </Link>
+        </div>
+      </div>
+      {/* Mobile UI */}
+      <div className="md:hidden relative z-10 flex flex-col items-center text-center max-w-md pb-6 mt-5">
+        <ProfileAvatar src={profileImg || placeholder} size="medium" />
+        <h1
+          className="mt-4 text-3xl sm:text-4xl font-bold bg-clip-text text-transparent"
+          style={{ backgroundImage: "var(--gradient-text)" }}
+        >
+          {name || "Sayar Samanta"}
+        </h1>
+        <p className="mt-2 text-[var(--text-secondary)]">{bio}</p>
+        <p className="mt-1 text-[var(--text-secondary)] text-sm">{brief}</p>
+        {qoute && (
+          <p
+            className="mt-3 italic text-[var(--text-tertiary)] border-l-2 pl-3 text-sm"
+            style={{ borderColor: "var(--primary)" }}
+          >
+            "{qoute}"
+          </p>
+        )}
+        <div className="mt-12 w-full flex flex-wrap justify-center gap-4 px-2 sm:px-0">
+          {[
+            { label: "Projects", count: projects, color: "var(--primary)" },
+            { label: "Years Exp", count: experienceYears, color: "var(--primary)" },
+            { label: "Clients", count: clients, color: "var(--primary)" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              variants={itemVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 * i, duration: 0.6 }}
+              className={`
+        flex items-center gap-4 px-6 py-4 
+        bg-white/10 backdrop-blur-md border-l-4 rounded-lg shadow-lg 
+        min-w-[200px] flex-1
+        transition-transform hover:scale-105
+      `}
+              style={{ borderColor: stat.color }}
+            >
+              <h2 className="text-2xl font-bold text-[var(--text-primary)]">{stat.count}</h2>
+              <p className="text-[var(--text-secondary)]">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+        {/* Skills badges */}
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {skills.map((tech, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                delay: 0.8 * i,
+                duration: 2,
+                repeat: Infinity,
+              }}
+              className="
+        px-3 py-2
+        rounded-full
+        shadow-lg
+        text-[var(--text-primary)]
+        font-body
+        text-xs sm:text-sm
+        whitespace-nowrap
+      "
+            >
+              {tech?.name}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-6 flex flex-col gap-3 w-full">
+          <Link
+            className="w-full px-6 py-2 rounded-xl font-medium transition hover:scale-105 shadow-md text-center"
+            style={{
+              background: "var(--primary)",
+              color: darkMode ? "#000" : "#fff",
+            }}
+            to="/projects"
+          >
+            Projects
+          </Link>
+          <Link
+            className="w-full px-6 py-2 rounded-xl border font-medium transition hover:bg-[var(--background-alt)] text-center"
+            style={{
+              borderColor: "var(--primary)",
+              color: "var(--text-primary)",
+            }}
+            to="/resume"
+          >
+            Resume
+          </Link>
+        </div>
+
+        <div className="h-16"></div>
       </div>
     </div>
   );

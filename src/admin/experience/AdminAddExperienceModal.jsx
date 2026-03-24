@@ -6,8 +6,9 @@ import { Input } from "../../components/admin/projects/Input";
 import TimelineExpCard from "../../components/experience/TimelineExpCard";
 import { formatDuration, parseDuration, validateExp } from "../../utils/helper";
 import { Textarea } from "../../components/admin/projects/Textarea";
+import Button from "../../components/common/Button";
 
-export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item }) {
+export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item, loading }) {
   const [form, setForm] = useState({
     company: "",
     role: "",
@@ -112,7 +113,10 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
       <div className="absolute inset-0 flex justify-center items-start overflow-y-auto py-10 px-4">
-        <div className="w-full max-w-5xl bg-[var(--card)] border border-[var(--border)] rounded-md shadow-xl p-8">
+        <div
+          className="w-full max-w-5xl bg-[var(--card)] border border-[var(--border)] rounded-md shadow-xl p-8"
+          style={{ background: "var(--gradient-bg)" }}
+        >
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-xl font-semibold">{item ? "Edit Experience" : "Add Experience"}</h3>
 
@@ -258,19 +262,23 @@ export default function AdminAddExperienceModal({ isOpen, onClose, onSave, item 
             </div>
           </div>
           <div className="flex justify-end gap-4 mt-10">
-            <button
+            <Button
               onClick={onClose}
+              variant="cancel"
               className="px-4 py-2 rounded-md border border-[var(--border)] hover:bg-[var(--bg-soft)]"
             >
               Cancel
-            </button>
-
-            <button
+            </Button>
+            <Button
               onClick={handleSubmitAction}
               className="px-6 py-2 rounded-md bg-[var(--primary)] text-[var(--text-button)]"
+              variant="primary"
+              loading={loading}
+              disabled={loading}
+              loadingText="Saving changes ..."
             >
               {item ? "Save Changes" : "Add Experience"}
-            </button>
+            </Button>
           </div>
         </div>
       </div>

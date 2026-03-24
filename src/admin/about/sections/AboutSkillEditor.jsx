@@ -1,12 +1,28 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
 import { validateSection } from "../../../utils/helper";
+import Button from "../../../components/common/Button";
 
 const percentageOptions = Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
 const AboutSkillEditor = ({ about, skillForm, setSkillForm, updateItem, removeItem }) => {
+  const handleClick = () => {
+    if (!validateSection("Skills", skillForm)) {
+      return;
+    }
+
+    updateItem("skills", skillForm);
+
+    setSkillForm({
+      id: "",
+      name: "",
+      percentage: "",
+      type: "",
+    });
+  };
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
-      <h3 className="text-lg font-semibold mb-2">Skills</h3><div className="flex flex-wrap gap-2 mb-2">
+    <div className="rounded-2xl border border-[var(--border)] p-6 space-y-4">
+      <h3 className="text-lg font-semibold mb-2">Skills</h3>
+      <div className="flex flex-wrap gap-2 mb-2">
         <input
           placeholder="Skill Name (React, Node, etc)"
           value={skillForm.name}
@@ -27,8 +43,7 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
               percentage: Number(e.target.value),
             })
           }
-          className="
-      bg-[var(--card)]
+          className="bg-[var(--input-bg)]
       border border-[var(--border)]
       rounded-lg
       px-3 py-2
@@ -60,22 +75,9 @@ px-4 py-2.5 text-sm text-[var(--text-primary)]"
           <option value="DevOps">DevOps</option>
           <option value="Tools">Tools</option>
         </select>
-
-        <button
-          onClick={() => {
-            if (!validateSection("Skills", skillForm)) {
-              return;
-            }
-
-            updateItem("skills", skillForm);
-
-            setSkillForm({
-              id: "",
-              name: "",
-              percentage: "",
-              type: "",
-            });
-          }}
+        <Button
+          onClick={handleClick}
+          variant="primary"
           className="px-5 py-2.5 text-sm font-medium
 bg-[var(--primary)] text-[var(--text-button)]
 rounded-lg
@@ -84,8 +86,9 @@ hover:opacity-90
 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         >
           Add / Save
-        </button>
-      </div>{about.skills?.map((item) => (
+        </Button>
+      </div>
+      {about.skills?.map((item) => (
         <AdminItemCard
           key={item.id}
           type="skill"

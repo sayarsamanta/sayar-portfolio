@@ -14,17 +14,14 @@ const ProjectCard = ({ proj, onClick }) => {
       className="
 group cursor-pointer
 rounded-3xl p-2 overflow-hidden
-border flex-[0_0_100%] sm:flex-[0_0_380px] lg:flex-[0_0_460px] xl:flex-[0_0_500px]
+border border-white/10 flex-[0_0_100%] sm:flex-[0_0_380px] lg:flex-[0_0_460px] xl:flex-[0_0_500px]
 max-w-full min-h-[460px] lg:min-h-[520px]
 flex flex-col relative
 transition-all duration-500
 hover:shadow-[0_18px_35px_rgba(0,0,0,0.08)]
 backdrop-blur-sm shadow-sm
 "
-      style={{
-        backgroundColor: "var(--card)",
-        borderColor: "var(--border)",
-      }}
+      style={{ background: "var(--gradient-bg)" }}
     >
       {" "}
       <div className="p-2 flex-shrink-0 relative">
@@ -36,6 +33,7 @@ backdrop-blur-sm shadow-sm
         >
           {" "}
           <ImageSlider
+            key={JSON.stringify(proj.images)}
             images={proj.screenshots}
             autoplay
             interval={4000}

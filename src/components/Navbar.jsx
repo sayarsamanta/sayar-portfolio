@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiMenu, FiX, FiSun, FiMoon, FiShield } from "react-icons/fi";
@@ -17,33 +17,16 @@ const navItems = [
 const Navbar = () => {
   const { user } = useSelector((state) => state.about || null);
   const token = localStorage.getItem("adminToken");
-  const [scrolled, setScrolled] = useState(
-    typeof window !== "undefined" ? window.scrollY > 10 : false
-  );
+
   const [isOpen, setIsOpen] = useState(false);
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [visible, setVisible] = useState(true);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const { mode, setMode } = useContext(ThemeContext);
   const {
     about: {
       intro: { profileImg },
     },
     role,
   } = user || {};
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
-      setScrolled(currentScrollPos > 20);
-
-      if (Math.abs(prevScrollPos - currentScrollPos) > 5) {
-        setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50);
-        setPrevScrollPos(currentScrollPos);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [prevScrollPos]);
 
   const mobileMenuVariants = {
     hidden: { y: "-100%", opacity: 0 },
@@ -60,15 +43,9 @@ const Navbar = () => {
       initial={{ y: 0 }}
       animate={{
         y: visible ? 0 : -100,
-        backgroundColor: darkMode ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.5)",
-        borderBottom: scrolled
-          ? darkMode
-            ? "1px solid rgba(255, 255, 255, 0.1)"
-            : "1px solid rgba(0, 0, 0, 0.05)"
-          : "1px solid rgba(0, 0, 0, 0)",
       }}
       transition={{ duration: 0.3 }}
-      className="fixed shadow-lg left-0 right-0 top-0 z-50 backdrop-blur-md font-heading"
+      className="fixed left-0 right-0 top-0 z-50 backdrop-blur-md font-heading"
     >
       <div className="flex justify-between items-center px-8 py-5">
         <motion.div
@@ -149,18 +126,18 @@ const Navbar = () => {
             </NavLink>
           )}
           <button
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => setMode(mode === "light" ? "dark" : "light")}
             className="ml-4 p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
           >
-            {darkMode ? <FiSun color="#FBBF24" size={20} /> : <FiMoon size={20} />}
+            {mode === "dark" ? <FiSun color="#FBBF24" size={20} /> : <FiMoon size={20} />}
           </button>
         </div>
         <div className="md:hidden flex items-center gap-3">
           <button
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => setMode(mode === "light" ? "dark" : "light")}
             className="p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
           >
-            {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+            {mode === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
           <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
             <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>
@@ -172,8 +149,12 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden absolute top-full left-0 w-full flex flex-col items-start p-6 font-heading"
-            style={{ backgroundColor: "var(--card)" }}
+            className="md:hidden absolute top-full left-0 w-full flex flex-col items-start p-6 font-heading backdrop-blur-md"
+            style={{
+              background: "var(--gradient-bg)",
+              WebkitBackdropFilter: "blur(10px)",
+              backdropFilter: "blur(10px)",
+            }}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -194,6 +175,7 @@ const Navbar = () => {
               <NavLink
                 to="/admin"
                 className="py-2 w-full transition-colors duration-300 font-heading flex items-center gap-2"
+                style={{ color: "var(--text-primary)" }}
                 onClick={() => setIsOpen(false)}
               >
                 <FiShield size={18} /> Admin Panel

@@ -17,7 +17,8 @@ const ProjectDetailModal = ({ selectedProject, setSelectedProject }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 35 }}
         transition={{ duration: 0.3 }}
-        className="relative w-full max-w-5xl max-h-[90vh] bg-[var(--card)] rounded-3xl shadow-2xl flex flex-col pb-6 overflow-hidden"
+        className="relative w-full max-w-5xl max-h-[90vh]  rounded-3xl shadow-2xl flex flex-col pb-6 overflow-hidden"
+        style={{ background: "var(--gradient-bg)" }}
       >
         <button
           onClick={() => setSelectedProject(null)}

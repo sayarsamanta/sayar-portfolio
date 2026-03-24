@@ -16,10 +16,8 @@ export default function Projects() {
   const { fetchProjects } = useProjectAPI();
 
   useEffect(() => {
-    if (!projects || projects?.length === 0) {
-      setLoading(true);
-      fetchProjects().finally(() => setLoading(false));
-    }
+    setLoading(true);
+    fetchProjects().finally(() => setLoading(false));
   }, [fetchProjects, projects]);
 
   useEffect(() => {
@@ -40,20 +38,12 @@ export default function Projects() {
         className="min-h-screen w-full px-4 sm:px-6 md:px-12 lg:px-20 py-16 sm:py-20 md:py-24 flex flex-col gap-16 md:gap-20 font-body"
         style={{ backgroundColor: "var(--background)", color: "var(--text-primary)" }}
       >
-        {loading && (
-          <>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-center mb-6 md:mb-10">
-              Projects
-            </h1>
-          </>
-        )}
-
         {!loading && projects.length === 0 && <EmptySection type={"Project"} />}
 
         {!loading && projects.length > 0 && (
           <>
             <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-center mb-6 md:mb-10"
+              className="text-4xl font-heading font-bold text-center  mt-8"
               style={{ color: "var(--text-primary)" }}
             >
               Projects

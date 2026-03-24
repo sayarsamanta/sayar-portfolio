@@ -1,10 +1,24 @@
 import React from "react";
 import AdminItemCard from "../../../components/AdminItemCard";
 import { validateSection } from "../../../utils/helper";
+import Button from "../../../components/common/Button";
 
 const AboutAchievementEditor = ({ achForm, setAchForm, updateItem, about, removeItem }) => {
+  const handleClick = () => {
+    if (!validateSection("Achievments", achForm)) {
+      return;
+    }
+    updateItem("achievements", achForm);
+    setAchForm({
+      id: "",
+      title: "",
+      year: "",
+      description: "",
+      icon: "",
+    });
+  };
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
+    <div className="rounded-2xl border border-[var(--border)] p-6 space-y-4">
       <h3 className="text-lg font-semibold mb-2">Achievements</h3>
       <div className="flex gap-2 flex-wrap mb-2">
         <input
@@ -55,20 +69,9 @@ focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
           <option value="milestone">Milestone</option>
           <option value="certification">Certification</option>
         </select>
-        <button
-          onClick={() => {
-            if (!validateSection("Achievments", achForm)) {
-              return;
-            }
-            updateItem("achievements", achForm);
-            setAchForm({
-              id: "",
-              title: "",
-              year: "",
-              description: "",
-              icon: "",
-            });
-          }}
+        <Button
+          onClick={handleClick}
+          variant="primary"
           className="px-5 py-2.5 text-sm font-medium 
 bg-[var(--primary)] text-[var(--text-button)] 
 rounded-lg 
@@ -77,7 +80,7 @@ hover:opacity-90
 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         >
           Add / Save
-        </button>
+        </Button>
       </div>
 
       {about.achievements.map((item) => (

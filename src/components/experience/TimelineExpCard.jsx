@@ -15,7 +15,7 @@ const TimelineExpCard = ({
   const isExpanded = expandedId === _id;
 
   return (
-    <motion.div className="w-full">
+    <motion.div>
       <motion.div
         onClick={() => setExpandedId(isExpanded ? null : _id)}
         whileHover={{

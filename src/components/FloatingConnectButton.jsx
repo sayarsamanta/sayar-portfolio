@@ -1,3 +1,6 @@
+/**
+ * currently not using this component...
+ */
 import { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";

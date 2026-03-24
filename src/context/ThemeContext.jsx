@@ -1,26 +1,61 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useRef } from "react";
 import { theme } from "../theme/theme";
 
 export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [mode, setMode] = useState(() => {
+    return localStorage.getItem("theme-preference") || "system";
+  });
+
+  const modeRef = useRef(mode);
+
+  useEffect(() => {
+    modeRef.current = mode;
+    localStorage.setItem("theme-preference", mode);
+  }, [mode]);
 
   useEffect(() => {
     const root = document.documentElement;
+    const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-    const colors = darkMode ? theme.dark : theme.light;
-    root.style.setProperty("--bg", colors.background);
-    root.style.setProperty("--card", colors.card);
-    root.style.setProperty("--text-primary", colors.textPrimary);
-    root.style.setProperty("--text-secondary", colors.textSecondary);
-    root.style.setProperty("--border", colors.border);
-    root.style.setProperty("--primary", theme.primary);
-    root.style.setProperty("--secondary", theme.secondary);
-    root.style.setProperty("--accent", theme.accent);
-  }, [darkMode]);
+    const apply = (isDark) => {
+      const colors = isDark ? theme.dark : theme.light;
 
-  return (
-    <ThemeContext.Provider value={{ darkMode, setDarkMode }}>{children}</ThemeContext.Provider>
-  );
+      // Variables
+      root.style.setProperty("--bg", colors.background);
+      root.style.setProperty("--card", colors.card);
+      root.style.setProperty("--text-primary", colors.textPrimary);
+      root.style.setProperty("--text-secondary", colors.textSecondary);
+      root.style.setProperty("--border", colors.border);
+
+      // Class toggles
+      if (isDark) {
+        root.classList.add("dark");
+        root.classList.remove("light-theme");
+      } else {
+        root.classList.remove("dark");
+        root.classList.add("light-theme");
+      }
+    };
+
+    const handleChange = (e) => {
+      console.log("EVENT FIRED: OS is now", e.matches ? "Dark" : "Light");
+
+      const currentPreference = localStorage.getItem("theme-preference") || "system";
+
+      if (currentPreference === "system") {
+        apply(e.matches);
+      }
+    };
+
+    const initialIsDark = mode === "system" ? darkQuery.matches : mode === "dark";
+    apply(initialIsDark);
+
+    darkQuery.addEventListener("change", handleChange);
+
+    return () => darkQuery.removeEventListener("change", handleChange);
+  }, [mode]);
+
+  return <ThemeContext.Provider value={{ mode, setMode }}>{children}</ThemeContext.Provider>;
 };

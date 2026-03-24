@@ -3,7 +3,7 @@ import React from "react";
 const AboutIntroEditor = ({ about, setAbout }) => {
   const { bio, brief, qoute, headline, subText, story } = about.intro || {};
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
+    <div className="rounded-2xl border border-[var(--border)] p-6 space-y-4">
       <h3 className="text-lg font-semibold mb-2">Intro / About Info</h3>
       <div className="space-y-3">
         <input

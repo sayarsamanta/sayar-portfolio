@@ -23,7 +23,7 @@ export default function AboutSectionRenderer({ type, items }) {
             <motion.div
               key={idx}
               whileHover={{ scale: 1.02 }}
-              className="bg-[var(--card)] border border-[var(--border)]
+              className=" border border-[var(--border)]
               rounded-xl sm:rounded-2xl
               p-4 sm:p-5 md:p-6
               transition-all duration-200
@@ -60,7 +60,7 @@ export default function AboutSectionRenderer({ type, items }) {
               <motion.div
                 key={idx}
                 whileHover={{ scale: 1.02 }}
-                className="bg-[var(--card)] border border-[var(--border)]
+                className="border border-[var(--border)]
                 rounded-xl sm:rounded-2xl
                 p-4 sm:p-5 md:p-6
                 transition-all duration-200
@@ -101,7 +101,7 @@ export default function AboutSectionRenderer({ type, items }) {
             <motion.div
               key={idx}
               whileHover={{ scale: 1.02 }}
-              className="bg-[var(--card)] border border-[var(--border)]
+              className="border border-[var(--border)]
               rounded-xl sm:rounded-2xl
               p-4 sm:p-5 md:p-6
               flex flex-col gap-2
@@ -136,7 +136,7 @@ export default function AboutSectionRenderer({ type, items }) {
               whileHover={{ scale: 1.02 }}
               className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2
               rounded-full border border-[var(--border)]
-              bg-[var(--card)]
+              
               hover:border-[var(--primary)] transition-all duration-200"
             >
               {i}
