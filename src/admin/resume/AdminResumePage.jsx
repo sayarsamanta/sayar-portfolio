@@ -1,13 +1,10 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Trash2, UploadCloud } from "lucide-react";
-import { ThemeContext } from "../../context/ThemeContext";
 
 export default function AdminResumePage() {
-  const [resumeFile, setResumeFile] = useState(null); 
+  const [resumeFile, setResumeFile] = useState(null);
   const fileInputRef = useRef(null);
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
 
-  
   const handleUpload = (e) => {
     const file = e.target.files[0];
     if (file && file.type === "application/pdf") {
@@ -18,7 +15,6 @@ export default function AdminResumePage() {
     }
   };
 
-  
   const handleDelete = () => {
     setResumeFile(null);
     if (fileInputRef.current) fileInputRef.current.value = null;
@@ -26,7 +22,8 @@ export default function AdminResumePage() {
 
   return (
     <div className="p-8 space-y-6 font-sans">
-      <h1 className="text-2xl font-semibold">Admin Resume</h1><div className="flex items-center gap-4">
+      <h1 className="text-2xl font-semibold">Admin Resume</h1>
+      <div className="flex items-center gap-4">
         <input
           ref={fileInputRef}
           type="file"
@@ -50,7 +47,8 @@ export default function AdminResumePage() {
             <Trash2 size={16} /> Delete
           </button>
         )}
-      </div>{resumeFile && (
+      </div>
+      {resumeFile && (
         <div className="mt-6 w-full h-[500px] border border-[var(--border)] rounded overflow-hidden">
           <iframe src={resumeFile.url} title="Resume Preview" className="w-full h-full"></iframe>
         </div>

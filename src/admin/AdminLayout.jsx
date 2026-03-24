@@ -9,7 +9,7 @@ import useExperienceAPI from "../hooks/useExperienceAPI";
 import useProjectAPI from "../hooks/useProjectAPI";
 import { useSelector } from "react-redux";
 export default function AdminLayout() {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { mode, setMode } = useContext(ThemeContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const { user } = useSelector((state) => state.about);
@@ -24,13 +24,6 @@ export default function AdminLayout() {
     fetchExperience();
     fetchProjects();
   }, []);
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.remove("light-theme");
-    } else {
-      document.body.classList.add("light-theme");
-    }
-  }, [darkMode]);
 
   return (
     <div
@@ -105,7 +98,7 @@ export default function AdminLayout() {
 
           <div className="flex items-center gap-4">
             <button
-              onClick={() => setDarkMode(!darkMode)}
+              onClick={() => setMode(mode === "light" ? "dark" : "light")}
               className="
             p-2 rounded-full
             border border-[var(--border)]
@@ -113,7 +106,7 @@ export default function AdminLayout() {
             transition
           "
             >
-              {darkMode ? <FiSun color="#FBBF24" size={18} /> : <FiMoon size={18} />}
+              {mode === "dark" ? <FiSun color="#FBBF24" size={18} /> : <FiMoon size={18} />}
             </button>
 
             <div

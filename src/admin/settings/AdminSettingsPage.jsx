@@ -7,7 +7,7 @@ import useAboutAPI from "../../hooks/useAboutAPI";
 import Button from "../../components/common/Button";
 
 export default function AdminSettingsPage() {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { mode, setMode } = useContext(ThemeContext);
   const about = useSelector((state) => state.about);
   const { user } = useSelector((state) => state.about);
   const { uploadResume, loading, deleteResume, deleteLoading } = useResumeHandler();
@@ -18,7 +18,7 @@ export default function AdminSettingsPage() {
   const [email, setEmail] = useState("sayarsamanta@gmail.com");
   const [resumeFile, setResumeFile] = useState(null);
 
-  const handleToggleDarkMode = () => setDarkMode(!darkMode);
+  const handleToggleDarkMode = () => setMode(mode === "light" ? "dark" : "light");
 
   const handleSaveProfile = useCallback(async () => {
     const payload = {
@@ -75,13 +75,26 @@ export default function AdminSettingsPage() {
       <div className="border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
         <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
 
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {mode === "light" ? <Moon size={16} /> : <Sun color="#FBBF24" size={16} />}
+
+            <span className="text-sm sm:text-base font-medium">
+              {mode === "light" ? "Dark Mode" : "Light Mode"}
+            </span>
+          </div>
+
           <button
             onClick={handleToggleDarkMode}
-            className="flex items-center justify-center gap-2 px-4 py-2 border rounded-xl w-full sm:w-auto"
+            className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
+              mode === "dark" ? "bg-[var(--primary)]" : "bg-gray-300"
+            }`}
           >
-            {darkMode ? <Moon size={16} /> : <Sun size={16} />}
-            {darkMode ? "Dark Mode" : "Light Mode"}
+            <span
+              className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-all duration-300 ${
+                mode === "dark" ? "translate-x-6" : "translate-x-0"
+              }`}
+            />
           </button>
         </div>
       </div>

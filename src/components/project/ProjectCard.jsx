@@ -33,6 +33,7 @@ backdrop-blur-sm shadow-sm
         >
           {" "}
           <ImageSlider
+            key={JSON.stringify(proj.images)}
             images={proj.screenshots}
             autoplay
             interval={4000}

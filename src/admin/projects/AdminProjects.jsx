@@ -10,7 +10,7 @@ export default function AdminProjects() {
   const { projects } = useSelector((state) => state.projects);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const { addProjectCall, deleteProjectAction, loading } = useProjectAPI();
+  const { fetchProjects, addProjectCall, deleteProjectAction, loading } = useProjectAPI();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const handleEdit = (project) => {
@@ -21,6 +21,7 @@ export default function AdminProjects() {
   const handleCreate = async (form, rawFiles, slug, isEdit) => {
     const res = await addProjectCall(form, isEdit, slug, "", rawFiles);
     if (res) {
+      await fetchProjects();
       setIsModalOpen(false);
     }
   };

@@ -1,10 +1,9 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Linkedin, Github, Instagram, Mail } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import { version } from "../../../package.json";
 import ThemeSwitcher from "../common/ThemeSwitcher";
-import { useContext, useEffect, useRef, useState } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
+
 const socialLinks = [
   {
     id: "linkedin",
@@ -12,7 +11,12 @@ const socialLinks = [
     url: "https://www.linkedin.com/in/sayarsamanta/",
     platform: "linkedin",
   },
-  { id: "github", enabled: true, url: "https://github.com/sayarsamanta", platform: "github" },
+  {
+    id: "github",
+    enabled: true,
+    url: "https://github.com/sayarsamanta",
+    platform: "github",
+  },
   {
     id: "twitter",
     enabled: true,
@@ -25,7 +29,12 @@ const socialLinks = [
     url: "https://instagram.com/your-profile",
     platform: "instagram",
   },
-  { id: "email", enabled: true, url: "mailto:sayarsamanta@gmail.com", platform: "mail" },
+  {
+    id: "email",
+    enabled: true,
+    url: "mailto:sayarsamanta@gmail.com",
+    platform: "mail",
+  },
 ];
 
 const iconMap = {
@@ -37,78 +46,54 @@ const iconMap = {
 };
 
 export default function Footer() {
-  const { mode } = useContext(ThemeContext);
-  const [isVisible, setIsVisible] = useState(false);
-  const sentinelRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0,
-        rootMargin: "0px 0px 40px 0px",
-      }
-    );
-
-    if (sentinelRef.current) observer.observe(sentinelRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <>
-      <div ref={sentinelRef} className="h-0 w-full pointer-events-none" />
+    <motion.footer
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="fixed bottom-6 left-0 right-0 z-[100] flex justify-center px-4"
+    >
+      <div className="flex items-center bg-[var(--card)] border border-[var(--border)] backdrop-blur-2xl rounded-2xl p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+        <div className="flex flex-col px-4 py-1 border-r border-[var(--border)] min-w-[110px]">
+          <span className="text-[10px] font-black tracking-tighter text-[var(--text-primary)]">
+            SAYAR.S
+          </span>
 
-      <AnimatePresence>
-        {isVisible && (
-          <motion.footer
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            className="fixed bottom-6 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none"
-          >
-            <div className="pointer-events-auto flex items-center bg-[var(--card)] border border-[var(--border)] backdrop-blur-2xl rounded-2xl p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.3)] transform-gpu">
-              <div className="flex flex-col px-4 py-1 border-r border-[var(--border)] min-w-[110px]">
-                <span className="text-[10px] font-black tracking-tighter text-[var(--text-primary)]">
-                  SAYAR.S
-                </span>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-[7px] font-bold text-[var(--text-secondary)] opacity-50 tracking-[0.2em]">
-                    v{version}
-                  </span>
-                  <div className="flex items-center gap-1">
-                    <span className="h-1 w-1 rounded-full bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]" />
-                    <span className="text-[6px] font-bold tracking-[0.3em] text-green-600 dark:text-green-400">
-                      ACTIVE
-                    </span>
-                  </div>
-                </div>
-              </div>
+          <div className="flex items-center gap-2 mt-0.5">
+            <span className="text-[7px] font-bold text-[var(--text-secondary)] opacity-50 tracking-[0.2em]">
+              v{version}
+            </span>
 
-              <div className="flex items-center gap-1 bg-black/5 dark:bg-white/5 rounded-xl p-1 mx-2 border border-black/5 dark:border-white/5">
-                {socialLinks
-                  ?.filter((s) => s.enabled)
-                  .map((item) => (
-                    <a
-                      key={item.id}
-                      href={item.url}
-                      target="_blank"
-                      className="p-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-all"
-                    >
-                      <div className="w-4 h-4 flex items-center justify-center">
-                        {iconMap[item.platform]}
-                      </div>
-                    </a>
-                  ))}
-              </div>
-              <div className="pl-1 pr-1 border-l border-[var(--border)]">
-                <ThemeSwitcher />
-              </div>
+            <div className="flex items-center gap-1">
+              <span className="h-1 w-1 rounded-full bg-green-500 shadow-[0_0_4px_rgba(34,197,94,0.6)]" />
+              <span className="text-[6px] font-bold tracking-[0.3em] text-green-600 dark:text-green-400">
+                ACTIVE
+              </span>
             </div>
-          </motion.footer>
-        )}
-      </AnimatePresence>
-    </>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1 bg-black/5 dark:bg-white/5 rounded-xl p-1 mx-2 border border-black/5 dark:border-white/5">
+          {socialLinks
+            .filter((s) => s.enabled)
+            .map((item) => (
+              <a
+                key={item.id}
+                href={item.url}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 hover:scale-110 transition-all"
+              >
+                <div className="w-4 h-4 flex items-center justify-center">
+                  {iconMap[item.platform]}
+                </div>
+              </a>
+            ))}
+        </div>
+
+        <div className="pl-1 pr-1 border-l border-[var(--border)]">
+          <ThemeSwitcher />
+        </div>
+      </div>
+    </motion.footer>
   );
 }

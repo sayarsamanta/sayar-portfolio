@@ -137,7 +137,7 @@ const Navbar = () => {
             onClick={() => setMode(mode === "light" ? "dark" : "light")}
             className="p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
           >
-            {mode ? <FiSun size={20} /> : <FiMoon size={20} />}
+            {mode === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
           <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
             <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>

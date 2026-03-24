@@ -16,10 +16,8 @@ export default function Projects() {
   const { fetchProjects } = useProjectAPI();
 
   useEffect(() => {
-    if (!projects || projects?.length === 0) {
-      setLoading(true);
-      fetchProjects().finally(() => setLoading(false));
-    }
+    setLoading(true);
+    fetchProjects().finally(() => setLoading(false));
   }, [fetchProjects, projects]);
 
   useEffect(() => {
