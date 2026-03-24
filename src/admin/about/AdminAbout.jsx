@@ -11,9 +11,9 @@ import ProfileAvatar from "../../components/profilepic/ProfileAvatar";
 import toast from "react-hot-toast";
 import useAboutAPI from "../../hooks/useAboutAPI";
 import placeholder from "../../assets/placeholder.jpg";
+import Button from "../../components/common/Button";
 export default function AdminAboutPage({}) {
   const aboutFromStore = useSelector((state) => state.about);
-  console.log(aboutFromStore);
   const { data } = aboutFromStore || {};
   const { saveAbout, loading } = useAboutAPI();
   const [about, setAbout] = useState({
@@ -50,23 +50,14 @@ export default function AdminAboutPage({}) {
   const { profileImg } = about.intro || {};
   const [interestInput, setInterestInput] = useState("");
   useEffect(() => {
-    async function fetchAbout() {
-      try {
-        // const res = await axios.get("/api/about");
-        // const data = res.data || {};
-        setAbout({
-          intro: data?.intro,
-          skills: data?.skills || [],
-          achievements: data?.achievements || [],
-          education: data?.education || [],
-          featuredProjects: data?.featuredProjects || [],
-          personalInterests: data?.personalInterests || [],
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchAbout();
+    setAbout({
+      intro: data?.intro,
+      skills: data?.skills || [],
+      achievements: data?.achievements || [],
+      education: data?.education || [],
+      featuredProjects: data?.featuredProjects || [],
+      personalInterests: data?.personalInterests || [],
+    });
   }, [data]);
 
   const updateItem = (field, item) => {
@@ -109,14 +100,11 @@ export default function AdminAboutPage({}) {
   };
 
   const saveAll = async () => {
-    if (data?.intro?.headline != "") {
-      console.log("need to call edit");
+    if (data) {
       await saveAbout(about, validateIntro, true);
     } else {
-      console.log("need to call create");
       await saveAbout(about, validateIntro, false);
     }
-    //await saveAbout(about, validateIntro, data);
   };
   return (
     <div
@@ -131,7 +119,6 @@ export default function AdminAboutPage({}) {
     font-sans
   "
     >
-      {/* LEFT PANEL */}
       <div
         className="
       space-y-8
@@ -142,7 +129,6 @@ export default function AdminAboutPage({}) {
       hide-scrollbar
     "
       >
-        {/* Header */}
         <div>
           <h2 className="text-2xl font-semibold">About Section</h2>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -212,39 +198,17 @@ export default function AdminAboutPage({}) {
         />
 
         <div>
-          <button
+          <Button
             onClick={saveAll}
+            variant="primary"
             className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md flex items-center"
+            loading={loading}
+            loadingText="Saving All ...."
           >
-            {loading ? (
-              <svg
-                className="animate-spin h-5 w-5 mr-2 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                />
-              </svg>
-            ) : (
-              "Save All"
-            )}
-          </button>
+            Save All
+          </Button>
         </div>
       </div>
-
-      {/* RIGHT PREVIEW PANEL */}
       <div
         className="
       rounded-2xl
@@ -255,7 +219,9 @@ export default function AdminAboutPage({}) {
       xl:h-[calc(100vh-120px)]
       xl:overflow-y-auto
       hide-scrollbar
+      
     "
+        style={{ background: "var(--gradient-bg)" }}
       >
         <h2 className="text-2xl font-semibold">Live About Preview</h2>
 

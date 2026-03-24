@@ -18,7 +18,6 @@ export const formatDuration = (startDate, endDate) => {
 export const validateSection = (sectionName, data) => {
   if (!data) return false;
 
-  // for object sections
   if (typeof data === "object" && !Array.isArray(data)) {
     const hasValue = Object.values(data).some(
       (val) => val !== "" && val !== null && val !== undefined
@@ -30,7 +29,6 @@ export const validateSection = (sectionName, data) => {
     }
   }
 
-  // for array sections
   if (Array.isArray(data) && data.length === 0) {
     toast.error(`${sectionName} cannot be empty`);
     return false;
@@ -109,6 +107,11 @@ export const validateExp = (form, setErrors) => {
   if (!form.description?.trim()) {
     newErrors.description = "Description required";
   }
+
+  const activeTech = form.tech.filter((t) => t.trim() !== "");
+  if (activeTech.length === 0) {
+    newErrors.tech = "At least one technology is required";
+  }
   setErrors(newErrors);
 
   return Object.keys(newErrors).length === 0;
@@ -117,7 +120,6 @@ export const validateExp = (form, setErrors) => {
 export const validateProj = (form, setErrors, item, rawFiles) => {
   const newErrors = {};
 
-  // Required Text Fields
   if (!form.title.trim()) newErrors.title = "Project title is required";
   if (!form.type.trim()) newErrors.type = "Project type (e.g. Frontend) is required";
   if (!form.description.trim()) newErrors.description = "Description is required";
@@ -127,13 +129,11 @@ export const validateProj = (form, setErrors, item, rawFiles) => {
   if (!form.problem.trim()) newErrors.problem = "Problem statement is required";
   if (!form.solution.trim()) newErrors.solution = "Solution description is required";
 
-  // URL Validations (Optional but must be valid if provided)
   const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
   if (form.github && !urlPattern.test(form.github)) {
     newErrors.github = "Please enter a valid GitHub URL";
   }
 
-  // Array Validations (Ensure at least one non-empty item)
   const activeTech = form.tech.filter((t) => t.trim() !== "");
   if (activeTech.length === 0) {
     newErrors.tech = "At least one technology is required";
@@ -144,13 +144,12 @@ export const validateProj = (form, setErrors, item, rawFiles) => {
     newErrors.features = "At least one feature is required";
   }
 
-  // Screenshot Validation (For new projects)
   if (!item && rawFiles.length === 0) {
     newErrors.screenshots = "At least one screenshot is required for new projects";
   }
   if (Object.keys(newErrors).length > 0) {
     toast.error("Please fill in all required fields", {
-      id: "validation-error", // Prevents multiple duplicate toasts if clicked rapidly
+      id: "validation-error",
       duration: 3000,
     });
   }
@@ -179,11 +178,54 @@ export const BLANK_FORM = {
 export const validateContactUsForm = (form, setErrors) => {
   const newErrors = {};
 
-  // Required Text Fields
   if (!form.name.trim()) newErrors.name = "Name is required";
   if (!form.email.trim()) newErrors.email = "Email is required";
   if (!form.message.trim()) newErrors.message = "Message can not be empty";
 
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0;
+};
+
+export function optimizeCloudinaryURL(
+  url,
+  transformations = "c_fill,g_face,dpr_auto,f_auto,q_auto"
+) {
+  // Find the /upload/ segment
+  const uploadIndex = url.indexOf("/upload/");
+  if (uploadIndex === -1) return url; // Not a Cloudinary URL
+
+  const prefix = url.substring(0, uploadIndex + 8); // includes /upload/
+  let rest = url.substring(uploadIndex + 8); // rest of the URL after /upload/
+
+  // Check if a version exists
+  const versionMatch = rest.match(/^v\d+\//);
+  let version = "";
+  if (versionMatch) {
+    version = versionMatch[0]; // e.g., v1773649591/
+    rest = rest.substring(version.length); // remove version from rest
+  }
+
+  // Construct optimized URL
+  return `${prefix}${transformations}/${version}${rest}`;
+}
+
+export const hasData = (obj) =>
+  obj &&
+  Object.values(obj).some((value) => {
+    if (Array.isArray(value)) return value.length > 0;
+    if (typeof value === "object" && value !== null) return Object.keys(value).length > 0;
+    return value !== null && value !== undefined;
+  });
+
+export const validateLoginForm = (form, setErrors) => {
+  const newErrors = {};
+  if (!form.email) newErrors.email = "Email is required";
+  if (!form.password) newErrors.password = "Password is required";
+  if (form.password && form.password.length < 6) newErrors.password = "Minimum 6 characters";
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
+export const getFileNameFromCloudinary = (url) => {
+  return url.split("/").pop();
 };

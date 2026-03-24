@@ -8,11 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 .env
 node_modules
-/src/assets/
 dist
 dist-ssr
 *.local
 .prettierrc
+removeComments.js
 
 # Editor directories and files
 .vscode/*

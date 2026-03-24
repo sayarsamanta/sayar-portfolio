@@ -3,15 +3,12 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import api from "../services/api";
 
-/**
- * Custom hook for About API
- * Handles fetching user and saving/updating About section
- */
+
 const useContactAPI = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  // Fetch user data
+  
   const sendEmail = useCallback(
     async (name, email, message) => {
       try {

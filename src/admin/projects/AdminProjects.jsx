@@ -4,22 +4,24 @@ import AdminAddProjectModal from "./AdminAddProjectModal";
 import useProjectAPI from "../../hooks/useProjectAPI";
 import { useSelector } from "react-redux";
 import DeleteModal from "../../components/admin/DeleteModal";
+import Button from "../../components/common/Button";
 
 export default function AdminProjects() {
   const { projects } = useSelector((state) => state.projects);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const { addProjectCall, deleteProjectAction, loading } = useProjectAPI();
+  const { fetchProjects, addProjectCall, deleteProjectAction, loading } = useProjectAPI();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const handleEdit = (project) => {
-    setSelectedProject(project); // pass the project to modal
-    setIsModalOpen(true); // open modal
+    setSelectedProject(project);
+    setIsModalOpen(true);
   };
 
   const handleCreate = async (form, rawFiles, slug, isEdit) => {
     const res = await addProjectCall(form, isEdit, slug, "", rawFiles);
     if (res) {
+      await fetchProjects();
       setIsModalOpen(false);
     }
   };
@@ -37,7 +39,6 @@ export default function AdminProjects() {
 
   return (
     <div className="space-y-8 text-[var(--text-primary)]">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-semibold">Projects</h2>
@@ -46,25 +47,22 @@ export default function AdminProjects() {
           </p>
         </div>
 
-        <button
+        <Button
+          onClick={() => handleEdit(null)}
+          variant="primary"
           className="
             flex items-center gap-2
             px-4 py-2
-            rounded-xl
             bg-[var(--primary)]
             text-[var(--text-button)]
             text-sm
             transition-all duration-200
             hover:opacity-90
           "
-          onClick={() => handleEdit(null) /* pass null to indicate adding new project */}
         >
-          <Plus size={16} />
           Add Project
-        </button>
+        </Button>
       </div>
-
-      {/* Projects Table */}
       <div
         className="
           rounded-2xl
@@ -79,7 +77,7 @@ export default function AdminProjects() {
           </div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-[var(--background)]">
+            <thead style={{ background: "var(--gradient-bg)" }}>
               <tr>
                 <th className="text-left p-4 border-b border-[var(--border)]">Title</th>
                 <th className="text-left p-4 border-b border-[var(--border)]">Tech Stack</th>
@@ -94,9 +92,10 @@ export default function AdminProjects() {
                   key={project._id}
                   className="
                     border-b border-[var(--border)]
-                    hover:bg-[var(--background)]
+                    hover:bg-[var(--gradient-bg)]
                     transition-all duration-150
                   "
+                  style={{ background: "var(--gradient-bg)" }}
                 >
                   <td className="p-4 font-medium">{project.name || project.title}</td>
 
@@ -118,31 +117,21 @@ export default function AdminProjects() {
 
                   <td className="p-4">
                     <div className="flex justify-end gap-3">
-                      <button
-                        className="
-                          p-2
-                          rounded-lg
-                          border border-[var(--border)]
-                          hover:border-[var(--primary)]
-                          transition
-                        "
-                        onClick={() => handleEdit(project)}
-                      >
-                        <Pencil size={16} />
-                      </button>
+                      <Button
+                        variant="edit"
+                        onClick={() => {
+                          handleEdit(project);
+                        }}
+                        className="p-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
+                        icon={<Pencil size={16} />}
+                      ></Button>
 
-                      <button
+                      <Button
                         onClick={() => handleDelete(project)}
-                        className="
-                          p-2
-                          rounded-lg
-                          border border-[var(--border)]
-                          hover:border-red-500
-                          transition
-                        "
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                        variant="secondarydelete"
+                        className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
+                        icon={<Trash2 size={16} />}
+                      ></Button>
                     </div>
                   </td>
                 </tr>
@@ -155,7 +144,7 @@ export default function AdminProjects() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleCreate}
-        item={selectedProject} // pass selected project for editing
+        item={selectedProject}
         loading={loading}
       />
       <DeleteModal

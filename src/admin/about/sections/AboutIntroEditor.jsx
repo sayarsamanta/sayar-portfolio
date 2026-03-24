@@ -3,10 +3,8 @@ import React from "react";
 const AboutIntroEditor = ({ about, setAbout }) => {
   const { bio, brief, qoute, headline, subText, story } = about.intro || {};
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 space-y-4">
+    <div className="rounded-2xl border border-[var(--border)] p-6 space-y-4">
       <h3 className="text-lg font-semibold mb-2">Intro / About Info</h3>
-
-      {/* Home Page Fields */}
       <div className="space-y-3">
         <input
           placeholder="Bio (Home Page)"
@@ -57,8 +55,6 @@ placeholder:text-sm placeholder:text-[var(--text-secondary)] placeholder:opacity
 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         />
       </div>
-
-      {/* About Page Fields */}
       <div className="space-y-3 mt-4">
         <input
           placeholder="Headline (About Page)"

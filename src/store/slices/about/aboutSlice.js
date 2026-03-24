@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: null, // stores the about object
-  user: null, // optional: full user object
+  data: null,
+  user: null,
 };
 
 const aboutSlice = createSlice({
@@ -10,7 +10,7 @@ const aboutSlice = createSlice({
   initialState,
   reducers: {
     setAboutData(state, action) {
-      state.data = action.payload; // assign about object directly
+      state.data = action.payload;
     },
     setUser(state, action) {
       state.user = action.payload;

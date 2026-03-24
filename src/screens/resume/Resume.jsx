@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import Resume from "../../components/resume/Resume";
 import EmptySection from "../../components/admin/experience/EmptySection";
 import { useState } from "react";
-// Modern way to import worker
 
 export default function ResumePage() {
   const about = useSelector((state) => state.about);
@@ -11,10 +10,9 @@ export default function ResumePage() {
   const [error, setError] = useState(false);
   return (
     <div
-      className="min-h-screen bg-[var(--background)] flex flex-col items-center py-10 px-4"
-      style={{ paddingTop: "5rem" }}
+      className="min-h-screen  flex flex-col items-center py-10 px-4"
+      style={{ background: "var(--gradient-bg)", paddingTop: "7rem" }}
     >
-      {/* Header */}
       {(!resume || error) && <EmptySection type={"Resume"} />}
       {resume && !error && (
         <>
@@ -30,8 +28,6 @@ export default function ResumePage() {
           <Resume pdfUrl={resume} setError={setError} />
         </>
       )}
-
-      {/* PDF Viewer */}
     </div>
   );
 }

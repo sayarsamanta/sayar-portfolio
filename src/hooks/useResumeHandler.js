@@ -4,16 +4,13 @@ import toast from "react-hot-toast";
 import api from "../services/api";
 import { setAboutData } from "../store/slices/about/aboutSlice";
 
-/**
- * Custom hook for About API
- * Handles fetching user and saving/updating About section
- */
+
 const useResumeHandler = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  // Save or update About
+  
   const uploadResume = useCallback(
     async (resumeFile) => {
       try {

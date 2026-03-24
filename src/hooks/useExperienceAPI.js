@@ -15,7 +15,6 @@ const useExperienceAPI = () => {
   const { exp } = useSelector((state) => state.experience || {});
   const [loading, setLoading] = useState(false);
 
-  // Fetch user data
   const fetchExperience = useCallback(async () => {
     try {
       setLoading(true);
@@ -105,7 +104,7 @@ const useExperienceAPI = () => {
     [dispatch, exp]
   );
 
-  return { fetchExperience, addExperienceCall, deleteExperienceAction };
+  return { fetchExperience, addExperienceCall, deleteExperienceAction, loading };
 };
 
 export default useExperienceAPI;

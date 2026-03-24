@@ -5,17 +5,17 @@ import AdminAddExperienceModal from "./AdminAddExperienceModal";
 import { useSelector } from "react-redux";
 import EmptySection from "../../components/admin/experience/EmptySection";
 import useExperienceAPI from "../../hooks/useExperienceAPI";
+import Button from "../../components/common/Button";
 
 export default function AdminExperience() {
   const { exp } = useSelector((state) => state.experience || {});
-  const { addExperienceCall, deleteExperienceAction } = useExperienceAPI();
+  const { addExperienceCall, deleteExperienceAction, loading } = useExperienceAPI();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState(null);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [toDelete, setToDelete] = useState(null);
 
-  // Handlers
   const handleAddNew = () => {
     setSelectedExperience(null);
     setModalOpen(true);
@@ -49,35 +49,29 @@ export default function AdminExperience() {
   };
 
   return (
-    <div className="p-6 md:p-8 space-y-6 font-sans min-h-screen bg-[var(--background)]">
-      {/* Header */}
+    <div className="p-6 md:p-8 space-y-6 font-sans min-h-screen">
       <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 w-full">
-        {/* Heading */}
         <h1 className="text-4xl sm:text-4xl md:text-4xl font-heading font-bold text-center sm:text-left w-full sm:w-auto">
           Experience
         </h1>
-
-        {/* Add Experience button */}
         <div className="w-full sm:w-auto flex justify-center sm:justify-end">
-          <button
-            className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md"
+          <Button
             onClick={handleAddNew}
+            variant="primary"
+            className="px-6 py-3 bg-[var(--primary)] text-[var(--text-button)] rounded-md shadow-md"
           >
             Add Experience
-          </button>
+          </Button>
         </div>
       </div>
       {exp?.length === 0 && <EmptySection isAdmin={true} type={"Experience"} />}
-
-      {/* Experience List */}
       {exp?.length > 0 && (
         <div className="flex flex-col w-full gap-4">
           {exp?.map((exp) => (
             <div
               key={exp._id}
-              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-[var(--card)] rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] gap-4"
+              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4  rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] gap-4"
             >
-              {/* Content */}
               <div className="flex-1 w-full">
                 <h3 className="text-lg md:text-xl font-semibold">
                   {exp.role} @ {exp.company}
@@ -104,35 +98,30 @@ export default function AdminExperience() {
                   </p>
                 )}
               </div>
-
-              {/* Actions */}
               <div className="flex flex-shrink-0 gap-2 mt-2 md:mt-0">
-                <button
+                <Button
                   onClick={() => handleEdit(exp)}
-                  className="p-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
-                  title="Edit"
-                >
-                  <Edit2 size={16} />
-                </button>
-                <button
+                  className="px-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
+                  icon={<Edit2 size={16} />}
+                  variant="edit"
+                ></Button>
+                <Button
                   onClick={() => handleDelete(exp)}
+                  variant="secondarydelete"
                   className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
-                  title="Delete"
-                >
-                  <Trash2 size={16} />
-                </button>
+                  icon={<Trash2 size={16} />}
+                ></Button>
               </div>
             </div>
           ))}
         </div>
       )}
-
-      {/* Modals */}
       <AdminAddExperienceModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onSave={handleSubmit}
         item={selectedExperience}
+        loading={loading}
       />
 
       <DeleteModal

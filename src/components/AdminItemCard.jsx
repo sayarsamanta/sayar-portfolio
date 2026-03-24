@@ -25,7 +25,7 @@ export default function AdminItemCard({ type, data, onDelete }) {
     switch (type) {
       case "achievement":
         return (
-          <div className=" rounded-lg bg-[var(--card)] hover:border-[var(--primary)] transition">
+          <div className=" rounded-lg  hover:border-[var(--primary)] transition">
             <p className="font-medium text-[15px] text-[var(--text-primary)]">{data.title}</p>
 
             <p className="text-sm text-[var(--text-secondary)] mt-1 leading-relaxed">
@@ -53,15 +53,9 @@ export default function AdminItemCard({ type, data, onDelete }) {
           <>
             <div className="flex items-center justify-between w-full">
               <p className="font-medium text-[15px]">{data.name}</p>
-
-              {/* <span className="text-xs text-[var(--text-secondary)]">
-                {data.percentage}%
-              </span> */}
             </div>
 
             <p className="text-xs text-[var(--text-secondary)]">{data.type}</p>
-
-            {/* Skill Progress */}
             <div className="w-full h-1.5 bg-[var(--border)] rounded-full mt-1 overflow-hidden">
               <div
                 className="h-full bg-[var(--primary)] rounded-full"
@@ -84,7 +78,7 @@ export default function AdminItemCard({ type, data, onDelete }) {
       className="
         group
         flex items-start justify-between
-        bg-[var(--card)]
+        
         border border-[var(--border)]
         rounded-xl
         px-4 py-3
@@ -93,14 +87,11 @@ export default function AdminItemCard({ type, data, onDelete }) {
         hover:shadow-lg
       "
     >
-      {/* LEFT CONTENT */}
       <div className="flex items-start gap-3">
         <div className="mt-1 opacity-80">{getIcon()}</div>
 
         <div className="flex flex-col gap-0.5">{renderContent()}</div>
       </div>
-
-      {/* DELETE BUTTON */}
       <button
         onClick={onDelete}
         className="

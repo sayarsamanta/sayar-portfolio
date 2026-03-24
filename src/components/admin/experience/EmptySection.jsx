@@ -1,7 +1,6 @@
 const EmptySection = ({ type, isAdmin = false }) => {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      {/* Icon */}
       <div
         className="w-16 h-16 flex items-center justify-center rounded-full 
         bg-[var(--bg-soft)] mb-5"
@@ -21,11 +20,7 @@ const EmptySection = ({ type, isAdmin = false }) => {
           />
         </svg>
       </div>
-
-      {/* Title */}
       <h2 className="text-xl font-semibold text-[var(--text-primary)]">{`${type} Not Available`}</h2>
-
-      {/* Description */}
       <p className="text-sm text-[var(--text-secondary)] mt-2 max-w-md">
         {isAdmin
           ? `No ${type?.toLowerCase()} details have been added yet. Use the admin panel to add or update professional experience.`

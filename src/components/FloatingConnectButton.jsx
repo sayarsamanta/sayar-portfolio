@@ -1,3 +1,6 @@
+/**
+ * currently not using this component...
+ */
 import { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
@@ -65,8 +68,6 @@ export default function FloatingConnectButtonVertical() {
           >
             <FaTwitter size={24} />
           </a>
-
-          {/* Email */}
           <a
             href="mailto:sayarsamanta@gmail.com"
             target="_blank"

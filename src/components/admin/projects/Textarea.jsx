@@ -11,7 +11,6 @@ export const Textarea = ({ name, value, onChange, placeholder, rows = 4, error }
         rows={rows}
         className={`w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-transparent text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-purple-500 transition resize-none`}
       />
-      {/* Reserve space for error */}
       <div className="min-h-[1.25rem] mt-1 text-xs text-red-500">{error || " "}</div>
     </div>
   );

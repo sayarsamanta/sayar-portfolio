@@ -37,6 +37,7 @@ export default function ProfileAvatar({
     <div className="relative group">
       <motion.img
         src={src}
+        loading="lazy"
         alt="Profile"
         className={`
           ${sizes[size]}
@@ -52,7 +53,6 @@ export default function ProfileAvatar({
 
       {editable && (
         <>
-          {/* Upload Button Overlay */}
           <button
             onClick={() => fileRef.current.click()}
             className="

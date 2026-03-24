@@ -23,10 +23,10 @@ export default function AboutSectionRenderer({ type, items }) {
             <motion.div
               key={idx}
               whileHover={{ scale: 1.02 }}
-              className="bg-[var(--card)] border border-[var(--border)]
+              className=" border border-[var(--border)]
               rounded-xl sm:rounded-2xl
               p-4 sm:p-5 md:p-6
-              transition-all duration-300
+              transition-all duration-200
               hover:border-[var(--primary)] hover:shadow-xl"
             >
               <div className="flex justify-between mb-3 font-heading font-medium text-sm sm:text-base">
@@ -59,11 +59,11 @@ export default function AboutSectionRenderer({ type, items }) {
             return (
               <motion.div
                 key={idx}
-                whileHover={{ scale: 1.02, y: -3 }}
-                className="bg-[var(--card)] border border-[var(--border)]
+                whileHover={{ scale: 1.02 }}
+                className="border border-[var(--border)]
                 rounded-xl sm:rounded-2xl
                 p-4 sm:p-5 md:p-6
-                transition-all duration-300
+                transition-all duration-200
                 hover:border-[var(--primary)] hover:shadow-lg
                 flex flex-col gap-3"
               >
@@ -100,13 +100,13 @@ export default function AboutSectionRenderer({ type, items }) {
           {items.map((edu, idx) => (
             <motion.div
               key={idx}
-              whileHover={{ scale: 1.01 }}
-              className="bg-[var(--card)] border border-[var(--border)]
+              whileHover={{ scale: 1.02 }}
+              className="border border-[var(--border)]
               rounded-xl sm:rounded-2xl
               p-4 sm:p-5 md:p-6
               flex flex-col gap-2
               md:flex-row md:justify-between md:items-center
-              transition-all duration-300
+              transition-all duration-200
               hover:border-[var(--primary)] hover:shadow-lg"
             >
               <div className="min-w-0">
@@ -127,58 +127,17 @@ export default function AboutSectionRenderer({ type, items }) {
         </div>
       );
 
-    case "projects":
-      return (
-        <div className="grid gap-4 sm:gap-6 [grid-template-columns:repeat(auto-fit,minmax(220px,1fr))] text-left">
-          {items.map((proj, idx) => (
-            <motion.a
-              key={idx}
-              href={proj.githubLink}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ scale: 1.02, y: -4 }}
-              className="bg-[var(--card)] border border-[var(--border)]
-              rounded-xl sm:rounded-2xl
-              p-4 sm:p-5 md:p-6
-              flex flex-col gap-3 sm:gap-4
-              transition-all duration-300
-              hover:border-[var(--primary)] hover:shadow-xl"
-            >
-              <h3 className="font-heading font-semibold text-sm sm:text-base md:text-lg break-words">
-                {proj.title}
-              </h3>
-
-              <p className="text-[var(--text-secondary)] text-xs sm:text-sm leading-relaxed line-clamp-4 break-words">
-                {proj.description}
-              </p>
-
-              <div className="flex gap-2 flex-wrap mt-auto">
-                {proj.tech.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--background-alt)]"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.a>
-          ))}
-        </div>
-      );
-
     case "interests":
       return (
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
           {items.map((i, idx) => (
             <motion.span
               key={idx}
-              whileHover={{ scale: 1.05, y: -2 }}
+              whileHover={{ scale: 1.02 }}
               className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2
               rounded-full border border-[var(--border)]
-              bg-[var(--card)]
-              transition-all duration-300
-              hover:border-[var(--primary)]"
+              
+              hover:border-[var(--primary)] transition-all duration-200"
             >
               {i}
             </motion.span>
