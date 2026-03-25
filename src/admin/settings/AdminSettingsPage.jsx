@@ -47,8 +47,12 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="w-full mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 font-sans">
-      <h1 className="text-xl sm:text-2xl font-semibold">Admin Settings</h1>
-      <div className=" border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+      <h1 className="text-2xl sm:text-3xl font-semibold text-center sm:text-left">
+        Admin Settings
+      </h1>
+
+      {/* Profile */}
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
         <h2 className="text-lg sm:text-xl font-semibold">Profile Information</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -68,14 +72,19 @@ export default function AdminSettingsPage() {
             className="input-glass w-full"
           />
         </div>
-        <Button onClick={handleSaveProfile} variant="primary">
-          Save Profile
-        </Button>
+
+        <div className="flex justify-end">
+          <Button onClick={handleSaveProfile} variant="primary" className="w-full sm:w-auto">
+            Save Profile
+          </Button>
+        </div>
       </div>
-      <div className="border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+
+      {/* Theme */}
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
         <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2">
             {mode === "light" ? <Moon size={16} /> : <Sun color="#FBBF24" size={16} />}
 
@@ -86,7 +95,7 @@ export default function AdminSettingsPage() {
 
           <button
             onClick={handleToggleDarkMode}
-            className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
+            className={`relative w-14 h-8 rounded-full transition-all duration-300 shrink-0 ${
               mode === "dark" ? "bg-[var(--primary)]" : "bg-gray-300"
             }`}
           >
@@ -98,37 +107,40 @@ export default function AdminSettingsPage() {
           </button>
         </div>
       </div>
-      <div className="border border-[var(--border)] rounded-2xl p-4 sm:p-6 space-y-4">
+
+      {/* Resume */}
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
         <h2 className="text-lg sm:text-xl font-semibold">Resume / Portfolio</h2>
 
-        <div className="flex flex-col gap-4 w-full">
-          <span className="truncate text-sm sm:text-base max-w-full">
-            {resume?.split("/").pop()}
-          </span>
+        <div className="space-y-4">
+          <span className="block truncate text-sm sm:text-base">{resume?.split("/").pop()}</span>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={handleResumeChange}
-              className="border border-[var(--border)] p-2 flex-1 min-w-[160px] 
-              /* The main input background */
-             file:mr-4 file:py-2 file:px-4
-             file:rounded-md file:border-0
-             file:text-sm file:font-semibold
-             file:bg-[var(--primary)] file:text-white
-             hover:file:bg-[var(--primary)]
-             transition-all cursor-pointer"
-            />
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx"
+            onChange={handleResumeChange}
+            className="
+          border border-[var(--border)] p-2 w-full
+          file:mr-4 file:py-2 file:px-4
+          file:rounded-md file:border-0
+          file:text-sm file:font-semibold
+          file:bg-[var(--primary)] file:text-white
+          hover:file:bg-[var(--primary)]
+          transition-all cursor-pointer
+        "
+          />
 
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button
               onClick={handleUploadResume}
               loading={loading}
               variant="primary"
               loadingText="Uploading Resume..."
+              className="w-full sm:w-auto"
             >
               Upload Resume
             </Button>
+
             <Button
               onClick={handleDeleteResume}
               disabled={deleteLoading}
@@ -136,6 +148,7 @@ export default function AdminSettingsPage() {
               loadingText="Deleting resume ...."
               loading={deleteLoading}
               icon={<Trash2 size={18} />}
+              className="w-full sm:w-auto"
             >
               Delete
             </Button>
