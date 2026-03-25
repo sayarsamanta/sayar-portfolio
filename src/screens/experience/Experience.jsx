@@ -25,7 +25,7 @@ export default function Experience() {
 
   return (
     <div
-      className="min-h-screen w-full py-16 px-4 md:px-6"
+      className="min-h-screen w-full py-16 px-4 md:px-6 pb-20 sm:pb-24 md:pb-32   "
       style={{ background: "var(--gradient-bg)" }}
     >
       {!loading && experienceData.length === 0 && <EmptySection type={"Experience"} />}
