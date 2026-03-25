@@ -39,107 +39,92 @@ export default function AdminProjects() {
 
   return (
     <div className="space-y-8 text-[var(--text-primary)]">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold">Projects</h2>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">
+      <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 w-full">
+        <div className="w-full">
+          <h2 className="text-2xl font-semibold text-center sm:text-left">Projects</h2>
+          <p className="text-sm text-[var(--text-secondary)] mt-1 text-center sm:text-left">
             Manage and edit your portfolio projects.
           </p>
         </div>
 
-        <Button
-          onClick={() => handleEdit(null)}
-          variant="primary"
-          className="
-            flex items-center gap-2
-            px-4 py-2
-            bg-[var(--primary)]
-            text-[var(--text-button)]
-            text-sm
-            transition-all duration-200
-            hover:opacity-90
-          "
-        >
-          Add Project
-        </Button>
-      </div>
-      <div
-        className="
-          rounded-2xl
-          border border-[var(--border)]
-          bg-[var(--card)]
-          overflow-hidden
+        <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+          <Button
+            onClick={() => handleEdit(null)}
+            variant="primary"
+            className="
+          flex items-center justify-center gap-2
+          px-4 py-2
+          w-full sm:w-auto
+          bg-[var(--primary)]
+          text-[var(--text-button)]
+          text-sm
+          transition-all duration-200
+          hover:opacity-90
         "
-      >
-        {projects.length === 0 ? (
-          <div className="p-10 text-center text-[var(--text-secondary)]">
-            No projects added yet.
-          </div>
-        ) : (
-          <table className="w-full text-sm">
-            <thead style={{ background: "var(--gradient-bg)" }}>
-              <tr>
-                <th className="text-left p-4 border-b border-[var(--border)]">Title</th>
-                <th className="text-left p-4 border-b border-[var(--border)]">Tech Stack</th>
-                <th className="text-left p-4 border-b border-[var(--border)]">Status</th>
-                <th className="text-right p-4 border-b border-[var(--border)]">Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {projects.map((project) => (
-                <tr
-                  key={project._id}
-                  className="
-                    border-b border-[var(--border)]
-                    hover:bg-[var(--gradient-bg)]
-                    transition-all duration-150
-                  "
-                  style={{ background: "var(--gradient-bg)" }}
-                >
-                  <td className="p-4 font-medium">{project.name || project.title}</td>
-
-                  <td className="p-4 text-[var(--text-secondary)]">{project.tech.join(", ")}</td>
-
-                  <td className="p-4">
-                    <span
-                      className="
-                        px-3 py-1
-                        rounded-full
-                        text-xs
-                        bg-[var(--background)]
-                        border border-[var(--border)]
-                      "
-                    >
-                      {project.status}
-                    </span>
-                  </td>
-
-                  <td className="p-4">
-                    <div className="flex justify-end gap-3">
-                      <Button
-                        variant="edit"
-                        onClick={() => {
-                          handleEdit(project);
-                        }}
-                        className="p-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
-                        icon={<Pencil size={16} />}
-                      ></Button>
-
-                      <Button
-                        onClick={() => handleDelete(project)}
-                        variant="secondarydelete"
-                        className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
-                        icon={<Trash2 size={16} />}
-                      ></Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+          >
+            Add Project
+          </Button>
+        </div>
       </div>
+
+      {projects.length === 0 ? (
+        <div className="p-10 text-center text-[var(--text-secondary)] rounded-2xl border border-[var(--border)] bg-[var(--card)]">
+          No projects added yet.
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {projects.map((project) => (
+            <div
+              key={project._id}
+              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] bg-[var(--card)] gap-4"
+            >
+              <div className="flex-1 w-full">
+                <h3 className="text-lg md:text-xl font-semibold">
+                  {project.name || project.title}
+                </h3>
+
+                <p className="text-sm mt-2 text-[var(--text-secondary)]">{project.description}</p>
+
+                {project.tech?.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.tech.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-1 text-xs rounded-full border border-[var(--border)] text-[var(--text-secondary)]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <div className="mt-3">
+                  <span className="px-3 py-1 rounded-full text-xs bg-[var(--background)] border border-[var(--border)]">
+                    {project.status}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-shrink-0 gap-2 mt-2 md:mt-0">
+                <Button
+                  variant="edit"
+                  onClick={() => handleEdit(project)}
+                  className="p-2 bg-yellow-400 rounded-full hover:bg-yellow-500 transition-colors"
+                  icon={<Pencil size={16} />}
+                />
+
+                <Button
+                  onClick={() => handleDelete(project)}
+                  variant="secondarydelete"
+                  className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
+                  icon={<Trash2 size={16} />}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       <AdminAddProjectModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -147,6 +132,7 @@ export default function AdminProjects() {
         item={selectedProject}
         loading={loading}
       />
+
       <DeleteModal
         isOpen={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}

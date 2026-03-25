@@ -25,42 +25,61 @@ export default function AdminItemCard({ type, data, onDelete }) {
     switch (type) {
       case "achievement":
         return (
-          <div className=" rounded-lg  hover:border-[var(--primary)] transition">
-            <p className="font-medium text-[15px] text-[var(--text-primary)]">{data.title}</p>
+          <div className="w-full">
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="font-medium text-[15px] text-[var(--text-primary)] leading-snug">
+                {data.title}
+              </p>
 
-            <p className="text-sm text-[var(--text-secondary)] mt-1 leading-relaxed">
+              <p className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--input-bg)] border border-[var(--border)] text-[var(--text-secondary)] whitespace-nowrap">
+                {data.year}
+              </p>
+            </div>
+
+            <p className="text-sm text-[var(--text-secondary)] mt-1 leading-relaxed break-words line-clamp-4">
               {data.description}
             </p>
-
-            <p className="text-xs text-[var(--text-secondary)] mt-2">{data.year}</p>
           </div>
         );
 
       case "education":
         return (
-          <>
-            <p className="font-medium text-[15px]">{data.degree}</p>
-            <p className="text-sm text-[var(--text-secondary)]">{data.institution}</p>
-            <p className="text-xs text-[var(--text-secondary)]">{data.year}</p>
-          </>
+          <div className="w-full">
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="font-medium text-[15px] text-[var(--text-primary)] leading-snug">
+                {data.degree}
+              </p>
+
+              <p className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--input-bg)] border border-[var(--border)] text-[var(--text-secondary)] whitespace-nowrap">
+                {data?.duration}
+              </p>
+            </div>
+
+            <p className="text-sm text-[var(--text-secondary)] mt-1 break-words">
+              {data.institution}
+            </p>
+          </div>
         );
 
       case "interest":
-        return <p className="font-medium text-[15px]">{data}</p>;
+        return <p className="font-medium text-[15px] text-[var(--text-primary)]">{data}</p>;
 
       case "skill":
         return (
           <>
-            <div className="flex items-center justify-between w-full">
-              <p className="font-medium text-[15px]">{data.name}</p>
+            <div className="flex items-center  w-full">
+              <p className="font-medium text-[15px] text-[var(--text-primary)]">{data.name}</p>
             </div>
 
             <p className="text-xs text-[var(--text-secondary)]">{data.type}</p>
-            <div className="w-full h-1.5 bg-[var(--border)] rounded-full mt-1 overflow-hidden">
-              <div
-                className="h-full bg-[var(--primary)] rounded-full"
-                style={{ width: `${data.percentage}%` }}
-              />
+            <div className="flex justify-center">
+              <div className="w-full h-1.5 bg-[var(--border)] rounded-full mt-1 overflow-hidden">
+                <div
+                  className="h-full bg-[var(--primary)] rounded-full"
+                  style={{ width: `${data.percentage}%` }}
+                />
+              </div>
+              <p className="text-xs text-[var(--text-secondary)] mx-2 b-2">{data.percentage}%</p>
             </div>
           </>
         );
@@ -77,24 +96,26 @@ export default function AdminItemCard({ type, data, onDelete }) {
       whileHover={{ y: -2 }}
       className="
         group
-        flex items-start justify-between
-        
+        flex items-start gap-3
         border border-[var(--border)]
         rounded-xl
         px-4 py-3
+        bg-[linear-gradient(135deg,var(--card),var(--input-bg))]
         transition-all duration-300
         hover:border-[var(--primary)]
-        hover:shadow-lg
+        hover:shadow-md
       "
     >
-      <div className="flex items-start gap-3">
-        <div className="mt-1 opacity-80">{getIcon()}</div>
+      <div className="flex items-start gap-3 flex-1 min-w-0">
+        <div className="mt-1 opacity-80 shrink-0">{getIcon()}</div>
 
-        <div className="flex flex-col gap-0.5">{renderContent()}</div>
+        <div className="flex flex-col gap-0.5 flex-1 min-w-0">{renderContent()}</div>
       </div>
+
       <button
         onClick={onDelete}
         className="
+          shrink-0
           flex items-center gap-1
           text-red-400
           text-xs
@@ -107,7 +128,7 @@ export default function AdminItemCard({ type, data, onDelete }) {
         "
       >
         <Trash2 size={14} />
-        Delete
+        <span className="hidden sm:inline">Delete</span>
       </button>
     </motion.div>
   );
