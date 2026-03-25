@@ -40,14 +40,6 @@ const ImageSlider = ({
     setLoaded(false);
   }, [current]);
 
-  // preload all images once
-  useEffect(() => {
-    images.forEach((img) => {
-      const image = new Image();
-      image.src = getImageUrl(img);
-    });
-  }, [images]);
-
   // preload next image
   useEffect(() => {
     if (!images.length) return;
@@ -115,10 +107,10 @@ const ImageSlider = ({
               initial={{ opacity: 0, scale: 1.03 }}
               animate={{ opacity: loaded ? 1 : 0, scale: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.25 }}
               onLoad={() => setLoaded(true)}
               className="w-full h-full object-cover object-top"
-              drag="x"
+              drag={window.innerWidth > 768 ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={(e, info) => {
                 if (info.offset.x < -50) nextImage();

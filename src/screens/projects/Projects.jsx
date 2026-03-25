@@ -16,9 +16,14 @@ export default function Projects() {
   const { fetchProjects } = useProjectAPI();
 
   useEffect(() => {
-    setLoading(true);
-    fetchProjects().finally(() => setLoading(false));
-  }, [fetchProjects, projects]);
+    const load = async () => {
+      setLoading(true);
+      await fetchProjects();
+      setLoading(false);
+    };
+
+    load();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = selectedProject ? "hidden" : "auto";
