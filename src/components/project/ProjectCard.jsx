@@ -3,7 +3,7 @@ import ImageSlider from "./ImageSlider";
 import { FiArrowUpRight } from "react-icons/fi";
 import { getTechIcon } from "./getTechIcon";
 import { useMemo } from "react";
-
+const isMobile = window.innerWidth < 768;
 const ProjectCard = ({ proj, onClick }) => {
   const techList = useMemo(() => proj?.tech.flat() || [], [proj.tech]);
   return (
@@ -33,15 +33,13 @@ backdrop-blur-sm shadow-sm
         >
           {" "}
           <ImageSlider
-            key={JSON.stringify(proj.images)}
             images={proj.screenshots}
-            autoplay
+            autoplay={!isMobile}
             interval={4000}
             showDots={true}
             showArrows={false}
             height="h-full"
           />
-          ```
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
             <div className="bg-white/90 text-black px-3 py-1.5 rounded-full flex items-center gap-2 font-medium text-[11px] shadow-md">
               View Details <FiArrowUpRight size={13} />
