@@ -40,7 +40,14 @@ export default function Projects() {
   return (
     <>
       <div
-        className="min-h-screen w-full px-4 sm:px-6 md:px-12 lg:px-20 py-16 sm:py-20 md:py-24 flex flex-col gap-16 md:gap-20 font-body"
+        className="
+    min-h-screen w-full
+    px-4 sm:px-6 md:px-12 lg:px-20
+    py-10 sm:py-14 md:py-20
+    flex flex-col
+    gap-8 sm:gap-12 md:gap-16
+    font-body pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-24 md:pb-32   
+  "
         style={{ backgroundColor: "var(--background)", color: "var(--text-primary)" }}
       >
         {!loading && projects.length === 0 && <EmptySection type={"Project"} />}
@@ -48,18 +55,18 @@ export default function Projects() {
         {!loading && projects.length > 0 && (
           <>
             <h1
-              className="text-4xl font-heading font-bold text-center  mt-8"
+              className="text-3xl sm:text-4xl font-heading font-bold text-center mt-4 sm:mt-6"
               style={{ color: "var(--text-primary)" }}
             >
               Projects
             </h1>
 
-            <div className="flex justify-center gap-4 mb-10">
+            <div className="flex justify-center gap-3 sm:gap-4 mb-6 sm:mb-8">
               {["All", "Fullstack", "Frontend"].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setFilter(cat)}
-                  className="px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm rounded-full font-heading font-medium border transition duration-200"
+                  className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded-full font-heading font-medium border transition duration-200"
                   style={{
                     backgroundColor: filter === cat ? "var(--primary)" : "var(--card)",
                     color: filter === cat ? "white" : "var(--text-secondary)",
@@ -71,13 +78,9 @@ export default function Projects() {
               ))}
             </div>
 
-            <div className="flex flex-wrap justify-center gap-10 w-full max-w-[1400px] mx-auto px-4">
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-10 w-full max-w-[1400px] mx-auto px-2 sm:px-4">
               {filteredProjects.map((proj, idx) => (
-                <ProjectCard
-                  proj={proj}
-                  key={idx}
-                  onClick={() => setSelectedProject(proj)}
-                ></ProjectCard>
+                <ProjectCard proj={proj} key={idx} onClick={() => setSelectedProject(proj)} />
               ))}
             </div>
           </>
