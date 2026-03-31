@@ -9,7 +9,7 @@ const SectionLayout = ({
   showDivider = true,
 }) => {
   return (
-    <section className="w-full py-14 px-6">
+    <section className={`w-full py-8 px-6 max-[440px]:py-0 max-[340px]:px-0`}>
       <div
         className={`${maxWidth} mx-auto flex flex-col ${
           centered ? "items-center text-center" : ""

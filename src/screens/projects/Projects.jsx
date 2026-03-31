@@ -48,7 +48,6 @@ export default function Projects() {
     gap-8 sm:gap-12 md:gap-16
     font-body pt-24 sm:pt-28 md:pt-32 pb-20 sm:pb-24 md:pb-32   
   "
-        style={{ backgroundColor: "var(--background)", color: "var(--text-primary)" }}
       >
         {!loading && projects.length === 0 && <EmptySection type={"Project"} />}
 

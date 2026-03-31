@@ -52,7 +52,7 @@ export default function AdminSettingsPage() {
       </h1>
 
       {/* Profile */}
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
+      <div className="rounded-2xl border border-[var(--border)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
         <h2 className="text-lg sm:text-xl font-semibold">Profile Information</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -81,7 +81,7 @@ export default function AdminSettingsPage() {
       </div>
 
       {/* Theme */}
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
+      <div className="rounded-2xl border border-[var(--border)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
         <h2 className="text-lg sm:text-xl font-semibold">Appearance & Theme</h2>
 
         <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -109,7 +109,7 @@ export default function AdminSettingsPage() {
       </div>
 
       {/* Resume */}
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
+      <div className="rounded-2xl border border-[var(--border)] p-4 sm:p-6 space-y-5 shadow-sm md:shadow-md">
         <h2 className="text-lg sm:text-xl font-semibold">Resume / Portfolio</h2>
 
         <div className="space-y-4">
