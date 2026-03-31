@@ -50,7 +50,10 @@ export default function AdminLogin() {
   );
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-tr from-purple-50 to-indigo-50 overflow-hidden">
+    <div
+      className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6"
+      style={{ background: "var(--gradient-bg)" }}
+    >
       <motion.div
         className="absolute w-[500px] h-[500px] bg-purple-400/20 rounded-full blur-3xl top-[-100px] left-[-100px]"
         initial={{ opacity: 0 }}
