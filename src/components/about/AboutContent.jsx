@@ -37,7 +37,7 @@ const AboutContent = ({
       flex flex-col gap-14
       relative
       transition-colors duration-500
-      
+      mb-10
       font-body`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}

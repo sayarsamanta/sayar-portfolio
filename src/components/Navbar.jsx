@@ -28,160 +28,129 @@ const Navbar = () => {
     role,
   } = user || {};
 
-  const mobileMenuVariants = {
-    hidden: { y: "-100%", opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-    exit: { y: "-100%", opacity: 0, transition: { duration: 0.3 } },
-  };
-
   return (
     <motion.nav
       initial={{ y: 0 }}
-      animate={{
-        y: visible ? 0 : -100,
-      }}
+      animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.3 }}
-      className="fixed left-0 right-0 top-0 z-50 backdrop-blur-md font-heading"
+      className="fixed left-0 right-0 top-0 z-50 font-heading backdrop-blur-md"
+      style={{
+        background: isOpen ? "transparent" : "var(--gradient-bg)",
+        backdropFilter: isOpen ? "none" : "blur(10px)",
+        WebkitBackdropFilter: isOpen ? "none" : "blur(10px)",
+      }}
     >
-      <div className="flex justify-between items-center px-8 py-5">
+      <div className="flex justify-between items-center px-5 md:px-7 py-2 md:py-2.5">
+        {/* Logo */}
         <motion.div
-          whileHover={{ scale: 1.1, rotate: 2 }}
+          whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="flex items-center gap-3 cursor-pointer"
+          className="cursor-pointer"
         >
-          <Link
-            to={"/"}
-            className="relative rounded-full object-cover border border-[var(--border)] ring-1 ring-white/20 object-top hidden lg:block"
-          >
+          <Link to="/" className="relative rounded-full  overflow-hidden">
             <ProfileAvatar src={profileImg || placeholder} size="small" />
-            <motion.div
-              animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.15, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)] blur-xl z-[-1]"
-            />
           </Link>
         </motion.div>
-        <div className="hidden md:flex gap-6 items-center relative">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.path === "/"}
-              className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              {({ isActive }) => (
-                <div className="relative px-1 py-1">
-                  <span
-                    className="
-          transition-colors duration-300
-          group-hover:text-[var(--primary)]
-        "
-                    style={{
-                      color: isActive ? "var(--primary)" : "var(--text-secondary)",
-                    }}
-                  >
-                    {item.name}
-                  </span>
-                  {!isActive && (
-                    <span
-                      className="
-            absolute left-0 -bottom-1
-            h-[2px] w-0
-            bg-[var(--primary)]
-            transition-all duration-300 ease-out
-            group-hover:w-full
-          "
-                    />
-                  )}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-[var(--primary)]"
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30,
-                      }}
-                    />
-                  )}
-                </div>
-              )}
-            </NavLink>
-          ))}
-          {token && (
-            <NavLink
-              to="/admin"
-              className="relative text-sm uppercase tracking-wider font-heading group transition-colors duration-300"
-            >
-              <div className="relative px-1 py-1 flex items-center gap-1">
-                <FiShield size={16} className="text-[var(--primary)]" />
-                <span>Admin Panel</span>
-                <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[var(--primary)] transition-all duration-300 ease-out group-hover:w-full" />
-              </div>
-            </NavLink>
-          )}
+
+        {/* Right Controls */}
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle */}
           <button
             onClick={() => setMode(mode === "light" ? "dark" : "light")}
-            className="ml-4 p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
+            className="p-1.5 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors"
           >
-            {mode === "dark" ? <FiSun color="#FBBF24" size={20} /> : <FiMoon size={20} />}
+            {mode === "dark" ? <FiSun size={18} /> : <FiMoon size={18} />}
           </button>
-        </div>
-        <div className="md:hidden flex items-center gap-3">
+
+          {/* Hamburger */}
           <button
-            onClick={() => setMode(mode === "light" ? "dark" : "light")}
-            className="p-2 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors font-heading"
+            onClick={() => setIsOpen(true)}
+            className="p-1.5 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors"
           >
-            {mode === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
-          </button>
-          <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
-            <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.3 }}>
-              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </motion.div>
+            <FiMenu size={20} />
           </button>
         </div>
       </div>
+
+      {/* Drawer */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            className="md:hidden absolute top-full left-0 w-full flex flex-col items-start p-6 font-heading backdrop-blur-md"
-            style={{
-              background: "var(--gradient-bg)",
-              WebkitBackdropFilter: "blur(10px)",
-              backdropFilter: "blur(10px)",
-            }}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={mobileMenuVariants}
-          >
-            {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className="py-2 w-full transition-colors duration-300 font-heading"
-                style={{ color: "var(--text-primary)" }}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </NavLink>
-            ))}
-            {token && (
-              <NavLink
-                to="/admin"
-                className="py-2 w-full transition-colors duration-300 font-heading flex items-center gap-2"
-                style={{ color: "var(--text-primary)" }}
-                onClick={() => setIsOpen(false)}
-              >
-                <FiShield size={18} /> Admin Panel
-              </NavLink>
-            )}
-          </motion.div>
+          <>
+            {/* Full Screen Overlay */}
+            <motion.div
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.35 }}
+              className="fixed top-0 right-0 h-screen w-[80%] md:w-[320px] z-50 p-6 backdrop-blur-xl flex flex-col"
+              style={{
+                background: "var(--gradient-bg)",
+                borderLeft: "1px solid var(--border)",
+              }}
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center mb-8">
+                <div>
+                  <h2 className="text-base font-semibold">Sayar Samanta</h2>
+                  <p className="text-xs text-[var(--text-secondary)]">Full Stack Developer</p>
+                </div>
+
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 rounded-full border border-[var(--border)] hover:bg-[var(--card)] transition-colors"
+                >
+                  <FiX size={20} />
+                </button>
+              </div>
+
+              {/* Links */}
+              <div className="flex flex-col gap-5">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.path}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                  >
+                    <NavLink
+                      to={item.path}
+                      end={item.path === "/"}
+                      onClick={() => setIsOpen(false)}
+                      className={({ isActive }) =>
+                        `text-base transition-colors duration-300 ${
+                          isActive
+                            ? "text-[var(--primary)]"
+                            : "text-[var(--text-primary)] hover:text-[var(--primary)]"
+                        }`
+                      }
+                    >
+                      {item.name}
+                    </NavLink>
+                  </motion.div>
+                ))}
+
+                {token && (
+                  <NavLink
+                    to="/admin"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-2 text-base hover:text-[var(--primary)] transition-colors duration-300"
+                  >
+                    <FiShield size={16} />
+                    Admin Panel
+                  </NavLink>
+                )}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
