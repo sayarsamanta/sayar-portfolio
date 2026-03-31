@@ -68,7 +68,7 @@ export default function AdminProjects() {
       </div>
 
       {projects.length === 0 ? (
-        <div className="p-10 text-center text-[var(--text-secondary)] rounded-2xl border border-[var(--border)] bg-[var(--card)]">
+        <div className="p-10 text-center text-[var(--text-secondary)] rounded-2xl border border-[var(--border)]">
           No projects added yet.
         </div>
       ) : (
@@ -76,7 +76,7 @@ export default function AdminProjects() {
           {projects.map((project) => (
             <div
               key={project._id}
-              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] bg-[var(--card)] gap-4"
+              className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-2xl shadow-sm md:shadow-md border border-[var(--border)] gap-4"
             >
               <div className="flex-1 w-full">
                 <h3 className="text-lg md:text-xl font-semibold">
